@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heapforge — Consumer-Focused Software Studio</title>
+  <meta name="description" content="Heapforge is a stealth software startup based in Sofia, Bulgaria and London, UK developing consumer-focused software.">
+  <meta name="author" content="Heapforge">
+  <meta name="theme-color" content="#FAF8F5">
+  <meta name="color-scheme" content="light">
+  <link rel="canonical" href="https://heapforge.com/">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Heapforge">
+  <meta property="og:locale" content="en_GB">
+  <meta property="og:url" content="https://heapforge.com/">
+  <meta property="og:title" content="Heapforge — Consumer-Focused Software Studio">
+  <meta property="og:description" content="A stealth software startup based in Sofia, Bulgaria and London, UK developing consumer-focused software.">
+  <meta property="og:image" content="https://heapforge.com/assets/images/stanislav.jpg">
+  <meta property="og:image:alt" content="Heapforge co-founder Stanislav Vasilev">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Heapforge — Consumer-Focused Software Studio">
+  <meta name="twitter:description" content="A stealth software startup based in Sofia, Bulgaria and London, UK developing consumer-focused software.">
+  <meta name="twitter:image" content="https://heapforge.com/assets/images/stanislav.jpg">
+  <meta name="twitter:image:alt" content="Heapforge co-founder Stanislav Vasilev">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&display=swap" rel="stylesheet">
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://heapforge.com/#organization",
+        "name": "Heapforge",
+        "url": "https://heapforge.com/",
+        "logo": "https://heapforge.com/assets/favicon.svg",
+        "description": "Heapforge is a software stealth-startup based in Sofia, Bulgaria and London, UK that develops consumer-focused software.",
+        "sameAs": [
+          "https://madladsquad.com",
+          "https://tiny.lol",
+          "https://lasso.domains"
+        ],
+        "foundingLocation": [
+          {
+            "@type": "Place",
+            "name": "Sofia, Bulgaria"
+          },
+          {
+            "@type": "Place",
+            "name": "London, United Kingdom"
+          }
+        ],
+        "founder": [
+          {
+            "@type": "Person",
+            "name": "Stanislav Vasilev",
+            "jobTitle": "Co-founder",
+            "url": "https://madman10k.com",
+            "sameAs": "https://madman10k.com"
+          },
+          {
+            "@type": "Person",
+            "name": "Nicholas Bors",
+            "jobTitle": "Co-founder",
+            "url": "https://nickbors.cc",
+            "sameAs": "https://nickbors.cc"
+          }
+        ]
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://heapforge.com/#website",
+        "url": "https://heapforge.com/",
+        "name": "Heapforge",
+        "inLanguage": "en",
+        "publisher": { "@id": "https://heapforge.com/#organization" }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    :root {
+      --bg-color: #FAF8F5;
+      --text-main: #1C1B1A;
+      --text-muted: #666360;
+      /* Decorative peach — borders and list markers only, never text */
+      --accent: #FAA381;
+      /* Darker sibling of --accent, for text that must meet WCAG AA */
+      --accent-text: #B64B20;
+      --accent-text-hover: #933C1A;
+      --card-bg: #FFFFFF;
+      --card-border: #EFECE6;
+      --radius: 12px;
+      --max-width: 768px;
+      --font-serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 40px 24px 48px;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: var(--font-serif);
+      font-size: 1.05rem;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    strong, b {
+      font-weight: 600;
+    }
+
+    /* Header & Branding */
+    h1 {
+      font-size: 3.25rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+
+    /* Sections */
+    section {
+      margin-bottom: 28px;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--accent-text);
+      margin-bottom: 10px;
+    }
+
+    /* Projects */
+    .project-list {
+      list-style: square;
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      line-height: 1.5;
+    }
+
+    .project-list li::marker {
+      color: var(--accent);
+    }
+
+    .project-title {
+      font-weight: 600;
+      font-size: 1.15rem;
+    }
+
+    strong.project-title {
+      color: var(--text-main);
+    }
+
+    .opensource-note {
+      margin-top: 14px;
+    }
+
+    /* Team */
+    .team-grid {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .team-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 16px;
+    }
+
+    .team-name {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .team-role {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--accent-text);
+      margin-top: 2px;
+    }
+
+    .team-avatar {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border: 1px solid var(--card-border);
+      border-radius: calc(var(--radius) - 4px);
+      margin: 12px 0;
+    }
+
+    .team-location {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 4px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Links */
+    a {
+      color: var(--accent-text);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    a:hover {
+      color: var(--accent-text-hover);
+    }
+
+    a:focus-visible {
+      outline: 2px solid var(--accent-text);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+
+    .external-link {
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 36px;
+      padding-top: 16px;
+      border-top: 1px solid var(--card-border);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 520px) {
+      body {
+        padding: 40px 16px;
+      }
+      h1 {
+        font-size: 2.2rem;
+      }
+      .team-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Heapforge</h1>
+  </header>
+
+  <main>
+    <section id="about">
+      <h2>About</h2>
+      <p>
+        A software stealth-startup based in <strong>Sofia, Bulgaria</strong> and <strong>London, UK</strong> that develops consumer-focused software.
+      </p>
+    </section>
+
+    <section id="projects">
+      <h2>Projects</h2>
+      <ul class="project-list">
+        <li>
+          <a href="https://tiny.lol" target="_blank" rel="noopener" class="project-title">tiny.lol</a> &ndash; a minimal URL shortener and paste tool
+        </li>
+        <li>
+          <a href="https://lasso.domains" target="_blank" rel="noopener" class="project-title">lasso.domains</a> &ndash; a domain auction sniping and market analysis toolkit
+        </li>
+        <li>
+          <strong class="project-title">Project YY</strong> &ndash; a website for learning writing systems supporting more than 20K characters
+        </li>
+      </ul>
+
+      <p class="opensource-note">
+        You might also be interested in our open-source work under <strong>MadLadSquad</strong>:
+        <a href="https://madladsquad.com" target="_blank" rel="noopener">madladsquad.com &rarr;</a>
+      </p>
+    </section>
+
+    <section id="team">
+      <h2>Team</h2>
+      <ul class="team-grid">
+
+        <li class="team-card">
+          <h3 class="team-name">Stanislav Vasilev</h3>
+          <p class="team-role">Co-founder</p>
+          <img src="assets/images/stanislav.jpg" alt="Portrait of Stanislav Vasilev" class="team-avatar" width="2478" height="2478" loading="lazy" decoding="async">
+          <p class="team-location">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            Sofia, Bulgaria
+          </p>
+          <a href="https://madman10k.com" target="_blank" rel="noopener" class="external-link">madman10k.com &rarr;</a>
+        </li>
+
+        <li class="team-card">
+          <h3 class="team-name">Nicholas Bors</h3>
+          <p class="team-role">Co-founder</p>
+          <img src="assets/images/nicholas.jpg" alt="Portrait of Nicholas Bors" class="team-avatar" width="1024" height="1024" loading="lazy" decoding="async">
+          <p class="team-location">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            London, UK
+          </p>
+          <a href="https://nickbors.cc" target="_blank" rel="noopener" class="external-link">nickbors.cc &rarr;</a>
+        </li>
+
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>Copyright &copy; 2024 &ndash; <time id="year">2026</time> Heapforge. All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

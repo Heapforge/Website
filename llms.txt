@@ -1,0 +1,24 @@
+# Heapforge
+
+> Heapforge is a software stealth-startup based in Sofia, Bulgaria and London, UK that develops consumer-focused software.
+
+## Overview
+- **Locations**: Sofia, Bulgaria & London, UK
+- **Status**: Stealth Startup
+- **Focus**: Consumer-focused software, developer tools, and language learning tools
+- **Website**: https://heapforge.com
+
+## Projects
+- **tiny.lol**: Minimal URL shortener and paste tool designed for simplicity and speed.
+- **lasso.domains**: Domain auction sniping and market analysis toolkit.
+- **Project YY**: Interactive website for learning writing systems supporting over 20,000 characters.
+
+## Open-Source Contributions
+- **MadLadSquad**: Open-source organization behind various tools and initiatives.
+  - Link: https://madladsquad.com
+
+## Team
+- **Stanislav Vasilev**: Co-founder based in Sofia, Bulgaria.
+  - Personal Website: https://madman10k.com
+- **Nicholas Bors**: Co-founder based in London, UK.
+  - Personal Website: https://nickbors.cc
