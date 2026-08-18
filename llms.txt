@@ -12,6 +12,8 @@
 - **tiny.lol**: Minimal URL shortener and paste tool designed for simplicity and speed.
 - **lasso.domains**: Domain auction sniping and market analysis toolkit.
 - **Project YY**: Interactive website for learning writing systems supporting over 20,000 characters.
+- **Heapforge Reader**: A book reading app for iOS, Android, Windows, Linux and macOS.
+- **Heapforge Journal**: a journaling app for iOS, Android and the web.
 
 ## Open-Source Contributions
 - **MadLadSquad**: Open-source organization behind various tools and initiatives.
