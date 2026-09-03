@@ -15,6 +15,10 @@
 - **Heapforge Reader**: A book reading app for iOS, Android, Windows, Linux and macOS.
 - **Heapforge Journal**: a journaling app for iOS, Android and the web.
 
+## Client Work
+- **cleanrs.bg**: Website developed for a Bulgarian cleaning company.
+  - Link: https://cleanrs.bg
+
 ## Open-Source Contributions
 - **MadLadSquad**: Open-source organization behind various tools and initiatives.
   - Link: https://madladsquad.com
