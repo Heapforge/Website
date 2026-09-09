@@ -1,0 +1,29 @@
+/* Design tokens. Every other stylesheet reads colours, spacing and type
+   from here — nothing below this file should hard-code a hex value. */
+:root {
+  --bg-color: #FAF8F5;
+  --text-main: #1C1B1A;
+  --text-muted: #666360;
+  /* Decorative peach — borders and list markers only, never text */
+  --accent: #FAA381;
+  /* Darker sibling of --accent, for text that must meet WCAG AA */
+  --accent-text: #B64B20;
+  --accent-text-hover: #933C1A;
+  --card-bg: #FFFFFF;
+  --card-border: #EFECE6;
+
+  --radius: 12px;
+  --max-width: 768px;
+
+  --font-serif: 'Newsreader', Georgia, 'Times New Roman', serif;
+  --font-size-base: 1.05rem;
+  --font-size-small: 0.85rem;
+  --line-height-base: 1.6;
+
+  --page-padding-block: 40px;
+  --page-padding-inline: 24px;
+  --page-padding-inline-small: 16px;
+  --section-gap: 28px;
+
+  --transition-fast: 0.2s ease;
+}

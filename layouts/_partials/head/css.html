@@ -1,0 +1,31 @@
+{{- /*
+  Bundles the stylesheet layers into one fingerprinted file.
+  Order matters: tokens must come first, components last. To add a new
+  component stylesheet, drop it in assets/css/components/ and list it here.
+*/ -}}
+{{- $sheets := slice
+  "css/base/tokens.css"
+  "css/base/reset.css"
+  "css/base/layout.css"
+  "css/base/typography.css"
+  "css/components/link.css"
+  "css/components/entry-list.css"
+  "css/components/prose.css"
+  "css/components/card-grid.css"
+  "css/components/footer.css"
+-}}
+
+{{- $resources := slice -}}
+{{- range $sheets -}}
+  {{- with resources.Get . -}}
+    {{- $resources = $resources | append . -}}
+  {{- else -}}
+    {{- errorf "head/css.html: stylesheet %q not found under assets/" . -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $css := $resources | resources.Concat "css/main.css" -}}
+{{- if hugo.IsProduction -}}
+  {{- $css = $css | minify | fingerprint -}}
+{{- end }}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}"{{ with $css.Data.Integrity }} integrity="{{ . }}" crossorigin="anonymous"{{ end }}>

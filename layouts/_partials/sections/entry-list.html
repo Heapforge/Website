@@ -1,0 +1,31 @@
+{{- /*
+  Renders a section of named entries.
+
+  Params:
+    id       - section element id / anchor
+    title    - heading text
+    entries  - slice of {name, description, url?} (e.g. hugo.Data.projects)
+    external - true when the urls point off-site, so links open in a new tab
+    note     - optional trailing HTML paragraph
+*/ -}}
+{{- $entries := .entries -}}
+{{- $external := .external -}}
+{{- if $entries }}
+<section id="{{ .id }}">
+  <h2>{{ .title }}</h2>
+  <ul class="entry-list">
+    {{- range $entries }}
+    <li>
+      {{- if .url }}
+      <a href="{{ .url }}"{{ if $external }} target="_blank" rel="noopener"{{ end }} class="entry-list__title">{{ .name }}</a>
+      {{- else }}
+      <strong class="entry-list__title">{{ .name }}</strong>
+      {{- end }} &ndash; {{ .description }}
+    </li>
+    {{- end }}
+  </ul>
+  {{- with .note }}
+  <p class="entry-list__note">{{ . | safeHTML }}</p>
+  {{- end }}
+</section>
+{{- end }}

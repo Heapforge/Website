@@ -1,0 +1,10 @@
+{{ define "main" }}
+  <div class="prose">
+    {{ .Content }}
+
+    {{- /* Pages that sit inside a section get a way back up to its index. */ -}}
+    {{- with .Parent }}{{ if not .IsHome }}
+    <a class="prose__back" href="{{ .RelPermalink }}">&larr; Back to {{ .Title }}</a>
+    {{ end }}{{ end }}
+  </div>
+{{ end }}

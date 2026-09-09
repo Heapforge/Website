@@ -1,0 +1,23 @@
+/* The single-column page shell shared by every page. */
+body {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--page-padding-block) var(--page-padding-inline) 48px;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  font-family: var(--font-serif);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+section {
+  margin-bottom: var(--section-gap);
+}
+
+@media (max-width: 520px) {
+  body {
+    padding: var(--page-padding-block) var(--page-padding-inline-small);
+  }
+}

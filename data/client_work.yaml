@@ -1,0 +1,5 @@
+# Work delivered for external clients. Same shape as data/projects.yaml.
+- name: cleanrs.bg
+  url: https://cleanrs.bg
+  description: a website for a Bulgarian cleaning company
+  summary: Website developed for a Bulgarian cleaning company.

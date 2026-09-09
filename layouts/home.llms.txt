@@ -1,0 +1,41 @@
+{{- $org := site.Params.organization -}}
+# {{ site.Title }}
+
+> {{ $org.description }}
+
+## Overview
+- **Locations**: {{ delimit site.Params.locations ", " " & " }}
+- **Status**: Stealth Startup
+- **Focus**: Consumer-focused software, developer tools, and language learning tools
+- **Website**: {{ strings.TrimSuffix "/" site.BaseURL }}
+
+## Projects
+{{ range hugo.Data.projects -}}
+- **{{ .name }}**: {{ .summary | default .description }}
+{{ if .url }}  - Link: {{ .url }}
+{{ end -}}
+{{ end }}
+## Client Work
+{{ range hugo.Data.client_work -}}
+- **{{ .name }}**: {{ .summary | default .description }}
+{{ if .url }}  - Link: {{ .url }}
+{{ end -}}
+{{ end }}
+## Open-Source Contributions
+- **{{ site.Params.openSource.name }}**: Open-source organization behind various tools and initiatives.
+  - Link: {{ site.Params.openSource.url }}
+
+## Team
+{{ range hugo.Data.team -}}
+- **{{ .name }}**: {{ .role }} based in {{ .location }}.
+{{ if .url }}  - Personal Website: {{ .url }}
+{{ end -}}
+{{ end -}}
+
+{{ with site.GetPage "/legal" }}
+## Legal
+{{ range .Pages.ByWeight -}}
+- **{{ .Title }}**: {{ .Description }}
+  - Link: {{ .Permalink }}
+{{ end -}}
+{{ end -}}

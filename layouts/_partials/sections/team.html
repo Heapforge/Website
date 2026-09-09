@@ -1,0 +1,38 @@
+{{- /*
+  Renders a grid of profile cards.
+
+  Params:
+    id      - section element id / anchor
+    title   - heading text
+    members - slice of {name, role, location, image, url, label}
+*/ -}}
+{{- $members := .members -}}
+{{- if $members }}
+<section id="{{ .id }}">
+  <h2>{{ .title }}</h2>
+  <ul class="card-grid">
+    {{- range $member := $members }}
+    <li class="card">
+      <h3 class="card__name">{{ $member.name }}</h3>
+      <p class="card__role">{{ $member.role }}</p>
+      {{- with resources.Get $member.image }}
+      <img src="{{ .RelPermalink }}"
+           alt="Portrait of {{ $member.name }}"
+           class="card__avatar"
+           width="{{ .Width }}" height="{{ .Height }}"
+           loading="lazy" decoding="async">
+      {{- end }}
+      {{- with $member.location }}
+      <p class="card__meta">
+        {{ partial "icons/map-pin.html" 12 }}
+        {{ . }}
+      </p>
+      {{- end }}
+      {{- with $member.url }}
+      <a href="{{ . }}" target="_blank" rel="noopener" class="external-link">{{ $member.label | default . }} &rarr;</a>
+      {{- end }}
+    </li>
+    {{- end }}
+  </ul>
+</section>
+{{- end }}

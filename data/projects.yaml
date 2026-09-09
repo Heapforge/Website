@@ -1,0 +1,22 @@
+# Heapforge's own products. `url` is optional — omit it for unreleased work.
+- name: tiny.lol
+  url: https://tiny.lol
+  description: a minimal URL shortener and paste tool
+  summary: Minimal URL shortener and paste tool designed for simplicity and speed.
+
+- name: lasso.domains
+  url: https://lasso.domains
+  description: a domain auction sniping and market analysis toolkit
+  summary: Domain auction sniping and market analysis toolkit.
+
+- name: Project YY
+  description: a website for learning writing systems supporting more than 20K characters
+  summary: Interactive website for learning writing systems supporting over 20,000 characters.
+
+- name: Heapforge Reader
+  description: a book reading app for iOS, Android, Windows, Linux and macOS
+  summary: A book reading app for iOS, Android, Windows, Linux and macOS.
+
+- name: Heapforge Journal
+  description: a journaling app for iOS, Android and the web
+  summary: A journaling app for iOS, Android and the web.

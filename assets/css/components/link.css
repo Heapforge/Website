@@ -1,0 +1,23 @@
+a {
+  color: var(--accent-text);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  font-weight: 500;
+  transition: color var(--transition-fast);
+}
+
+a:hover {
+  color: var(--accent-text-hover);
+}
+
+a:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Small, bold "somewhere.else →" link used in cards and asides. */
+.external-link {
+  font-size: var(--font-size-small);
+  font-weight: 600;
+}

@@ -1,0 +1,33 @@
+{{- $title := partial "func/title.html" . -}}
+{{- $description := .Description | default site.Params.seoDescription -}}
+{{- $ogDescription := .Description | default site.Params.description -}}
+{{- $image := absURL site.Params.ogImage -}}
+{{- with resources.Get "favicon.svg" }}{{ $image = .Permalink }}{{ end -}}
+
+<meta name="description" content="{{ $description }}">
+<meta name="author" content="{{ site.Params.author }}">
+<meta name="theme-color" content="{{ site.Params.themeColor }}">
+<meta name="color-scheme" content="{{ site.Params.colorScheme }}">
+<link rel="canonical" href="{{ .Permalink }}">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="{{ site.Title }}">
+<meta property="og:locale" content="{{ replace site.Language.Locale "-" "_" }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $ogDescription }}">
+<meta property="og:image" content="{{ $image }}">
+<meta property="og:image:alt" content="{{ site.Params.ogImageAlt }}">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ $title }}">
+<meta name="twitter:description" content="{{ $ogDescription }}">
+<meta name="twitter:image" content="{{ $image }}">
+<meta name="twitter:image:alt" content="{{ site.Params.ogImageAlt }}">
+
+{{- /* robots.txt is a crawler file, not a document alternate. */ -}}
+{{- range where .AlternativeOutputFormats "Name" "!=" "robots" }}
+<link rel="{{ .Rel }}" type="{{ .MediaType.Type }}" href="{{ .Permalink }}" title="{{ site.Title }}">
+{{- end }}

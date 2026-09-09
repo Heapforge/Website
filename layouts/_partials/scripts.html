@@ -1,0 +1,9 @@
+{{- /* Bundles assets/js/main.js and its ES module imports with esbuild. */ -}}
+{{- with resources.Get "js/main.js" -}}
+  {{- $opts := dict "minify" hugo.IsProduction "target" "es2018" -}}
+  {{- $js := . | js.Build $opts -}}
+  {{- if hugo.IsProduction -}}
+    {{- $js = $js | fingerprint -}}
+  {{- end }}
+  <script src="{{ $js.RelPermalink }}"{{ with $js.Data.Integrity }} integrity="{{ . }}" crossorigin="anonymous"{{ end }} defer></script>
+{{- end }}

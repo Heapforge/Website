@@ -1,0 +1,28 @@
+/* Bulleted list of named entries — used by Projects, Client Work and any
+   future section built from the same `name — description` data shape. */
+.entry-list {
+  list-style: square;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  line-height: 1.5;
+}
+
+.entry-list li::marker {
+  color: var(--accent);
+}
+
+.entry-list__title {
+  font-weight: 600;
+  font-size: 1.15rem;
+}
+
+/* Entries with no link still read as headings, not as body text. */
+strong.entry-list__title {
+  color: var(--text-main);
+}
+
+.entry-list__note {
+  margin-top: 14px;
+}

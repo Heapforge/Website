@@ -1,0 +1,20 @@
+{{- $start := site.Params.copyrightStartYear -}}
+{{- /* Trim any trailing period so "Ltd." doesn't double up with the sentence stop. */ -}}
+{{- $legalName := site.Params.organization.legalName | default site.Title -}}
+{{- $legalName = strings.TrimSuffix "." $legalName -}}
+<footer class="site-footer">
+  <p>
+    Copyright &copy; {{ $start }} &ndash;
+    <time data-current-year datetime="{{ now.Year }}">{{ now.Year }}</time>
+    {{ $legalName }}. All rights reserved.
+  </p>
+  {{- with site.Menus.footer }}
+  <nav class="site-footer__nav" aria-label="Footer">
+    <ul>
+      {{- range . }}
+      <li><a href="{{ .URL }}"{{ if $.IsMenuCurrent "footer" . }} aria-current="page"{{ end }}>{{ .Name }}</a></li>
+      {{- end }}
+    </ul>
+  </nav>
+  {{- end }}
+</footer>

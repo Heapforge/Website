@@ -1,0 +1,18 @@
+{{ define "main" }}
+  {{ with .Content }}
+  <div class="prose">{{ . }}</div>
+  {{ end }}
+
+  {{- /* Build the entry-list shape from the section's own pages so a new
+         document only ever needs a Markdown file with title + description. */ -}}
+  {{- $entries := slice -}}
+  {{- range .Pages.ByWeight -}}
+    {{- $entries = $entries | append (dict "name" .Title "url" .RelPermalink "description" .Description) -}}
+  {{- end }}
+
+  {{ partial "sections/entry-list.html" (dict
+      "id" "documents"
+      "title" "Documents"
+      "entries" $entries
+  ) }}
+{{ end }}

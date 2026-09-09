@@ -1,0 +1,69 @@
+baseURL = "https://heapforge.com/"
+locale = "en-GB"
+defaultContentLanguage = "en"
+title = "Heapforge"
+enableRobotsTXT = true
+enableGitInfo = false
+
+# Nothing in this repo needs Hugo's taxonomy machinery.
+disableKinds = ["taxonomy", "term", "rss"]
+
+[menus]
+  # Site-wide links rendered in the footer.
+  [[menus.footer]]
+    name = "Legal & Privacy"
+    pageRef = "/legal"
+    weight = 10
+
+[params]
+  tagline = "Consumer-Focused Software Studio"
+  description = "A stealth software startup based in Sofia, Bulgaria and London, UK developing consumer-focused software."
+  seoDescription = "Heapforge is a stealth software startup based in Sofia, Bulgaria and London, UK developing consumer-focused software."
+  author = "Heapforge"
+  themeColor = "#FAF8F5"
+  colorScheme = "light"
+  ogImage = "assets/favicon.svg"
+  # Short, human-facing location labels (schema.org uses the formal names below).
+  locations = ["Sofia, Bulgaria", "London, UK"]
+  ogImageAlt = "Heapforge logo"
+  copyrightStartYear = 2024
+
+  # Fonts loaded from Google Fonts; referenced by the head partial.
+  [params.fonts]
+    href = "https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&display=swap"
+
+  [params.organization]
+    # Registered company name; use for the footer and any legal-facing copy.
+    legalName = "Heapforge Ltd."
+    description = "Heapforge Ltd. is a software stealth-startup based in Sofia, Bulgaria and London, UK that develops consumer-focused software."
+    sameAs = ["https://madladsquad.com", "https://tiny.lol", "https://lasso.domains"]
+    foundingLocations = ["Sofia, Bulgaria", "London, United Kingdom"]
+
+  [params.openSource]
+    name = "MadLadSquad"
+    url = "https://madladsquad.com"
+    label = "madladsquad.com"
+
+[outputs]
+  home = ["html", "llms", "robots"]
+
+[outputFormats]
+  [outputFormats.llms]
+    mediaType = "text/plain"
+    baseName = "llms"
+    isPlainText = true
+    rel = "alternate"
+
+[markup.goldmark.renderer]
+  unsafe = true
+
+[minify]
+  minifyOutput = true
+
+[sitemap]
+  changefreq = "monthly"
+  filename = "sitemap.xml"
+  priority = 1.0
+
+[build]
+  writeStats = false

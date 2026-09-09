@@ -1,0 +1,95 @@
+/* Long-form document body — legal pages and anything else that is mostly
+   flowing Markdown. The base stylesheets only cover the home page's short
+   blocks, so block rhythm for prose lives here. */
+.prose {
+  line-height: 1.7;
+}
+
+.prose > * + * {
+  margin-top: 16px;
+}
+
+.prose h2 {
+  margin-top: 32px;
+}
+
+.prose h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin-top: 24px;
+  margin-bottom: 6px;
+}
+
+.prose h2 + *,
+.prose h3 + * {
+  margin-top: 0;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.prose ul {
+  list-style: square;
+}
+
+.prose ol {
+  list-style: decimal;
+}
+
+.prose li::marker {
+  color: var(--accent);
+}
+
+.prose li > ul,
+.prose li > ol {
+  margin-top: 6px;
+}
+
+.prose hr {
+  border: 0;
+  border-top: 1px solid var(--card-border);
+  margin-top: 32px;
+}
+
+/* Tables can outgrow the 768px column, so they scroll inside themselves
+   rather than making the whole page scroll sideways. */
+.prose table {
+  display: block;
+  overflow-x: auto;
+  border-collapse: collapse;
+  width: 100%;
+  font-size: var(--font-size-small);
+}
+
+.prose th,
+.prose td {
+  border: 1px solid var(--card-border);
+  padding: 8px 10px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose thead th {
+  background-color: var(--card-bg);
+  font-weight: 600;
+}
+
+.prose blockquote {
+  border-left: 3px solid var(--accent);
+  padding-left: 14px;
+  color: var(--text-muted);
+}
+
+/* Trailing link out of a document, back up to its section index. */
+.prose__back {
+  display: block;
+  margin-top: 32px;
+  font-size: var(--font-size-small);
+  font-weight: 600;
+}

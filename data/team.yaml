@@ -1,0 +1,14 @@
+# Founders and staff. `image` is a path under assets/, so Hugo can process it.
+- name: Stanislav Vasilev
+  role: Co-founder
+  location: Sofia, Bulgaria
+  image: images/stanislav.jpg
+  url: https://madman10k.com
+  label: madman10k.com
+
+- name: Nicholas Bors
+  role: Co-founder
+  location: London, UK
+  image: images/nicholas.jpg
+  url: https://nickbors.cc
+  label: nickbors.cc

@@ -1,0 +1,45 @@
+{{- /* Organization + WebSite JSON-LD, built from site params and data/team.yaml. */ -}}
+{{- $org := site.Params.organization -}}
+{{- $logo := absURL site.Params.ogImage -}}
+{{- with resources.Get "favicon.svg" }}{{ $logo = .Permalink }}{{ end -}}
+
+{{- $locations := slice -}}
+{{- range $org.foundingLocations -}}
+  {{- $locations = $locations | append (dict "@type" "Place" "name" .) -}}
+{{- end -}}
+
+{{- $founders := slice -}}
+{{- range hugo.Data.team -}}
+  {{- $founders = $founders | append (dict
+      "@type" "Person"
+      "name" .name
+      "jobTitle" .role
+      "url" .url
+      "sameAs" .url) -}}
+{{- end -}}
+
+{{- $organization := dict
+  "@type" "Organization"
+  "@id" (printf "%s#organization" site.BaseURL)
+  "name" site.Title
+  "legalName" $org.legalName
+  "url" site.BaseURL
+  "logo" $logo
+  "description" $org.description
+  "sameAs" $org.sameAs
+  "foundingLocation" $locations
+  "founder" $founders
+-}}
+
+{{- $website := dict
+  "@type" "WebSite"
+  "@id" (printf "%s#website" site.BaseURL)
+  "url" site.BaseURL
+  "name" site.Title
+  "inLanguage" site.Language.Lang
+  "publisher" (dict "@id" (printf "%s#organization" site.BaseURL))
+-}}
+
+<script type="application/ld+json">
+{{ dict "@context" "https://schema.org" "@graph" (slice $organization $website) | jsonify (dict "indent" "  ") | safeJS }}
+</script>

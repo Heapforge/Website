@@ -1,0 +1,30 @@
+{{ define "main" }}
+  {{ with .Content }}
+  <section id="about">
+    <h2>About</h2>
+    {{ . }}
+  </section>
+  {{ end }}
+
+  {{- $os := site.Params.openSource }}
+  {{ partial "sections/entry-list.html" (dict
+      "id" "projects"
+      "title" "Projects"
+      "entries" hugo.Data.projects
+      "external" true
+      "note" (printf `You might also be interested in our open-source work under <strong>%s</strong>: <a href="%s" target="_blank" rel="noopener">%s &rarr;</a>` $os.name $os.url $os.label)
+  ) }}
+
+  {{ partial "sections/entry-list.html" (dict
+      "id" "client-work"
+      "title" "Client Work"
+      "entries" hugo.Data.client_work
+      "external" true
+  ) }}
+
+  {{ partial "sections/team.html" (dict
+      "id" "team"
+      "title" "Team"
+      "members" hugo.Data.team
+  ) }}
+{{ end }}
