@@ -9,6 +9,11 @@
   description: a domain auction sniping and market analysis toolkit
   summary: Domain auction sniping and market analysis toolkit.
 
+- name: Schrift Studio
+  url: https://schrift.app
+  description: a fully-featured font design suite for desktop and mobile platforms
+  summary: A fully-featured font design suite for desktop and mobile platforms.
+
 - name: Project YY
   description: a website for learning writing systems supporting more than 20K characters
   summary: Interactive website for learning writing systems supporting over 20,000 characters.
