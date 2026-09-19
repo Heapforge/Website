@@ -1,0 +1,6 @@
+{{- $security := site.Params.security -}}
+{{- $expires := (now.AddDate 0 (int $security.expiryMonths) 0).UTC.Format "2006-01-02T15:04:05Z" -}}
+Contact: {{ $security.contact }}
+Expires: {{ $expires }}
+Preferred-Languages: {{ delimit $security.preferredLanguages ", " }}
+Canonical: {{ "/.well-known/security.txt" | absURL }}

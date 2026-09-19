@@ -8,7 +8,13 @@
 <meta name="author" content="{{ site.Params.author }}">
 <meta name="theme-color" content="{{ site.Params.themeColor }}">
 <meta name="color-scheme" content="{{ site.Params.colorScheme }}">
+{{- /* The 404 page is served at every missing URL, so it must not claim a
+       canonical address or be indexed. */ -}}
+{{- if eq .Kind "404" }}
+<meta name="robots" content="noindex">
+{{- else }}
 <link rel="canonical" href="{{ .Permalink }}">
+{{- end }}
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website">

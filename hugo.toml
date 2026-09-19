@@ -44,8 +44,15 @@ disableKinds = ["taxonomy", "term", "rss"]
     url = "https://madladsquad.com"
     label = "madladsquad.com"
 
+  # RFC 9116 security.txt, rendered by layouts/home.security.txt. Expires is
+  # computed at build time, so a rebuild is what keeps the file valid.
+  [params.security]
+    contact = "mailto:security@heapforge.com"
+    preferredLanguages = ["en", "bg", "ro"]
+    expiryMonths = 12
+
 [outputs]
-  home = ["html", "llms", "robots"]
+  home = ["html", "llms", "robots", "security"]
 
 [outputFormats]
   [outputFormats.llms]
@@ -53,6 +60,15 @@ disableKinds = ["taxonomy", "term", "rss"]
     baseName = "llms"
     isPlainText = true
     rel = "alternate"
+
+  # Served from /.well-known/security.txt; not a document alternate, so it is
+  # kept out of head/meta.html's rel="alternate" links.
+  [outputFormats.security]
+    mediaType = "text/plain"
+    path = ".well-known"
+    baseName = "security"
+    isPlainText = true
+    notAlternative = true
 
 [markup.goldmark.renderer]
   unsafe = true
