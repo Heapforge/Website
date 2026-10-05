@@ -12,9 +12,9 @@ This Privacy Policy explains how **Heapforge Ltd.** ("Heapforge", "we", "us" or 
 
 The data controller responsible for your personal data is:
 
-1. Heapforge Ltd., registered in England and Wales
-2. Company number: 17418393
-3. Registered office: 82A James Carter Road, Mildenhall, Bury St. Edmunds, Suffolk, England, IP28 7DE, United Kingdom
+- Heapforge Ltd., registered in England and Wales
+- Company number: 17418393
+- Registered office: 82A James Carter Road, Mildenhall, Bury St. Edmunds, Suffolk, England, IP28 7DE, United Kingdom
 
 Privacy contact: [privacy@heapforge.com](mailto:privacy@heapforge.com)
 
@@ -129,36 +129,7 @@ If you are in the UK, EU, EEA or Switzerland, you have the following rights, sub
 
 To exercise any of these rights, email us at [privacy@heapforge.com](mailto:privacy@heapforge.com). We will respond within one month, which may be extended by up to two further months for complex requests. We may need to verify your identity before responding. Exercising your rights is usually free of charge.
 
-## 11. Additional information for other regions
-
-Depending on where you live, you may have additional rights under local law. We will honour requests in line with applicable law, and you can always contact us at [privacy@heapforge.com](mailto:privacy@heapforge.com).
-
-### United States (including California and other states)
-
-Residents of certain U.S. states (such as California, Virginia, Colorado, Connecticut, Utah, Texas, Oregon and others with comprehensive privacy laws) may have the right to:
-
-- know what personal information we collect, use and disclose, and request access to it;
-- request correction or deletion of their personal information;
-- opt out of the sale or sharing of personal information, targeted advertising and certain profiling; and
-- not be discriminated against for exercising these rights.
-
-**We do not sell personal information, and we do not share it for cross-context behavioural advertising.** We do not knowingly process sensitive personal information for purposes that would require an opt-out.
-
-The categories of personal information we may collect are described in Section 3, the sources in Sections 3 and 5, the purposes in Section 4, and the categories of recipients in Section 5. You, or an authorised agent, may submit a request by emailing [privacy@heapforge.com](mailto:privacy@heapforge.com). We will verify your request before responding. Where your state provides a right to appeal our decision, you can do so by replying to our response.
-
-### Canada
-
-We handle personal information in accordance with the Personal Information Protection and Electronic Documents Act (PIPEDA) and applicable provincial laws. You may request access to and correction of your personal information, and may withdraw consent subject to legal or contractual restrictions.
-
-### Brazil
-
-If you are in Brazil, you have rights under the Lei Geral de Proteção de Dados (LGPD), including confirmation of processing, access, correction, anonymisation, blocking or deletion, portability, information about sharing, and revocation of consent.
-
-### Australia and New Zealand
-
-We handle personal information in line with the Australian Privacy Principles under the Privacy Act 1988 (Cth) and the New Zealand Privacy Act 2020, including your rights to access and correct your information and to complain about how it has been handled.
-
-### Other countries
+## 11.  Other countries
 
 If you live in another country with privacy laws that give you rights over your personal data, please contact us and we will respond in accordance with the law that applies to you.
 
