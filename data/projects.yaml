@@ -1,4 +1,9 @@
 # Heapforge's own products. `url` is optional — omit it for unreleased work.
+- name: webreview.app
+  url: https://webreview.app
+  description: skip tiring web design revision sessions! Send your client a link, receive feedback and get an automated PR from your agents based it
+  summary: Skip tiring web design revision sessions! Send your client a link, receive feedback and get an automated PR from your agents based on it
+
 - name: tiny.lol
   url: https://tiny.lol
   description: a minimal URL shortener and paste tool
