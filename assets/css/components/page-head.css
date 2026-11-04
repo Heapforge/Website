@@ -1,0 +1,64 @@
+/* Inner-page header: breadcrumb, large title, still heat glow. */
+.page-head {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-top: calc(var(--header-height) + var(--space-2xl));
+  padding-bottom: var(--space-2xl);
+  border-bottom: var(--hairline) solid var(--line);
+}
+.page-head__heat {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(30% 70% at 96% 110%, var(--heat-3) 0%, transparent 70%),
+    radial-gradient(50% 110% at 92% 105%, var(--heat-2) 0%, transparent 72%),
+    radial-gradient(70% 90% at 20% 0%, var(--heat-1) 0%, transparent 70%),
+    var(--heat-0);
+  opacity: 0.85;
+}
+.page-head__grain { z-index: -1; }
+
+.page-head__title {
+  max-width: 20ch;
+  font-size: var(--step-4);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: var(--tracking-display);
+}
+.page-head__lede {
+  max-width: 40rem;
+  margin-top: var(--space-m);
+  font-size: var(--step-1);
+  line-height: 1.5;
+  color: var(--ink-muted);
+}
+
+.crumbs {
+  margin-bottom: var(--space-l);
+  font-family: var(--font-label);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--step--1);
+  letter-spacing: 0.04em;
+  color: var(--ink-muted);
+}
+.crumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2em 0;
+  list-style: none;
+  padding: 0;
+}
+.crumbs li:not(:last-child)::after {
+  content: "/";
+  margin-inline: 0.7em;
+  color: var(--accent);
+}
+.crumbs a { text-decoration: none; }
+.crumbs a:hover { color: var(--accent-text); text-decoration: underline; }
+.crumbs [aria-current] { color: var(--ink); }
+
+.page-body {
+  padding-block: var(--space-2xl) var(--space-section);
+}

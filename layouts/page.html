@@ -1,10 +1,30 @@
 {{ define "main" }}
-  <div class="prose">
-    {{ .Content }}
+  {{ partial "page-head.html" (dict "page" .) }}
 
-    {{- /* Pages that sit inside a section get a way back up to its index. */ -}}
-    {{- with .Parent }}{{ if not .IsHome }}
-    <a class="prose__back" href="{{ .RelPermalink }}">&larr; Back to {{ .Title }}</a>
-    {{ end }}{{ end }}
+  <div class="container page-body page-body--article">
+    {{- /* Long documents get a sticky contents list built from their h2s. */ -}}
+    {{- $toc := .Fragments.Headings -}}
+    {{- $h2 := slice -}}
+    {{- range $toc }}{{ range .Headings }}{{ if eq .Level 2 }}{{ $h2 = $h2 | append . }}{{ end }}{{ end }}{{ end -}}
+    {{- if ge (len $h2) 3 }}
+    <aside class="toc" aria-labelledby="toc-title">
+      <p class="toc__title" id="toc-title">On this page</p>
+      <ol class="toc__list">
+        {{- range $h2 }}
+        <li><a href="#{{ .ID }}">{{ .Title | plainify }}</a></li>
+        {{- end }}
+      </ol>
+    </aside>
+    {{- end }}
+
+    <article class="prose">
+      {{ .Content }}
+
+      {{- with .Parent }}{{ if not .IsHome }}
+      <p class="prose__back">
+        <a class="link-arrow link-arrow--back" href="{{ .RelPermalink }}">{{ partial "icons/icon.html" (dict "name" "arrow-left" "size" 16) }} Back to {{ .Title }}</a>
+      </p>
+      {{- end }}{{ end }}
+    </article>
   </div>
 {{ end }}

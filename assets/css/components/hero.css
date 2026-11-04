@@ -1,0 +1,94 @@
+/* Hero: full-bleed heat-field shader behind large display type.
+   The CSS gradient underneath is the no-WebGL fallback; the canvas fades in
+   over it once its first frame is drawn. */
+.hero {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: flex-end;
+  min-height: 100vh;
+  min-height: 100svh;
+  max-height: 68rem;
+  padding-top: calc(var(--header-height) + var(--space-2xl));
+  padding-bottom: var(--space-xl);
+  overflow: hidden;
+  background:
+    radial-gradient(60% 75% at 84% 100%, var(--heat-3) 0%, transparent 60%),
+    radial-gradient(70% 90% at 78% 85%, var(--heat-2) 0%, transparent 70%),
+    radial-gradient(90% 80% at 30% 20%, var(--heat-1) 0%, transparent 70%),
+    var(--heat-0);
+}
+
+.hero__canvas {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+.hero__canvas[data-ready] { opacity: 1; }
+
+/* Keeps the type side of the hero calm so text holds AA contrast. */
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    linear-gradient(90deg, var(--scrim) 0%, transparent 62%),
+    linear-gradient(0deg, var(--scrim) 0%, transparent 34%);
+}
+.hero__grain { z-index: -1; }
+
+.hero__inner { position: relative; }
+
+.hero__title {
+  max-width: 13ch;
+  font-size: var(--step-hero);
+  font-weight: 500;
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-display);
+  text-wrap: initial;
+}
+@media (min-width: 40.01rem) {
+  .hero__title { max-width: none; }
+  .hero__line { display: block; }
+}
+.hero__title em {
+  font-style: normal;
+  font-weight: 300;
+  color: var(--accent-text);
+}
+
+.hero__lede {
+  max-width: 34rem;
+  margin-top: var(--space-l);
+  font-size: var(--step-1);
+  line-height: 1.5;
+  color: var(--ink-muted);
+}
+
+.hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-top: var(--space-xl);
+}
+
+@media (max-width: 40rem) {
+  .hero { max-height: none; }
+  .hero__scrim {
+    background: linear-gradient(0deg, var(--scrim) 0%, transparent 85%);
+  }
+}
+
+/* Load-in: a short staggered rise, once. */
+.js .reveal-load {
+  animation: rise var(--dur-slow) var(--ease-out) both;
+  animation-delay: calc(var(--d, 0) * 110ms + 120ms);
+}
+@keyframes rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}

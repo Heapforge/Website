@@ -1,0 +1,25 @@
+<section class="hero" aria-labelledby="hero-title" data-hero>
+  <canvas class="hero__canvas" data-heat aria-hidden="true"></canvas>
+  <div class="hero__scrim" aria-hidden="true"></div>
+  <div class="hero__grain grain" aria-hidden="true"></div>
+
+  <div class="hero__inner container">
+    <h1 class="hero__title reveal-load" id="hero-title" style="--d: 0">
+      <span class="hero__line">Software, <em>forged</em></span>
+      <span class="hero__line">in two cities.</span>
+    </h1>
+    <p class="hero__lede reveal-load" style="--d: 1">
+      We design and build SaaS products, developer utilities, games, mobile apps
+      and language-learning tools.
+    </p>
+
+    <div class="hero__meta reveal-load" style="--d: 2">
+      <a class="button button--primary" href="#projects">
+        See the work {{ partial "icons/icon.html" (dict "name" "arrow-right" "size" 18) }}
+      </a>
+      {{- if site.Params.contact.email }}
+      <a class="button button--ghost" href="#contact">Work with us</a>
+      {{- end }}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,28 @@
+/* Section heading: large display title, optional aside. */
+.section-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-m);
+  margin-bottom: var(--space-2xl);
+}
+@media (min-width: 60rem) {
+  .section-head {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 20rem);
+    align-items: end;
+    column-gap: var(--space-xl);
+  }
+}
+
+.section-head__title {
+  max-width: 18ch;
+  font-size: var(--step-4);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: var(--tracking-display);
+}
+
+.section-head__aside {
+  color: var(--ink-muted);
+  font-size: var(--step-1);
+  line-height: 1.45;
+}

@@ -1,0 +1,18 @@
+# What Heapforge builds for clients, rendered by sections/services.html and
+# listed in llms.txt. `icon` names a brand icon in assets/icons/.
+offerings:
+  - name: Websites
+    icon: web-app
+    summary: Fast, accessible websites for businesses, built to rank well and easy to keep up to date.
+
+  - name: Web apps & SaaS
+    icon: dashboard
+    summary: From first prototype to production, with accounts, payments, dashboards and the APIs behind them.
+
+  - name: Mobile apps
+    icon: mobile-app
+    summary: Apps for iOS and Android that do one job well, without the clutter.
+
+  - name: AI & automation
+    icon: ai-automation
+    summary: AI features, agent workflows and integrations connected to the tools you already use.

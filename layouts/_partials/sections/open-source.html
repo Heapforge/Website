@@ -1,0 +1,19 @@
+{{- with site.Params.openSource }}
+<section class="section section--band" id="open-source" aria-labelledby="open-source-title">
+  <div class="band">
+    <div class="band__heat" aria-hidden="true"></div>
+    <div class="band__grain grain" aria-hidden="true"></div>
+    <div class="container band__inner">
+      <h2 class="band__title" id="open-source-title">
+        Our open-source work lives under <span class="band__name">{{ .name }}</span>.
+      </h2>
+      <div class="band__foot">
+        <p class="band__copy">Tools and initiatives, built in the open and free for anyone to use, study and improve.</p>
+        <a class="button button--light" href="{{ .url }}" target="_blank" rel="noopener">
+          {{ .label }} {{ partial "icons/icon.html" (dict "name" "arrow-up-right" "size" 18) }}<span class="visually-hidden"> (opens in a new tab)</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+{{- end }}

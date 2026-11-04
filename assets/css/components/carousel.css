@@ -1,0 +1,152 @@
+/* Projects carousel: CSS scroll-snap track that bleeds to the viewport edge
+   while its first slide lines up with the page grid. */
+.section--projects { padding-bottom: calc(var(--space-section) * 0.8); }
+
+.carousel {
+  --edge: max(var(--gutter), calc((100% - var(--max-width)) / 2));
+  position: relative;
+}
+
+.carousel__track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: min(42rem, 84%);
+  gap: clamp(1rem, 0.5rem + 2vw, 2.25rem);
+  padding-inline: var(--edge);
+  padding-bottom: var(--space-m);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--edge);
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+.carousel__track:focus-visible {
+  outline-offset: -2px;
+  border-radius: 0;
+}
+/* With JS the buttons and dots take over, so the scrollbar can go. */
+.js .carousel__track { scrollbar-width: none; }
+.js .carousel__track::-webkit-scrollbar { display: none; }
+
+.slide {
+  /* Positioned so absolutely placed descendants (e.g. .visually-hidden)
+     stay inside the scroller instead of widening the page. */
+  position: relative;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.slide__media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: var(--radius-m);
+  background: var(--paper-sunk);
+  box-shadow: 0 0 0 var(--hairline) var(--line);
+  container-type: inline-size;
+}
+.slide__shot {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+.slide:hover .slide__shot { transform: scale(1.025); }
+
+.slide__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-xs);
+  padding-top: var(--space-m);
+}
+.slide__heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2xs) var(--space-s);
+}
+.slide__name {
+  font-size: var(--step-2);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+.slide__summary {
+  max-width: 34rem;
+  color: var(--ink-muted);
+}
+.slide__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s);
+  margin-top: auto;
+  padding-top: var(--space-xs);
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  font-family: var(--font-label);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--step--1);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+/* "In development" marker: a hollow Ember dot. */
+.status::before {
+  content: "";
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  box-shadow: inset 0 0 0 1.5px var(--accent);
+}
+
+.carousel__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-m);
+  margin-top: var(--space-l);
+}
+html:not(.js) .carousel__controls { display: none; }
+
+.carousel__dots {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1;
+  gap: 0;
+}
+.carousel__dot {
+  display: grid;
+  place-items: center;
+  width: 1.6rem;
+  height: 2rem;
+}
+.carousel__dot::before {
+  content: "";
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: var(--radius-pill);
+  background: var(--line-strong);
+  transition: width var(--dur-med) var(--ease-out), background-color var(--dur-fast) ease;
+}
+.carousel__dot:hover::before { background: var(--ink-muted); }
+.carousel__dot[aria-current="true"] { width: 2.4rem; }
+.carousel__dot[aria-current="true"]::before {
+  width: 1.6rem;
+  background: var(--accent);
+}
+
+.carousel__buttons {
+  display: flex;
+  gap: var(--space-2xs);
+}

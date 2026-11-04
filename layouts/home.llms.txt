@@ -5,16 +5,28 @@
 
 ## Overview
 - **Locations**: {{ delimit site.Params.locations ", " " & " }}
-- **Status**: Stealth Startup
-- **Focus**: Consumer-focused software, developer tools, and language learning tools
 - **Website**: {{ strings.TrimSuffix "/" site.BaseURL }}
-
+{{ with site.Params.contact.email }}- **Email**: {{ . }}
+{{ end -}}
+{{ range site.Params.social }}- **{{ .name }}**: {{ .url }}
+{{ end }}
+## What We Build
+{{ range hugo.Data.focus_areas -}}
+- **{{ .name }}**: {{ .summary }}
+{{ end }}
 ## Projects
 {{ range hugo.Data.projects -}}
 - **{{ .name }}**: {{ .summary | default .description }}
 {{ if .url }}  - Link: {{ .url }}
+{{ else }}  - Status: in development
 {{ end -}}
 {{ end }}
+{{ with hugo.Data.services -}}
+## Services for Clients
+{{ range .offerings -}}
+- **{{ .name }}**: {{ .summary }}
+{{ end }}
+{{ end -}}
 ## Client Work
 {{ range hugo.Data.client_work -}}
 - **{{ .name }}**: {{ .summary | default .description }}

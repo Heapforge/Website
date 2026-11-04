@@ -1,0 +1,24 @@
+{{- /*
+  "Coming soon" visual for an unreleased project, built only from its name and
+  categories: the name is set large in the display face over a heat glow whose
+  position is seeded from a hash of the name, so every card is different but
+  stable between builds. Decorative (aria-hidden); the slide carries the text.
+  Params: name (string), categories (slice of display names).
+*/ -}}
+{{- $hash := hash.FNV32a .name -}}
+{{- $gx := add 52 (mod $hash 38) -}}
+{{- $gy := add 58 (mod (div $hash 41) 34) -}}
+{{- $longest := 1 -}}
+{{- range split .name " " }}{{ $longest = math.Max $longest (strings.RuneCount .) }}{{ end -}}
+<div class="forge-card" aria-hidden="true"
+     style="--gx: {{ $gx }}%; --gy: {{ $gy }}%; --longest: {{ $longest }}">
+  <div class="forge-card__heat"></div>
+  <div class="forge-card__grain grain"></div>
+  <div class="forge-card__frame">
+    <p class="forge-card__name">{{ .name }}</p>
+    <p class="forge-card__bottom">
+      <span>{{ delimit .categories " / " }}</span>
+      <span>Coming soon</span>
+    </p>
+  </div>
+</div>

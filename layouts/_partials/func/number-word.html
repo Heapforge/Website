@@ -1,0 +1,4 @@
+{{- /* Spells out small counts ("5" -> "five") for headings; larger numbers pass through. */ -}}
+{{- $words := slice "zero" "one" "two" "three" "four" "five" "six" "seven" "eight" "nine" "ten" "eleven" "twelve" -}}
+{{- $n := int . -}}
+{{- if lt $n (len $words) }}{{ index $words $n }}{{ else }}{{ $n }}{{ end -}}

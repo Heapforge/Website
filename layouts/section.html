@@ -1,18 +1,32 @@
 {{ define "main" }}
-  {{ with .Content }}
-  <div class="prose">{{ . }}</div>
-  {{ end }}
+  {{ partial "page-head.html" (dict "page" . "noLede" true) }}
 
-  {{- /* Build the entry-list shape from the section's own pages so a new
-         document only ever needs a Markdown file with title + description. */ -}}
-  {{- $entries := slice -}}
-  {{- range .Pages.ByWeight -}}
-    {{- $entries = $entries | append (dict "name" .Title "url" .RelPermalink "description" .Description) -}}
-  {{- end }}
+  <div class="container page-body">
+    {{- /* The description is already the lede; body copy only shows when
+           there is no description, so the two never repeat each other. */ -}}
+    {{- if and .Content (not .Description) }}
+    <div class="prose prose--intro">{{ .Content }}</div>
+    {{- end }}
 
-  {{ partial "sections/entry-list.html" (dict
-      "id" "documents"
-      "title" "Documents"
-      "entries" $entries
-  ) }}
+    {{- /* Each document in the section, ordered by weight; a new one only
+           needs a Markdown file with title, description and weight. The
+           list shows titles only; descriptions go to each page's meta tags. */ -}}
+    {{- with .Pages.ByWeight }}
+    <section class="doc-section" aria-labelledby="documents-title">
+      <h2 class="doc-section__title" id="documents-title">Documents</h2>
+      <ol class="doc-list">
+        {{- range $p := . }}
+        <li class="doc-list__item">
+          <a class="doc-list__link" href="{{ $p.RelPermalink }}">
+            <span class="doc-list__text">
+              <span class="doc-list__name">{{ $p.Title }}</span>
+            </span>
+            <span class="doc-list__arrow" aria-hidden="true">{{ partial "icons/icon.html" (dict "name" "arrow-right" "size" 20) }}</span>
+          </a>
+        </li>
+        {{- end }}
+      </ol>
+    </section>
+    {{- end }}
+  </div>
 {{ end }}

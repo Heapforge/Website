@@ -3,11 +3,12 @@
 <head>
   {{ partial "head/head.html" . }}
 </head>
-<body class="{{ .Kind }}">
+<body class="page page--{{ .Kind }}">
+  <a class="skip-link" href="#main">Skip to content</a>
 
   {{ partial "header.html" . }}
 
-  <main>
+  <main id="main" tabindex="-1">
     {{ block "main" . }}{{ end }}
   </main>
 

@@ -1,0 +1,35 @@
+/* Official logo artwork. Sizes respect the brand minimums: horizontal
+   240px, stacked 160px, symbol 40px wide. */
+.logo {
+  display: block;
+  height: auto;
+}
+.logo__ink { fill: var(--logo-ink); }
+.logo__flame { fill: var(--logo-flame); }
+
+/* Live flame: the heat-field shader drawn over the symbol, cut to the flame
+   paths, with the hero's film grain on top. The SVG flame underneath shows
+   until the first frame (or for good without WebGL); the ink is outside the
+   mask, so it stays solid. */
+.logo-heat {
+  position: relative;
+  display: block;
+  flex-shrink: 0;
+}
+.logo-heat__canvas,
+.logo-heat__grain {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-mask: var(--flame-mask) center / 100% 100% no-repeat;
+  mask: var(--flame-mask) center / 100% 100% no-repeat;
+}
+.logo-heat__canvas {
+  opacity: 0;
+  transition: opacity var(--dur-med) ease;
+}
+.logo-heat__canvas[data-ready] { opacity: 1; }
+/* Grain only once the shader is up, so the fallback flame stays flat. */
+.logo-heat__grain { display: none; }
+.logo-heat__canvas[data-ready] + .logo-heat__grain { display: block; }

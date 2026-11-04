@@ -1,0 +1,23 @@
+{{- /* Client services, from data/services.yaml. */ -}}
+{{- with hugo.Data.services }}
+<section class="section" id="services" aria-labelledby="services-title">
+  <div class="container">
+    {{ partial "sections/section-head.html" (dict
+        "id" "services-title"
+        "title" "What we build for clients"
+    ) }}
+
+    {{- with .offerings }}
+    <ul class="services">
+      {{- range . }}
+      <li class="service reveal">
+        <span class="service__icon">{{ partial "icons/icon.html" (dict "name" .icon "size" 40) }}</span>
+        <h3 class="service__name">{{ .name }}</h3>
+        <p class="service__summary">{{ .summary }}</p>
+      </li>
+      {{- end }}
+    </ul>
+    {{- end }}
+  </div>
+</section>
+{{- end }}

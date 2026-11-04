@@ -1,3 +1,37 @@
-<header>
-  <h1>{{ .Title | default site.Title }}</h1>
+{{- /* In-page anchors resolve against the home page from every other page. */ -}}
+{{- $base := cond .IsHome "" site.Home.RelPermalink -}}
+{{- $links := slice
+  (dict "id" "build" "name" "What we build")
+  (dict "id" "projects" "name" "Projects")
+  (dict "id" "services" "name" "Services")
+  (dict "id" "clients" "name" "Client work")
+  (dict "id" "open-source" "name" "Open source")
+  (dict "id" "contact" "name" "Contact")
+-}}
+<header class="site-header" data-header>
+  <div class="site-header__inner">
+    <a class="site-header__brand" href="{{ site.Home.RelPermalink }}" aria-label="{{ site.Title }}"{{ if .IsHome }} aria-current="page"{{ end }}>
+      {{- partial "logo.html" (dict "variant" "symbol" "class" "site-header__symbol" "decorative" true "heat" true) -}}
+      {{- partial "logo.html" (dict "variant" "wordmark" "class" "site-header__wordmark" "decorative" true) -}}
+    </a>
+
+    <nav class="site-nav" id="site-nav" aria-label="Primary" data-nav>
+      <ul class="site-nav__list">
+        {{- range $links }}
+        <li><a class="site-nav__link" href="{{ $base }}#{{ .id }}">{{ .name }}</a></li>
+        {{- end }}
+      </ul>
+    </nav>
+
+    <div class="site-header__tools">
+      <button class="icon-button theme-toggle" type="button" data-theme-toggle aria-label="Switch colour theme">
+        <span class="theme-toggle__icon theme-toggle__icon--sun">{{ partial "icons/icon.html" (dict "name" "sun" "size" 18) }}</span>
+        <span class="theme-toggle__icon theme-toggle__icon--moon">{{ partial "icons/icon.html" (dict "name" "moon" "size" 18) }}</span>
+      </button>
+      <button class="icon-button menu-toggle" type="button" data-menu-toggle aria-controls="site-nav" aria-expanded="false">
+        <span class="visually-hidden">Menu</span>
+        <span class="menu-toggle__bars" aria-hidden="true"></span>
+      </button>
+    </div>
+  </div>
 </header>

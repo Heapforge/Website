@@ -1,0 +1,30 @@
+{{- /*
+  Header band for inner pages: breadcrumb, h1 and lede over a still CSS
+  heat glow (the WebGL shader is reserved for the home hero).
+  Params: page (the page), title, lede, kicker (all optional overrides),
+  noLede (optional: show no lede; the description still feeds the meta tags).
+*/ -}}
+{{- $p := .page -}}
+<header class="page-head">
+  <div class="page-head__heat" aria-hidden="true"></div>
+  <div class="page-head__grain grain" aria-hidden="true"></div>
+  <div class="container page-head__inner">
+    {{- if not (eq $p.Kind "404") }}
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="{{ site.Home.RelPermalink }}">{{ site.Title }}</a></li>
+        {{- with $p.Parent }}{{ if not .IsHome }}
+        <li><a href="{{ .RelPermalink }}">{{ .Title }}</a></li>
+        {{- end }}{{ end }}
+        <li><span aria-current="page">{{ $p.LinkTitle }}</span></li>
+      </ol>
+    </nav>
+    {{- else }}
+    <p class="crumbs crumbs--plain">{{ .kicker }}</p>
+    {{- end }}
+    <h1 class="page-head__title">{{ .title | default $p.Title }}</h1>
+    {{- with and (not .noLede) (.lede | default $p.Description) }}
+    <p class="page-head__lede">{{ . }}</p>
+    {{- end }}
+  </div>
+</header>

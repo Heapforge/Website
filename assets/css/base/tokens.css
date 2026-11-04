@@ -1,29 +1,182 @@
-/* Design tokens. Every other stylesheet reads colours, spacing and type
-   from here — nothing below this file should hard-code a hex value. */
+/* Design tokens. Every colour, radius, spacing, font and timing value lives
+   here; nothing below this file hard-codes a hex value.
+
+   Light follows the Heapforge brand guidelines (2026): Paper #F3F0E8 and
+   White, Forge Navy #1E293B ink, Ember Orange #D9532F for emphasis only.
+   Dark:  deep navy-black, warm whites, a brighter ember.
+   --accent is decorative (rules, dots, glows, icon accents): Ember is only
+   3.5:1 on paper, so it never sets small text. --accent-text is its WCAG AA
+   sibling for any accent-coloured text. */
+
 :root {
-  --bg-color: #FAF8F5;
-  --text-main: #1C1B1A;
-  --text-muted: #666360;
-  /* Decorative peach — borders and list markers only, never text */
-  --accent: #FAA381;
-  /* Darker sibling of --accent, for text that must meet WCAG AA */
-  --accent-text: #B64B20;
-  --accent-text-hover: #933C1A;
-  --card-bg: #FFFFFF;
-  --card-border: #EFECE6;
+  /* Type. Brand: Nebulas (primary, headings) + Geist (secondary, body).
+     Nebulas is not licensed for web embedding yet, so headings use Geist.
+     To switch: add the Nebulas WOFF2 files and an @font-face rule, then set
+     --font-display: 'Nebulas', 'Geist', 'Helvetica Neue', Arial, sans-serif; */
+  --font-display: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+  --font-body: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+  /* Small uppercase labels (brand "LABEL" style): kickers, indices, meta. */
+  --font-label: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+  --font-code: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
 
-  --radius: 12px;
-  --max-width: 768px;
+  --step--1: clamp(0.8rem, 0.78rem + 0.1vw, 0.86rem);
+  --step-0: clamp(1rem, 0.97rem + 0.15vw, 1.0625rem);
+  --step-1: clamp(1.15rem, 1.08rem + 0.35vw, 1.35rem);
+  --step-2: clamp(1.4rem, 1.25rem + 0.75vw, 1.9rem);
+  --step-3: clamp(1.85rem, 1.5rem + 1.6vw, 3rem);
+  --step-4: clamp(2.4rem, 1.7rem + 3.2vw, 4.6rem);
+  --step-hero: clamp(3rem, 1.6rem + 6.6vw, 8.75rem);
+  --step-giant: clamp(7rem, 1rem + 17vw, 20rem);
 
-  --font-serif: 'Newsreader', Georgia, 'Times New Roman', serif;
-  --font-size-base: 1.05rem;
-  --font-size-small: 0.85rem;
-  --line-height-base: 1.6;
+  --leading-tight: 0.94;
+  --leading-snug: 1.15;
+  --leading-body: 1.4;
+  --tracking-display: -0.035em;
+  --tracking-label: 0.06em;
 
-  --page-padding-block: 40px;
-  --page-padding-inline: 24px;
-  --page-padding-inline-small: 16px;
-  --section-gap: 28px;
+  /* Space */
+  --space-3xs: 0.25rem;
+  --space-2xs: 0.5rem;
+  --space-xs: 0.75rem;
+  --space-s: 1rem;
+  --space-m: 1.5rem;
+  --space-l: 2rem;
+  --space-xl: 3rem;
+  --space-2xl: clamp(3.5rem, 2.5rem + 4vw, 6rem);
+  --space-section: clamp(5rem, 3rem + 8vw, 10rem);
 
-  --transition-fast: 0.2s ease;
+  --gutter: clamp(1rem, 0.4rem + 2.6vw, 3rem);
+  --max-width: 84rem;
+  --prose-width: 42rem;
+  --header-height: 4.25rem;
+  --logo-header-symbol: 40px;
+  --logo-header-wordmark: 2.25rem;
+
+  /* Shape */
+  --radius-s: 6px;
+  --radius-m: 12px;
+  --radius-l: 20px;
+  --radius-pill: 999px;
+  --hairline: 1px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.2, 0.7, 0.1, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 0.18s;
+  --dur-med: 0.45s;
+  --dur-slow: 0.9s;
+
+  /* Brand constants (theme-independent) */
+  --navy: #1E293B;
+  --flame: #D9532F;
+}
+
+/* ---------- Light: brand Paper, Forge Navy ink, Ember accents ----------
+   Contrast on --paper: ink 12.9, ink-muted 6.7, ink-faint 5.2,
+   accent-text 5.1 (5.8 on white). */
+:root,
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --paper: #F3F0E8;
+  --paper-raised: #FFFFFF;
+  --paper-sunk: #E9E4D8;
+  --ink: #1E293B;
+  --ink-muted: #475569;
+  --ink-faint: #576579;
+  --line: rgba(30, 41, 59, 0.13);
+  --line-strong: rgba(30, 41, 59, 0.28);
+
+  --accent: #D9532F;
+  --accent-soft: rgba(217, 83, 47, 0.14);
+  --accent-text: #B2401F;
+  --accent-text-hover: #8F3218;
+
+  --header-bg: rgba(243, 240, 232, 0.8);
+  --scrim: rgba(243, 240, 232, 0.72);
+  --shadow: 0 1px 2px rgba(30, 41, 59, 0.06), 0 18px 40px -18px rgba(30, 41, 59, 0.22);
+  --focus: #B2401F;
+
+  /* Primary button: the brand's "white on navy" pairing */
+  --button-bg: #1E293B;
+  --button-ink: #FFFFFF;
+  --button-bg-hover: #2C3A52;
+
+  /* Inverted band (open source): Forge Navy slab on paper */
+  --band-bg: #1E293B;
+  --band-ink: #FFFFFF;
+  --band-muted: #CBD5E1;
+  --band-accent: #F2895F;
+  --band-line: rgba(255, 255, 255, 0.16);
+
+  /* Official logo artwork: full colour on light */
+  --logo-ink: #1E293B;
+  --logo-flame: #D9532F;
+  /* Header logo: darkens into the paper/shader behind it. */
+  --logo-blend: multiply;
+  --icon-accent: #D9532F;
+
+  /* Heat ramp — read by the WebGL shader and the CSS fallbacks.
+     0 = cold ground, 1 = haze, 2 = glow, 3 = hottest core. */
+  --heat-0: #F3F0E8;
+  --heat-1: #E6E0D4;
+  --heat-2: #F0B394;
+  --heat-3: #D9532F;
+  --heat-ember: #D9532F;
+  --heat-strength: 0.9;
+  /* Logo flame: 0 = glow-to-core only, 1 = the hero's full ramp (dark ground). */
+  --heat-logo-ground: 0;
+  --grain-opacity: 0.09;
+  --grain-blend: multiply;
+}
+
+/* ---------- Dark: navy-black, warm whites ---------- */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --paper: #080C13;
+  --paper-raised: #0F1520;
+  --paper-sunk: #05080D;
+  --ink: #F4EDE3;
+  --ink-muted: #B5AEA4;
+  --ink-faint: #8E8880;
+  --line: rgba(244, 237, 227, 0.11);
+  --line-strong: rgba(244, 237, 227, 0.24);
+
+  --accent: #FF6B35;
+  --accent-soft: rgba(255, 107, 53, 0.16);
+  --accent-text: #FF8B5E;
+  --accent-text-hover: #FFAA85;
+
+  --header-bg: rgba(8, 12, 19, 0.72);
+  --scrim: rgba(8, 12, 19, 0.66);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 24px 48px -20px rgba(0, 0, 0, 0.7);
+  --focus: #FF8B5E;
+
+  --button-bg: #F4EDE3;
+  --button-ink: #080C13;
+  --button-bg-hover: #FFFFFF;
+
+  --band-bg: #121A27;
+  --band-ink: #F4EDE3;
+  --band-muted: #AEB4BE;
+  --band-accent: #FF8B5E;
+  --band-line: rgba(244, 237, 227, 0.12);
+
+  /* Official logo artwork: full colour on dark (white + Ember) */
+  --logo-ink: #FFFFFF;
+  --logo-flame: #D9532F;
+  /* Header logo: lightens into the dark shader behind it. */
+  --logo-blend: screen;
+  --icon-accent: #FF6B35;
+
+  --heat-0: #070B12;
+  --heat-1: #1A2940;
+  --heat-2: #B9401C;
+  --heat-3: #FFB36B;
+  --heat-ember: #FFC58A;
+  --heat-strength: 0.92;
+  --heat-logo-ground: 1;
+  --grain-opacity: 0.14;
+  --grain-blend: screen;
 }

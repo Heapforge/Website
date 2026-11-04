@@ -1,0 +1,153 @@
+/* Fixed header: transparent over the hero, frosted paper once scrolled. */
+.site-header {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 50;
+  height: var(--header-height);
+  transition: background-color var(--dur-med) ease, border-color var(--dur-med) ease,
+              backdrop-filter var(--dur-med) ease;
+  border-bottom: var(--hairline) solid transparent;
+}
+.site-header[data-scrolled],
+.page:not(.page--home) .site-header {
+  background: var(--header-bg);
+  border-bottom-color: var(--line);
+  -webkit-backdrop-filter: saturate(1.4) blur(14px);
+  backdrop-filter: saturate(1.4) blur(14px);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-l);
+  height: 100%;
+  max-width: calc(var(--max-width) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* Logo: the symbol beside the wordmark, sized to the same height so the
+   symbol's top and bottom line up with the type. Both blend into what's
+   behind them, so the hero shader shows through the artwork. Below the
+   mobile-menu breakpoint only the symbol is shown, at its 40px brand minimum. */
+.site-header__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  flex-shrink: 0;
+  border-radius: var(--radius-s);
+}
+.site-header__symbol,
+.site-header__wordmark { mix-blend-mode: var(--logo-blend); }
+/* The live flame multiplies into the paper like the artwork, but stays
+   opaque in dark mode: screen would wash out its dark ground. */
+:root[data-theme="light"] .site-header__brand .logo-heat__canvas { mix-blend-mode: var(--logo-blend); }
+.site-header__symbol { height: var(--logo-header-wordmark); width: auto; }
+.site-header__wordmark { height: var(--logo-header-wordmark); width: auto; }
+
+.site-nav { margin-left: auto; }
+.site-nav__list {
+  display: flex;
+  gap: var(--space-3xs);
+}
+.site-nav__link {
+  display: block;
+  padding: 0.5rem 0.85rem;
+  border-radius: var(--radius-pill);
+  font-size: 0.94rem;
+  font-weight: 500;
+  color: var(--ink-muted);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--dur-fast) ease, background-color var(--dur-fast) ease;
+}
+.site-nav__link:hover { color: var(--ink); background: var(--accent-soft); }
+
+.site-header__tools {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3xs);
+}
+
+/* Theme toggle: shows the theme you'd switch to. */
+.theme-toggle { position: relative; }
+.theme-toggle__icon {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  transition: opacity var(--dur-med) ease, transform var(--dur-med) var(--ease-out);
+}
+:root[data-theme="light"] .theme-toggle__icon--sun,
+:root[data-theme="dark"] .theme-toggle__icon--moon {
+  opacity: 0;
+  transform: rotate(-60deg) scale(0.6);
+}
+
+.menu-toggle { display: none; }
+.menu-toggle__bars,
+.menu-toggle__bars::before {
+  display: block;
+  width: 1.15rem;
+  height: 1.5px;
+  background: currentColor;
+  border-radius: 2px;
+  transition: transform var(--dur-med) var(--ease-out);
+}
+.menu-toggle__bars { position: relative; transform: translateY(-3px); }
+.menu-toggle__bars::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+}
+.menu-toggle[aria-expanded="true"] .menu-toggle__bars { transform: translateY(0) rotate(45deg); }
+.menu-toggle[aria-expanded="true"] .menu-toggle__bars::before { transform: translateY(-6px) rotate(-90deg); }
+
+@media (max-width: 78rem) {
+  .site-header__wordmark { display: none; }
+  .site-header__symbol { width: var(--logo-header-symbol); height: auto; }
+  .site-nav { margin-left: auto; }
+  .site-header__tools { margin-left: auto; }
+
+  /* With JS the nav becomes a drop-down panel behind the menu button. */
+  .js .menu-toggle { display: inline-grid; }
+  .js .site-nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: var(--space-xs) var(--gutter) var(--space-m);
+    background: var(--paper);
+    border-bottom: var(--hairline) solid var(--line);
+    box-shadow: var(--shadow);
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity var(--dur-fast) ease, transform var(--dur-fast) var(--ease-out),
+                visibility 0s linear var(--dur-fast);
+  }
+  .js .site-nav[data-open] {
+    visibility: visible;
+    opacity: 1;
+    transform: none;
+    transition-delay: 0s;
+  }
+  .js .site-nav__list { flex-direction: column; }
+  .js .site-nav__link {
+    padding: 0.85rem 0;
+    border-radius: 0;
+    border-bottom: var(--hairline) solid var(--line);
+    font-family: var(--font-display);
+    font-size: var(--step-2);
+    color: var(--ink);
+  }
+  .js .site-nav__link:hover { background: none; color: var(--accent-text); }
+  .js .site-header:has(.site-nav[data-open]) {
+    background: var(--paper);
+    border-bottom-color: var(--line);
+  }
+
+  /* Without JS: hide the nav (footer and in-page sections stay reachable). */
+  html:not(.js) .site-nav { display: none; }
+}

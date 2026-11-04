@@ -1,0 +1,69 @@
+/* Contact: closing call to action over a low ember glow. */
+.contact {
+  overflow: hidden;
+  isolation: isolate;
+}
+.contact__heat {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(45% 60% at 10% 110%, var(--heat-2) 0%, transparent 70%),
+    radial-gradient(30% 45% at 4% 115%, var(--heat-3) 0%, transparent 75%);
+  opacity: calc(var(--heat-strength) * 0.5);
+  pointer-events: none;
+}
+
+.contact__inner {
+  display: grid;
+  gap: var(--space-xl);
+}
+@media (min-width: 60rem) {
+  .contact__inner {
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    align-items: end;
+    column-gap: var(--space-2xl);
+  }
+}
+
+.contact__intro {
+  display: grid;
+  gap: var(--space-m);
+}
+.contact__title {
+  max-width: 14ch;
+  font-size: var(--step-4);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: var(--tracking-display);
+}
+.contact__lede {
+  max-width: 32rem;
+  font-size: var(--step-1);
+  line-height: 1.45;
+  color: var(--ink-muted);
+}
+
+.contact__actions {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-l);
+}
+/* The address can be long: let it wrap rather than overflow on phones. */
+.contact__email {
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.contact__places {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs) var(--space-l);
+  color: var(--ink-muted);
+}
+.contact__places li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+}
+.contact__places .icon { color: var(--accent); }

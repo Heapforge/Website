@@ -3,18 +3,39 @@
 {{- $legalName := site.Params.organization.legalName | default site.Title -}}
 {{- $legalName = strings.TrimSuffix "." $legalName -}}
 <footer class="site-footer">
-  <p>
-    Copyright &copy; {{ $start }} &ndash;
-    <time data-current-year datetime="{{ now.Year }}">{{ now.Year }}</time>
-    {{ $legalName }}. All rights reserved.
-  </p>
-  {{- with site.Menus.footer }}
-  <nav class="site-footer__nav" aria-label="Footer">
-    <ul>
-      {{- range . }}
-      <li><a href="{{ .URL }}"{{ if $.IsMenuCurrent "footer" . }} aria-current="page"{{ end }}>{{ .Name }}</a></li>
+  <div class="site-footer__inner">
+    <div class="site-footer__top">
+      <a class="site-footer__brand" href="{{ site.Home.RelPermalink }}" aria-label="{{ site.Title }}">
+        {{- partial "logo.html" (dict "variant" "symbol" "class" "site-footer__symbol" "decorative" true "heat" true) -}}
+        {{- partial "logo.html" (dict "variant" "wordmark" "class" "site-footer__wordmark" "decorative" true) -}}
+      </a>
+      {{- with site.Menus.footer }}
+      <nav class="site-footer__nav" aria-label="Footer">
+        <ul>
+          {{- range . }}
+          <li><a href="{{ .URL }}"{{ if $.IsMenuCurrent "footer" . }} aria-current="page"{{ end }}>{{ .Name }}</a></li>
+          {{- end }}
+          {{- with site.Params.openSource }}
+          <li><a href="{{ .url }}" target="_blank" rel="noopener">{{ .name }} {{ partial "icons/icon.html" (dict "name" "arrow-up-right" "size" 14) }}</a></li>
+          {{- end }}
+        </ul>
+      </nav>
       {{- end }}
-    </ul>
-  </nav>
-  {{- end }}
+      {{- if or site.Params.contact.email site.Params.social }}
+      <ul class="site-footer__contact">
+        {{- with site.Params.contact.email }}
+        <li><a class="site-footer__email" href="mailto:{{ . }}">{{ partial "icons/icon.html" (dict "name" "mail" "size" 18) }}{{ . }}</a></li>
+        {{- end }}
+        {{- range site.Params.social }}
+        <li><a class="site-footer__social" href="{{ .url }}" target="_blank" rel="noopener me" aria-label="{{ site.Title }} on {{ .name }}" title="{{ .name }}">{{ partial "icons/icon.html" (dict "name" .icon "size" 20) }}</a></li>
+        {{- end }}
+      </ul>
+      {{- end }}
+    </div>
+
+    <p class="site-footer__legal">
+      Copyright &copy; {{ $start }}&ndash;<time data-current-year datetime="{{ now.Year }}">{{ now.Year }}</time>
+      {{ $legalName }}. All rights reserved.
+    </p>
+  </div>
 </footer>

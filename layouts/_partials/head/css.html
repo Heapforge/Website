@@ -1,18 +1,31 @@
 {{- /*
   Bundles the stylesheet layers into one fingerprinted file.
-  Order matters: tokens must come first, components last. To add a new
-  component stylesheet, drop it in assets/css/components/ and list it here.
+  Order matters: tokens first, then base, then components. A new component
+  stylesheet must be listed here; a missing file fails the build.
 */ -}}
 {{- $sheets := slice
   "css/base/tokens.css"
   "css/base/reset.css"
   "css/base/layout.css"
   "css/base/typography.css"
-  "css/components/link.css"
-  "css/components/entry-list.css"
+  "css/components/logo.css"
+  "css/components/button.css"
+  "css/components/header.css"
+  "css/components/hero.css"
+  "css/components/section-head.css"
+  "css/components/focus.css"
+  "css/components/carousel.css"
+  "css/components/forge-card.css"
+  "css/components/services.css"
+  "css/components/client.css"
+  "css/components/open-source.css"
+  "css/components/contact.css"
+  "css/components/page-head.css"
+  "css/components/doc-list.css"
   "css/components/prose.css"
-  "css/components/card-grid.css"
+  "css/components/not-found.css"
   "css/components/footer.css"
+  "css/components/reveal.css"
 -}}
 
 {{- $resources := slice -}}

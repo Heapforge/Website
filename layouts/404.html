@@ -1,6 +1,14 @@
 {{ define "main" }}
-  <div class="prose">
-    <p>The page you were looking for doesn't exist. It may have moved, or the link may be mistyped.</p>
-    <a class="prose__back" href="{{ site.Home.RelPermalink }}">&larr; Back to {{ site.Title }}</a>
-  </div>
+  <section class="not-found">
+    <div class="not-found__heat" aria-hidden="true"></div>
+    <div class="not-found__grain grain" aria-hidden="true"></div>
+    <div class="container not-found__inner">
+      <p class="not-found__code" aria-hidden="true">404</p>
+      <h1 class="not-found__title">Nothing was forged here.</h1>
+      <p class="not-found__copy">The page you were looking for doesn't exist. It may have moved, or the link may be mistyped.</p>
+      <a class="button button--primary" href="{{ site.Home.RelPermalink }}">
+        {{ partial "icons/icon.html" (dict "name" "arrow-left" "size" 18) }} Back to {{ site.Title }}
+      </a>
+    </div>
+  </section>
 {{ end }}

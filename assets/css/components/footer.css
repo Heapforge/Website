@@ -1,20 +1,86 @@
+/* Footer: logo + links, copyright. */
 .site-footer {
-  margin-top: 36px;
-  padding-top: 16px;
-  border-top: 1px solid var(--card-border);
-  font-size: var(--font-size-small);
-  color: var(--text-muted);
+  position: relative;
+  overflow: hidden;
+  border-top: var(--hairline) solid var(--line);
+  padding-top: var(--space-xl);
+}
+.site-footer__inner {
+  container-type: inline-size;
+  max-width: calc(var(--max-width) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
 }
 
-/* Row of site-wide links (legal documents and the like) below the copyright. */
-.site-footer__nav ul {
-  list-style: none;
+.site-footer__top {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px 16px;
-  margin-top: 8px;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-m) var(--space-xl);
 }
-
+/* Logo: symbol and wordmark at the same height, as in the header. */
+.site-footer__brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  border-radius: var(--radius-s);
+}
+.site-footer__symbol,
+.site-footer__wordmark { height: var(--logo-header-wordmark); width: auto; }
+.site-footer__nav ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs) var(--space-l);
+}
 .site-footer__nav a {
-  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3em;
+  padding-block: 0.4rem;
+  color: var(--ink-muted);
+  text-decoration: none;
+}
+.site-footer__nav a:hover,
+.site-footer__nav a[aria-current] { color: var(--accent-text); }
+
+/* Contact: email address, then icon-only social links. */
+.site-footer__contact {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2xs);
+}
+.site-footer__contact a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4em;
+  color: var(--ink-muted);
+  text-decoration: none;
+  border-radius: var(--radius-s);
+}
+.site-footer__email {
+  padding-block: 0.4rem;
+  margin-inline-end: var(--space-2xs);
+}
+/* 40px square hit area around each social icon. */
+.site-footer__social {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+.site-footer__contact a:hover { color: var(--accent-text); }
+
+.site-footer__legal {
+  margin-top: var(--space-l);
+  padding-block: var(--space-s) var(--space-m);
+  border-top: var(--hairline) solid var(--line);
+  font-family: var(--font-label);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--step--1);
+  color: var(--ink-muted);
 }

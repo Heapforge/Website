@@ -1,0 +1,27 @@
+# What Heapforge builds. `id` is referenced by `categories` in
+# data/projects.yaml and data/client_work.yaml. `icon` names a brand icon in
+# assets/icons/.
+- id: saas
+  icon: web-app
+  name: SaaS products
+  summary: B2C and B2B software-as-a-service.
+
+- id: dev-tools
+  icon: terminal
+  name: Developer utilities
+  summary: Tools that make it easier for developers and AI agents to build, test and experiment during development.
+
+- id: games
+  icon: play
+  name: Interactive videogames
+  summary: Fun, short interactive games to play during downtime.
+
+- id: mobile
+  icon: mobile-app
+  name: Mobile apps
+  summary: Everyday mobile applications, without the distractions.
+
+- id: language-learning
+  icon: ai-automation
+  name: Language learning
+  summary: AI, machine learning and data science, applied to the next generation of language learning products.

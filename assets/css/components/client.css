@@ -1,0 +1,48 @@
+/* Client work: a wide screenshot with a quiet text column. */
+.client-list {
+  display: grid;
+  gap: var(--space-2xl);
+}
+.client {
+  display: grid;
+  gap: var(--space-l);
+  align-items: end;
+}
+@media (min-width: 60rem) {
+  .client { grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: var(--space-2xl); }
+}
+
+.client__media {
+  overflow: hidden;
+  border-radius: var(--radius-l);
+  background: var(--paper-sunk);
+  box-shadow: 0 0 0 var(--hairline) var(--line), var(--shadow);
+}
+.client__shot {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+.client:hover .client__shot { transform: scale(1.02); }
+
+.client__body {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-s);
+  padding-bottom: var(--space-s);
+}
+.client__name {
+  font-size: var(--step-4);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: var(--tracking-display);
+}
+.client__summary {
+  max-width: 26rem;
+  margin-bottom: var(--space-s);
+  font-size: var(--step-1);
+  line-height: 1.45;
+  color: var(--ink-muted);
+}

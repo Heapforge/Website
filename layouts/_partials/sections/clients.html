@@ -1,0 +1,37 @@
+{{- $work := hugo.Data.client_work -}}
+{{- if $work }}
+<section class="section" id="clients" aria-labelledby="clients-title">
+  <div class="container">
+    {{ partial "sections/section-head.html" (dict
+        "id" "clients-title"
+        "title" "Projects we launched for our clients."
+    ) }}
+
+    <ul class="client-list">
+      {{- range $c := $work }}
+      <li class="client reveal">
+        <div class="client__media">
+          {{- with .screenshot }}
+          {{ partial "screenshot.html" (dict
+              "src" .
+              "alt" (printf "Front page of %s" $c.name)
+              "class" "client__shot"
+              "sizes" "(min-width: 64rem) 58vw, 92vw") }}
+          {{- end }}
+        </div>
+        <div class="client__body">
+          <h3 class="client__name">{{ .name }}</h3>
+          <p class="client__summary">{{ .summary | default .description }}</p>
+          {{- with .url }}
+          <a class="button button--ghost" href="{{ . }}" target="_blank" rel="noopener">
+            Visit {{ strings.TrimPrefix "https://" . | strings.TrimSuffix "/" }}
+            {{ partial "icons/icon.html" (dict "name" "arrow-up-right" "size" 16) }}<span class="visually-hidden"> (opens in a new tab)</span>
+          </a>
+          {{- end }}
+        </div>
+      </li>
+      {{- end }}
+    </ul>
+  </div>
+</section>
+{{- end }}

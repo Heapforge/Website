@@ -1,0 +1,30 @@
+{{- /* The five focus areas from data/focus_areas.yaml, each with the names of
+       the projects filed under it in data/projects.yaml. */ -}}
+{{- $areas := hugo.Data.focus_areas -}}
+{{- $projects := hugo.Data.projects -}}
+{{- if $areas }}
+<section class="section" id="build" aria-labelledby="build-title">
+  <div class="container">
+    {{ partial "sections/section-head.html" (dict
+        "id" "build-title"
+        "title" "What we develop"
+    ) }}
+
+    <ol class="focus">
+      {{- range $area := $areas }}
+      {{- $names := slice -}}
+      {{- range $projects -}}
+        {{- if in .categories $area.id -}}{{- $names = $names | append .name -}}{{- end -}}
+      {{- end }}
+      <li class="focus__item reveal">
+        <h3 class="focus__name">{{ $area.name }}</h3>
+        <p class="focus__summary">{{ $area.summary }}</p>
+        {{- with $names }}
+        <p class="focus__projects"><span class="visually-hidden">Projects: </span>{{ delimit . " · " }}</p>
+        {{- end }}
+      </li>
+      {{- end }}
+    </ol>
+  </div>
+</section>
+{{- end }}

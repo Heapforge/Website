@@ -1,95 +1,183 @@
-/* Long-form document body — legal pages and anything else that is mostly
-   flowing Markdown. The base stylesheets only cover the home page's short
-   blocks, so block rhythm for prose lives here. */
-.prose {
-  line-height: 1.7;
+/* Long-form Markdown (legal documents), including raw HTML elements. */
+.page-body--article {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-xl);
+}
+@media (min-width: 64rem) {
+  .page-body--article {
+    grid-template-columns: 15rem minmax(0, var(--prose-width));
+    column-gap: clamp(3rem, 8vw, 8rem);
+    align-items: start;
+  }
 }
 
-.prose > * + * {
-  margin-top: 16px;
+/* Contents list: sticky on wide screens, a compact block on narrow ones. */
+.toc {
+  padding: var(--space-m);
+  border: var(--hairline) solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--paper-raised);
 }
+@media (min-width: 64rem) {
+  .toc {
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-l));
+    max-height: calc(100vh - var(--header-height) - var(--space-2xl));
+    overflow-y: auto;
+    padding: 0 0 0 var(--space-s);
+    border: 0;
+    border-left: var(--hairline) solid var(--line-strong);
+    border-radius: 0;
+    background: none;
+  }
+}
+.toc__title {
+  margin-bottom: var(--space-xs);
+  font-family: var(--font-label);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--step--1);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.toc__list {
+  display: grid;
+  gap: 0.15rem;
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+.toc__list a {
+  display: block;
+  padding-block: 0.3rem;
+  color: var(--ink-muted);
+  text-decoration: none;
+}
+.toc__list a:hover { color: var(--accent-text); }
+@media (max-width: 63.99rem) {
+  .toc__list { grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr)); column-gap: var(--space-m); }
+}
+
+.prose {
+  max-width: var(--prose-width);
+  font-size: var(--step-0);
+  line-height: 1.7;
+  color: var(--ink);
+}
+.prose > * + * { margin-top: 1.1em; }
 
 .prose h2 {
-  margin-top: 32px;
+  margin-top: 2.6em;
+  padding-top: 1.1em;
+  border-top: var(--hairline) solid var(--line);
+  font-size: var(--step-2);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
 }
-
 .prose h3 {
-  font-size: 1.1rem;
+  margin-top: 2em;
+  font-size: var(--step-1);
   font-weight: 600;
   letter-spacing: -0.01em;
-  margin-top: 24px;
-  margin-bottom: 6px;
 }
-
-.prose h2 + *,
-.prose h3 + * {
-  margin-top: 0;
+.prose h4 {
+  margin-top: 1.6em;
+  font-family: var(--font-label);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--ink-muted);
 }
+.prose h2 + *, .prose h3 + *, .prose h4 + * { margin-top: 0.7em; }
+.prose > :first-child { margin-top: 0; }
 
-.prose ul,
-.prose ol {
-  padding-left: 22px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+.prose a {
+  color: var(--accent-text);
+  text-decoration-color: var(--accent);
+  overflow-wrap: anywhere;
 }
+.prose a:hover { color: var(--accent-text-hover); }
 
-.prose ul {
-  list-style: square;
-}
+.prose ul, .prose ol { padding-left: 1.3em; }
+.prose li + li { margin-top: 0.45em; }
+.prose li::marker { color: var(--accent); }
+.prose ol > li::marker { color: var(--accent-text); font-variant-numeric: tabular-nums; font-size: 0.9em; }
 
-.prose ol {
-  list-style: decimal;
-}
-
-.prose li::marker {
-  color: var(--accent);
-}
-
-.prose li > ul,
-.prose li > ol {
-  margin-top: 6px;
+.prose blockquote {
+  padding-left: var(--space-m);
+  border-left: 2px solid var(--accent);
+  color: var(--ink-muted);
 }
 
 .prose hr {
   border: 0;
-  border-top: 1px solid var(--card-border);
-  margin-top: 32px;
+  border-top: var(--hairline) solid var(--line-strong);
+  margin-block: 2.5em;
 }
 
-/* Tables can outgrow the 768px column, so they scroll inside themselves
-   rather than making the whole page scroll sideways. */
+.prose code, .prose kbd, .prose samp {
+  font-family: var(--font-code);
+  font-size: 0.88em;
+  padding: 0.12em 0.4em;
+  border-radius: var(--radius-s);
+  background: var(--paper-sunk);
+}
+.prose pre {
+  overflow-x: auto;
+  padding: var(--space-m);
+  border-radius: var(--radius-m);
+  background: var(--paper-sunk);
+  font-size: 0.88em;
+}
+.prose pre code { padding: 0; background: none; }
+
+/* Tables scroll inside themselves rather than widening the page. */
 .prose table {
   display: block;
+  max-width: 100%;
   overflow-x: auto;
-  border-collapse: collapse;
-  width: 100%;
-  font-size: var(--font-size-small);
+  font-size: 0.92em;
+  line-height: 1.5;
+  border-top: var(--hairline) solid var(--line-strong);
 }
-
-.prose th,
-.prose td {
-  border: 1px solid var(--card-border);
-  padding: 8px 10px;
+.prose th, .prose td {
+  min-width: 12rem;
+  padding: 0.85em 1em 0.85em 0;
   text-align: left;
   vertical-align: top;
+  border-bottom: var(--hairline) solid var(--line);
+}
+.prose th {
+  font-family: var(--font-label);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--step--1);
+  font-weight: 500;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--ink-muted);
 }
 
-.prose thead th {
-  background-color: var(--card-bg);
-  font-weight: 600;
+.prose img { border-radius: var(--radius-m); }
+.prose figure figcaption {
+  margin-top: var(--space-2xs);
+  font-size: var(--step--1);
+  color: var(--ink-muted);
 }
-
-.prose blockquote {
-  border-left: 3px solid var(--accent);
-  padding-left: 14px;
-  color: var(--text-muted);
+.prose details {
+  padding: var(--space-s) var(--space-m);
+  border: var(--hairline) solid var(--line);
+  border-radius: var(--radius-m);
+  background: var(--paper-raised);
 }
+.prose summary { cursor: pointer; font-weight: 600; }
+.prose details[open] summary { margin-bottom: var(--space-xs); }
+.prose mark { background: var(--accent-soft); color: inherit; padding: 0 0.15em; }
 
-/* Trailing link out of a document, back up to its section index. */
 .prose__back {
-  display: block;
-  margin-top: 32px;
-  font-size: var(--font-size-small);
-  font-weight: 600;
+  margin-top: var(--space-2xl) !important;
+  padding-top: var(--space-l);
+  border-top: var(--hairline) solid var(--line);
 }

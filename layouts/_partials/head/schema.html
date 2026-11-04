@@ -18,6 +18,12 @@
       "sameAs" .url) -}}
 {{- end -}}
 
+{{- /* Social profiles from params.social are part of sameAs too. */ -}}
+{{- $sameAs := $org.sameAs | default slice -}}
+{{- range site.Params.social -}}
+  {{- $sameAs = $sameAs | append .url -}}
+{{- end -}}
+
 {{- $organization := dict
   "@type" "Organization"
   "@id" (printf "%s#organization" site.BaseURL)
@@ -26,10 +32,13 @@
   "url" site.BaseURL
   "logo" $logo
   "description" $org.description
-  "sameAs" $org.sameAs
+  "sameAs" $sameAs
   "foundingLocation" $locations
   "founder" $founders
 -}}
+{{- with site.Params.contact.email -}}
+  {{- $organization = merge $organization (dict "email" .) -}}
+{{- end -}}
 
 {{- $website := dict
   "@type" "WebSite"

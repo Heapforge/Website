@@ -1,0 +1,38 @@
+{{- /*
+  Official Heapforge logo artwork (assets/images/brand/), inlined so the
+  theme can switch between the sanctioned variants: navy ink on light,
+  white ink on dark, Ember flame on both (--logo-ink / --logo-flame in
+  tokens.css). Never redraw, recolour or rearrange it. "wordmark" is the
+  type from the horizontal lockup on its own, so the header can pair it
+  with a smaller symbol.
+  Params: variant ("horizontal" | "stacked" | "symbol" | "wordmark"),
+  class (optional), decorative (optional: hide it from assistive tech when
+  the surrounding element already carries the name), heat (optional: fill
+  the flame with the live heat-field shader; the ink stays solid on top).
+*/ -}}
+{{- $variant := .variant | default "horizontal" -}}
+{{- $class := printf "logo logo--%s" $variant -}}
+{{- with .class }}{{ $class = printf "%s %s" $class . }}{{ end -}}
+{{- with resources.Get (printf "images/brand/logo-%s.svg" $variant) -}}
+  {{- $attrs := printf `role="img" aria-label="%s"` site.Title -}}
+  {{- if $.decorative }}{{ $attrs = `aria-hidden="true"` }}{{ end -}}
+  {{- $svg := replace .Content "<svg " (printf `<svg class="%s" %s focusable="false" ` $class $attrs) -}}
+  {{- if $.heat -}}
+    {{- /* The flame paths alone, published as their own file, mask the shader
+         canvas. (A data URI would be mangled by the HTML minifier.) The SVG
+         flame underneath stays as the fallback until the first frame; the hero's
+         film grain sits on top, cut to the same shape. */ -}}
+    {{- $flame := replaceRE `<path class="logo__ink"[^>]*/>` "" .Content -}}
+    {{- $flame = resources.FromString (printf "images/brand/logo-%s-flame.svg" $variant) $flame -}}
+    {{- $mask := printf `url(%s)` $flame.RelPermalink -}}
+    {{- printf `<span class="logo-heat" style="--flame-mask: %s">` $mask | safeHTML -}}
+      {{- $svg | safeHTML -}}
+      <canvas class="logo-heat__canvas" data-heat-logo aria-hidden="true"></canvas>
+      <span class="grain logo-heat__grain" aria-hidden="true"></span>
+    </span>
+  {{- else -}}
+    {{- $svg | safeHTML -}}
+  {{- end -}}
+{{- else -}}
+  {{- errorf "logo.html: unknown logo variant %q" $variant -}}
+{{- end -}}

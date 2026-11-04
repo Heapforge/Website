@@ -16,12 +16,12 @@ disableKinds = ["taxonomy", "term", "rss"]
     weight = 10
 
 [params]
-  tagline = "Consumer-Focused Software Studio"
-  description = "A stealth software startup based in Sofia, Bulgaria and London, UK developing consumer-focused software."
-  seoDescription = "Heapforge is a stealth software startup based in Sofia, Bulgaria and London, UK developing consumer-focused software."
+  tagline = "Software Studio in London & Sofia"
+  description = "Heapforge is a software studio in London and Sofia building SaaS products, developer utilities, games, mobile apps and language-learning software."
+  seoDescription = "Heapforge is a software studio based in London, UK and Sofia, Bulgaria. We build SaaS products, developer utilities, videogames, mobile apps and language-learning software."
   author = "Heapforge"
-  themeColor = "#FAF8F5"
-  colorScheme = "light"
+  themeColor = "#F3F0E8"
+  colorScheme = "light dark"
   ogImage = "assets/favicon.svg"
   # Short, human-facing location labels (schema.org uses the formal names below).
   locations = ["Sofia, Bulgaria", "London, UK"]
@@ -30,14 +30,29 @@ disableKinds = ["taxonomy", "term", "rss"]
 
   # Fonts loaded from Google Fonts; referenced by the head partial.
   [params.fonts]
-    href = "https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&display=swap"
+    href = "https://fonts.googleapis.com/css2?family=Geist:wght@300..800&display=swap"
 
   [params.organization]
     # Registered company name; use for the footer and any legal-facing copy.
     legalName = "Heapforge Ltd."
-    description = "Heapforge Ltd. is a software stealth-startup based in Sofia, Bulgaria and London, UK that develops consumer-focused software."
+    description = "Heapforge Ltd. is a software development studio based in London, UK and Sofia, Bulgaria. It builds SaaS products, developer utilities, interactive videogames, mobile apps and language-learning software."
     sameAs = ["https://madladsquad.com", "https://tiny.lol", "https://lasso.domains"]
     foundingLocations = ["Sofia, Bulgaria", "London, United Kingdom"]
+
+  # Public contact address, shown in the footer and the JSON-LD.
+  [params.contact]
+    email = "contact@heapforge.com"
+
+  # Company social profiles, rendered as icon links in the footer and added to
+  # the JSON-LD sameAs. `icon` names a glyph in _partials/icons/icon.html.
+  [[params.social]]
+    name = "LinkedIn"
+    url = "https://www.linkedin.com/company/heapforge-ltd"
+    icon = "linkedin"
+  [[params.social]]
+    name = "GitHub"
+    url = "https://github.com/Heapforge"
+    icon = "github"
 
   [params.openSource]
     name = "MadLadSquad"

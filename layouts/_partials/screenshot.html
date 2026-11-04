@@ -1,0 +1,18 @@
+{{- /*
+  Responsive screenshot from an assets/ path. Params: src (asset path),
+  alt, sizes, class, eager (bool). Sources are 2x captures (2880px wide),
+  so the larger widths stay sharp on high-density screens.
+*/ -}}
+{{- with resources.Get .src -}}
+  {{- $sm := .Process "resize 560x webp q78" -}}
+  {{- $md := .Process "resize 960x webp q80" -}}
+  {{- $lg := .Process "resize 1440x webp q80" -}}
+  {{- $xl := .Process "resize 1920x webp q80" -}}
+<img class="{{ $.class }}" src="{{ $md.RelPermalink }}"
+     srcset="{{ $sm.RelPermalink }} {{ $sm.Width }}w, {{ $md.RelPermalink }} {{ $md.Width }}w, {{ $lg.RelPermalink }} {{ $lg.Width }}w, {{ $xl.RelPermalink }} {{ $xl.Width }}w"
+     sizes="{{ $.sizes }}" alt="{{ $.alt }}"
+     width="{{ $md.Width }}" height="{{ $md.Height }}"
+     {{ if $.eager }}fetchpriority="high"{{ else }}loading="lazy"{{ end }} decoding="async">
+{{- else -}}
+  {{- errorf "screenshot.html: image %q not found under assets/" .src -}}
+{{- end -}}

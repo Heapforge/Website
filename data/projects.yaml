@@ -1,36 +1,50 @@
 # Heapforge's own products. `url` is optional — omit it for unreleased work.
+# `categories` are ids from data/focus_areas.yaml; `screenshot` is a path under
+# assets/ (a 1440x900 capture of the live front page at 2x, so 2880x1800), present only when `url` is.
 - name: webreview.app
   url: https://webreview.app
   description: skip tiring web design revision sessions! Send your client a link, receive feedback and get an automated PR from your agents based it
   summary: Skip tiring web design revision sessions! Send your client a link, receive feedback and get an automated PR from your agents based on it
+  categories: [saas, dev-tools]
+  screenshot: images/screenshots/webreview-app.png
 
 - name: tiny.lol
   url: https://tiny.lol
   description: a minimal URL shortener and paste tool
   summary: Minimal URL shortener and paste tool designed for simplicity and speed.
+  categories: [saas, dev-tools]
+  screenshot: images/screenshots/tiny-lol.png
 
 - name: lasso.domains
   url: https://lasso.domains
   description: a domain auction sniping and market analysis toolkit
   summary: Domain auction sniping and market analysis toolkit.
+  categories: [saas]
+  screenshot: images/screenshots/lasso-domains.png
 
 - name: Schrift Studio
   url: https://schrift.app
   description: a fully-featured font design suite for desktop and mobile platforms
   summary: A fully-featured font design suite for desktop and mobile platforms.
+  categories: [saas]
+  screenshot: images/screenshots/schrift-app.png
 
 - name: Project YY
   description: a website for learning writing systems supporting more than 20K characters
   summary: Interactive website for learning writing systems supporting over 20,000 characters.
+  categories: [language-learning]
 
 - name: Heapforge Reader
   description: a book reading app for iOS, Android, Windows, Linux and macOS
   summary: A book reading app for iOS, Android, Windows, Linux and macOS.
+  categories: [mobile]
 
 - name: Heapforge Journal
   description: a journaling app for iOS, Android and the web
   summary: A journaling app for iOS, Android and the web.
+  categories: [mobile]
 
 - name: Untitled Cube Rotator
   description: an idle clicker game for PC, Android and iOS
   summary: An idle clicker game for PC, Android and iOS.
+  categories: [games]

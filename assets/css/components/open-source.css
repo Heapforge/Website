@@ -1,0 +1,70 @@
+/* Open source: an inverted navy slab with a low ember glow. */
+.section--band { padding-block: 0; }
+
+/* Full-bleed on phones; an inset, rounded slab from tablet width up. */
+.band {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin-inline: auto;
+  max-width: calc(var(--max-width) + 2 * var(--gutter));
+  background: var(--band-bg);
+  color: var(--band-ink);
+  padding-block: var(--space-section);
+}
+@media (min-width: 48rem) {
+  .section--band { padding-inline: var(--gutter); }
+  .band { border-radius: var(--radius-l); }
+}
+:root[data-theme="dark"] .band {
+  box-shadow: inset 0 0 0 var(--hairline) var(--band-line);
+}
+
+.band__heat {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(40% 70% at 92% 115%, var(--band-accent) 0%, transparent 70%),
+    radial-gradient(55% 90% at 85% 120%, var(--flame) 0%, transparent 75%);
+  opacity: 0.7;
+}
+.band__grain {
+  z-index: -1;
+  mix-blend-mode: screen;
+  opacity: 0.12;
+}
+/* The band is always dark, so it always uses the light grain tile. */
+.band .grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 0.94 0 0 0 0 0.86 0 0 0 1.6 -0.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.band__title {
+  max-width: 20ch;
+  font-size: var(--step-4);
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: var(--tracking-display);
+}
+.band__name {
+  font-weight: 600;
+  color: var(--band-accent);
+}
+
+.band__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-l);
+  margin-top: var(--space-2xl);
+  padding-top: var(--space-m);
+  border-top: var(--hairline) solid var(--band-line);
+}
+.band__copy {
+  max-width: 30rem;
+  font-size: var(--step-1);
+  line-height: 1.45;
+  color: var(--band-muted);
+}
+.band :focus-visible { outline-color: var(--band-accent); }

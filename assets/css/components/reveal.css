@@ -1,0 +1,13 @@
+/* Scroll reveal: a short rise as items enter. Only with JS (the observer adds
+   .is-visible) and never under reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .js .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity var(--dur-slow) var(--ease-out), transform var(--dur-slow) var(--ease-out);
+  }
+  .js .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -1,6 +1,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+{{- /* Sets data-theme before first paint: a stored toggle choice wins,
+       otherwise the system preference. Kept inline so there is no flash. */}}
+<script>(function(){var d=document.documentElement,t;try{t=localStorage.getItem('theme')}catch(e){}if(t!=='light'&&t!=='dark'){t=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}d.setAttribute('data-theme',t);d.classList.add('js')})();</script>
 <title>{{ partial "func/title.html" . }}</title>
+{{- /* Per-scheme browser chrome colours; listed before meta.html's generic
+       theme-color so the matching media query wins. Values mirror --paper in
+       css/base/tokens.css. */}}
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#F3F0E8">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#080C13">
 {{ partial "head/meta.html" . }}
 {{ partial "head/favicon.html" . }}
 {{ partial "head/fonts.html" . }}

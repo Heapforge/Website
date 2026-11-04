@@ -1,0 +1,10 @@
+{{- /*
+  Shared section heading. Params: title (HTML allowed), id (heading id),
+  aside (optional HTML shown opposite the title).
+*/ -}}
+<div class="section-head">
+  <h2 class="section-head__title" id="{{ .id }}">{{ .title | safeHTML }}</h2>
+  {{- with .aside }}
+  <div class="section-head__aside">{{ . | safeHTML }}</div>
+  {{- end }}
+</div>
