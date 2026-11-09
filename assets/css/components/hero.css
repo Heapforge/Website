@@ -76,8 +76,16 @@
   margin-top: var(--space-xl);
 }
 
+/* On tall phone screens, bottom-aligned type leaves a large empty band
+   above it, so centre it instead. Equal top and bottom padding keeps it on
+   the screen's centre line rather than the centre of the space below the
+   header. */
 @media (max-width: 40rem) {
-  .hero { max-height: none; }
+  .hero {
+    align-items: center;
+    max-height: none;
+    padding-block: calc(var(--header-height) + var(--space-l));
+  }
   .hero__scrim {
     background: linear-gradient(0deg, var(--scrim) 0%, transparent 85%);
   }
