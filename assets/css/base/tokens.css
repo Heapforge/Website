@@ -69,6 +69,11 @@
   /* Brand constants (theme-independent) */
   --navy: #1E293B;
   --flame: #D9532F;
+
+  /* Live logo flame (heat-field.js): glow -> core, the same in both themes. */
+  --heat-logo-glow: #F0B394;
+  --heat-logo-core: #D9532F;
+  --heat-logo-strength: 0.9;
 }
 
 /* ---------- Light: brand Paper, Forge Navy ink, Ember accents ----------
@@ -124,8 +129,8 @@
   --heat-3: #D9532F;
   --heat-ember: #D9532F;
   --heat-strength: 0.9;
-  /* Logo flame: 0 = glow-to-core only, 1 = the hero's full ramp (dark ground). */
-  --heat-logo-ground: 0;
+  /* How much of the logo flame's light the ink catches (dark mode only). */
+  --heat-logo-ink-glow: 0;
   --grain-opacity: 0.09;
   --grain-blend: multiply;
 }
@@ -176,7 +181,7 @@
   --heat-3: #FFB36B;
   --heat-ember: #FFC58A;
   --heat-strength: 0.92;
-  --heat-logo-ground: 1;
+  --heat-logo-ink-glow: 0.38;
   --grain-opacity: 0.14;
   --grain-blend: screen;
 }

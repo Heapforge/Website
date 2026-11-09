@@ -14,10 +14,12 @@
  * and in hidden tabs. Reduced motion renders one still frame. Without WebGL
  * the hero's CSS gradient remains.
  *
- * The logo symbols ([data-heat-logo]) run a smaller variant: the same noise
- * and colour tokens, rising faster, drawn on a canvas masked to the flame
- * paths (see logo.html). --heat-logo-ground picks its ramp: glow-to-core in
- * light mode, the hero's full ramp (ember over dark ground) in dark mode.
+ * The logo symbols ([data-heat-logo]) run a smaller variant: the same noise,
+ * rising faster, drawn on a canvas masked to the flame paths (see logo.html).
+ * It ramps glow -> core from its own --heat-logo-* tokens, which are
+ * theme-independent, so the flame looks the same in light and dark. In dark
+ * mode a second canvas, cut to the white ink ([data-heat-logo-ink]), runs the
+ * same field on the same clock, so the ink catches the flame's light.
  */
 
 const VERTEX = `
@@ -130,46 +132,68 @@ void main() {
 }
 `;
 
-const FLAME_FRAGMENT = NOISE + `
+// The logo's heat field, shared by the flame and the ink so they move as one:
+// the hero's warp, rising faster so it reads as flame at this size, hottest
+// at the base.
+const LOGO_FIELD = NOISE + `
 uniform vec2 uRes;
 uniform float uTime;
-uniform vec3 uC0;        // cold ground
-uniform vec3 uC1;        // haze
-uniform vec3 uC2;        // glow
-uniform vec3 uC3;        // hottest core
 uniform float uStrength;
-uniform float uGround;   // 0: glow -> core only, 1: the hero's full ramp
 
-void main() {
-  vec2 uv = gl_FragCoord.xy / uRes;
+float logoHeat(vec2 uv) {
   float aspect = uRes.x / uRes.y;
   vec2 p = vec2(uv.x * aspect, uv.y) * 2.2;
-  float t = uTime;
-
-  // The hero's warp, rising faster so it reads as flame at this size.
-  vec2 rise = vec2(0.0, -t * 0.35);
+  vec2 rise = vec2(0.0, -uTime * 0.35);
   vec2 q = vec2(fbm(p + rise), fbm(p + vec2(5.2, 1.3) + rise * 1.3));
   float f = fbm(p + 2.2 * q + rise * 1.6);
+  return (f * f * 2.2 + (1.0 - uv.y) * 0.45 - 0.2) * uStrength;
+}
+`;
 
-  // Hottest at the base.
-  float heat = (f * f * 2.2 + (1.0 - uv.y) * 0.45 - 0.2) * uStrength;
+const FLAME_FRAGMENT = LOGO_FIELD + `
+uniform vec3 uC2;        // glow
+uniform vec3 uC3;        // hottest core
 
-  // Light theme: glow -> core, so the flame stays an ember on paper.
-  vec3 ember = mix(uC2, uC3, smoothstep(0.15, 0.85, heat));
-  // Dark theme: the hero's ramp, ember swirls over the dark ground, with
-  // the bright core kept to the hottest spots.
-  vec3 hero = mix(uC0, uC1, smoothstep(0.2, 0.8, f));
-  hero = mix(hero, uC2, smoothstep(0.3, 0.7, heat));
-  hero = mix(hero, uC3, smoothstep(0.85, 1.3, heat));
-  vec3 col = mix(ember, hero, uGround);
+void main() {
+  float heat = logoHeat(gl_FragCoord.xy / uRes);
+  // Glow -> core, so the flame stays an ember.
+  gl_FragColor = vec4(mix(uC2, uC3, smoothstep(0.15, 0.85, heat)), 1.0);
+}
+`;
 
-  gl_FragColor = vec4(col, 1.0);
+const INK_FRAGMENT = LOGO_FIELD + `
+uniform vec3 uC0;        // ink
+uniform vec3 uC2;        // glow
+uniform float uAmount;   // how much firelight the ink catches
+
+void main() {
+  float heat = logoHeat(gl_FragCoord.xy / uRes);
+  // A faint warm frost everywhere, washed peach where the flame runs hot.
+  float light = 0.18 + 0.82 * smoothstep(0.1, 1.0, heat);
+  gl_FragColor = vec4(mix(uC0, uC2, light * uAmount), 1.0);
 }
 `;
 
 const STILL_TIME = 37.0;   // a pleasing frame for reduced motion
-const HERO = { renderScale: 0.5, maxDpr: 1.5 };  // fraction of device pixels rendered, then upscaled
-const FLAME = { renderScale: 1, maxDpr: 2 };      // a few hundred pixels: render it sharp
+// renderScale: fraction of device pixels rendered, then upscaled.
+// colors / floats: which CSS custom properties feed which uniforms.
+// clock: fields sharing one stay in step (the flame and its ink).
+const HERO = {
+  renderScale: 0.5, maxDpr: 1.5,
+  colors: { uC0: '--heat-0', uC1: '--heat-1', uC2: '--heat-2', uC3: '--heat-3', uEmber: '--heat-ember' },
+  floats: { uStrength: '--heat-strength' },
+};
+const LOGO_CLOCK = { t: 12, stamp: 0 };
+const FLAME = {                                   // a few hundred pixels: render it sharp
+  renderScale: 1, maxDpr: 2, clock: LOGO_CLOCK,
+  colors: { uC2: '--heat-logo-glow', uC3: '--heat-logo-core' },
+  floats: { uStrength: '--heat-logo-strength' },
+};
+const INK = {
+  ...FLAME,                                       // same size and clock: the same field as the flame
+  colors: { uC0: '--logo-ink', uC2: '--heat-logo-glow' },
+  floats: { uStrength: '--heat-logo-strength', uAmount: '--heat-logo-ink-glow' },
+};
 const FRAME_MS = 1000 / 30;
 
 function parseColor(value) {
@@ -197,7 +221,7 @@ function compile(gl, type, source) {
   return shader;
 }
 
-function runField(canvas, fragment, { renderScale, maxDpr }) {
+function runField(canvas, fragment, { renderScale, maxDpr, colors, floats, clock: shared }) {
   let gl = null;
   try {
     gl = canvas.getContext('webgl', {
@@ -227,20 +251,19 @@ function runField(canvas, fragment, { renderScale, maxDpr }) {
   gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
 
   const u = {};
-  ['uRes', 'uScale', 'uTime', 'uC0', 'uC1', 'uC2', 'uC3', 'uEmber', 'uStrength', 'uGround']
+  ['uRes', 'uScale', 'uTime', 'uC0', 'uC1', 'uC2', 'uC3', 'uEmber', 'uStrength', 'uAmount']
     .forEach((name) => { u[name] = gl.getUniformLocation(program, name); });
 
   const readColors = () => {
     const cs = getComputedStyle(document.documentElement);
-    const pairs = [['uC0', '--heat-0'], ['uC1', '--heat-1'], ['uC2', '--heat-2'], ['uC3', '--heat-3'], ['uEmber', '--heat-ember']];
-    for (const [uniform, prop] of pairs) {
+    for (const [uniform, prop] of Object.entries(colors)) {
       const rgb = parseColor(cs.getPropertyValue(prop));
       if (rgb) gl.uniform3fv(u[uniform], rgb);
     }
-    const strength = parseFloat(cs.getPropertyValue('--heat-strength'));
-    gl.uniform1f(u.uStrength, Number.isFinite(strength) ? strength : 1);
-    const ground = parseFloat(cs.getPropertyValue('--heat-logo-ground'));
-    gl.uniform1f(u.uGround, Number.isFinite(ground) ? ground : 0);
+    for (const [uniform, prop] of Object.entries(floats)) {
+      const value = parseFloat(cs.getPropertyValue(prop));
+      gl.uniform1f(u[uniform], Number.isFinite(value) ? value : 1);
+    }
   };
 
   const resize = () => {
@@ -260,9 +283,17 @@ function runField(canvas, fragment, { renderScale, maxDpr }) {
   const reducedQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
   let reduced = reducedQuery.matches;
   let visible = true;
-  let elapsed = 12; // start mid-flow so the first frame is already developed
+  // Start mid-flow so the first frame is already developed.
+  const clock = shared || { t: 12, stamp: 0 };
   let last = 0;
   let raf = 0;
+
+  // Advance the clock once per animation frame, however many fields share it.
+  const advance = (now) => {
+    if (now === clock.stamp) return;
+    clock.t += clock.stamp ? Math.min((now - clock.stamp) / 1000, 0.1) : 0;
+    clock.stamp = now;
+  };
 
   const draw = (time) => {
     gl.uniform1f(u.uTime, time);
@@ -273,10 +304,9 @@ function runField(canvas, fragment, { renderScale, maxDpr }) {
   const frame = (now) => {
     raf = requestAnimationFrame(frame);
     if (last && now - last < FRAME_MS) return;
-    const dt = last ? Math.min((now - last) / 1000, 0.1) : 0;
     last = now;
-    elapsed += dt;
-    draw(elapsed);
+    advance(now);
+    draw(clock.t);
   };
 
   const shouldRun = () => !reduced && visible && !document.hidden;
@@ -290,11 +320,11 @@ function runField(canvas, fragment, { renderScale, maxDpr }) {
     }
   };
 
-  const redrawIfIdle = () => { if (!raf) draw(reduced ? STILL_TIME : elapsed); };
+  const redrawIfIdle = () => { if (!raf) draw(reduced ? STILL_TIME : clock.t); };
 
   readColors();
   resize();
-  draw(reduced ? STILL_TIME : elapsed);
+  draw(reduced ? STILL_TIME : clock.t);
 
   if ('ResizeObserver' in window) {
     new ResizeObserver(() => { resize(); redrawIfIdle(); }).observe(canvas);
@@ -329,4 +359,5 @@ export function initHeatField() {
   const hero = document.querySelector('[data-heat]');
   if (hero) runField(hero, FRAGMENT, HERO);
   document.querySelectorAll('[data-heat-logo]').forEach((canvas) => runField(canvas, FLAME_FRAGMENT, FLAME));
+  document.querySelectorAll('[data-heat-logo-ink]').forEach((canvas) => runField(canvas, INK_FRAGMENT, INK));
 }

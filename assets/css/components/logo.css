@@ -9,8 +9,9 @@
 
 /* Live flame: the heat-field shader drawn over the symbol, cut to the flame
    paths, with the hero's film grain on top. The SVG flame underneath shows
-   until the first frame (or for good without WebGL); the ink is outside the
-   mask, so it stays solid. */
+   until the first frame (or for good without WebGL). In dark mode a second
+   canvas, cut to the ink, warms the white with the same field so it doesn't
+   sit flat against the moving flame; the SVG ink is its fallback. */
 .logo-heat {
   position: relative;
   display: block;
@@ -30,6 +31,12 @@
   transition: opacity var(--dur-med) ease;
 }
 .logo-heat__canvas[data-ready] { opacity: 1; }
+.logo-heat__canvas--ink {
+  -webkit-mask-image: var(--ink-mask);
+  mask-image: var(--ink-mask);
+}
+/* Navy ink on paper needs no firelight; hidden, the field also pauses. */
+:root[data-theme="light"] .logo-heat__canvas--ink { display: none; }
 /* Grain only once the shader is up, so the fallback flame stays flat. */
 .logo-heat__grain { display: none; }
 .logo-heat__canvas[data-ready] + .logo-heat__grain { display: block; }
