@@ -10,7 +10,12 @@
     {{- with .offerings }}
     <ul class="services">
       {{- range . }}
-      <li class="service reveal">
+      <li class="service reveal" data-heat-hover>
+        <div class="service__bg" aria-hidden="true">
+          <canvas class="service__canvas" data-heat-row aria-hidden="true"></canvas>
+          <div class="service__frost"></div>
+          <div class="service__grain grain"></div>
+        </div>
         <span class="service__icon">{{ partial "icons/icon.html" (dict "name" .icon "size" 40) }}</span>
         <h3 class="service__name">{{ .name }}</h3>
         <p class="service__summary">{{ .summary }}</p>

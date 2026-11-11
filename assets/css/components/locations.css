@@ -48,6 +48,7 @@
 
 .locations__country {
   position: relative;
+  isolation: isolate;
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
@@ -56,6 +57,46 @@
   border-bottom: var(--hairline) solid var(--line);
   cursor: pointer;
   transition: color var(--dur-fast) ease;
+}
+
+/* Heat-field shader + frosted glass overlay revealed on hover / active. */
+.locations__country-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--dur-med) var(--ease-out);
+  background:
+    radial-gradient(55% 85% at 86% 100%, var(--heat-row-3) 0%, transparent 65%),
+    radial-gradient(70% 95% at 72% 85%, var(--heat-row-2) 0%, transparent 75%),
+    radial-gradient(90% 90% at 25% 20%, var(--heat-1) 0%, transparent 75%),
+    var(--heat-0);
+}
+.locations__country:hover .locations__country-bg,
+.locations__country:focus-visible .locations__country-bg,
+.locations__country[data-active] .locations__country-bg {
+  opacity: 1;
+}
+
+.locations__country-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity var(--dur-med) ease;
+}
+.locations__country-canvas[data-ready] { opacity: 1; }
+
+.locations__country-frost {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--focus-frost-strong) 0%, var(--focus-frost) 100%);
+  box-shadow: inset 0 1px 0 var(--focus-frost-edge);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
 }
 
 .locations__country::after {
@@ -68,10 +109,11 @@
   background: var(--accent);
   transform: scaleX(0);
   transform-origin: left;
-  transition: transform var(--dur-med) var(--ease-out);
+  transition: transform var(--dur-slow) var(--ease-out);
 }
 
 .locations__country:hover::after,
+.locations__country:focus-visible::after,
 .locations__country[data-active]::after {
   transform: scaleX(1);
 }
@@ -82,35 +124,41 @@
   border-radius: var(--radius-pill);
   background: var(--accent);
   box-shadow: 0 0 0 4px var(--accent-soft);
-  transition: transform var(--dur-fast) var(--ease-out);
+  transition: transform var(--dur-med) var(--ease-out);
 }
 
 .locations__country:hover .locations__country-dot,
+.locations__country:focus-visible .locations__country-dot,
 .locations__country[data-active] .locations__country-dot {
-  transform: scale(1.25);
+  transform: translateX(var(--space-s)) scale(1.25);
 }
 
 .locations__country-name {
   font-size: var(--step-1);
   font-weight: 500;
   letter-spacing: -0.02em;
-  transition: transform var(--dur-fast) var(--ease-out);
+  transition: transform var(--dur-med) var(--ease-out);
 }
 
 .locations__country:hover .locations__country-name,
+.locations__country:focus-visible .locations__country-name,
 .locations__country[data-active] .locations__country-name {
-  transform: translateX(4px);
+  transform: translateX(var(--space-s));
 }
 
 .locations__country-note {
   font-family: var(--font-label);
   font-size: var(--step--1);
   color: var(--ink-muted);
+  transition: color var(--dur-fast) ease, transform var(--dur-med) var(--ease-out);
 }
 
+.locations__country:hover .locations__country-note,
+.locations__country:focus-visible .locations__country-note,
 .locations__country[data-active] .locations__country-note {
-  color: var(--accent-text);
+  color: var(--ink);
   font-weight: 500;
+  transform: translateX(calc(-1 * var(--space-s)));
 }
 
 /* Globe stage */

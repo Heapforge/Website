@@ -74,6 +74,7 @@
   --heat-logo-glow: #F0B394;
   --heat-logo-core: #D9532F;
   --heat-logo-strength: 0.9;
+  --heat-ambient: 0;
 }
 
 /* ---------- Light: brand Paper, Forge Navy ink, Ember accents ----------
@@ -129,6 +130,15 @@
   --heat-3: #D9532F;
   --heat-ember: #D9532F;
   --heat-strength: 0.9;
+  /* Focus-row hover shader: muted warm stone and soft ember under heavy frost. */
+  --heat-row-2: #F0B89A;
+  --heat-row-3: #D95B35;
+  --heat-row-ember: #D9532F;
+  --heat-row-strength: 0.95;
+  --heat-row-ambient: 0.35;
+  --focus-frost: rgba(249, 247, 242, 0.48);
+  --focus-frost-strong: rgba(243, 240, 232, 0.7);
+  --focus-frost-edge: rgba(255, 255, 255, 0.7);
   /* How much of the logo flame's light the ink catches (dark mode only). */
   --heat-logo-ink-glow: 0;
   --grain-opacity: 0.09;
@@ -191,6 +201,14 @@
   --heat-3: #FFB36B;
   --heat-ember: #FFC58A;
   --heat-strength: 0.92;
+  --heat-row-2: #8C3419;
+  --heat-row-3: #E06B32;
+  --heat-row-ember: #FF9E64;
+  --heat-row-strength: 0.9;
+  --heat-row-ambient: 0.32;
+  --focus-frost: rgba(15, 21, 32, 0.46);
+  --focus-frost-strong: rgba(8, 12, 19, 0.68);
+  --focus-frost-edge: rgba(244, 237, 227, 0.09);
   --heat-logo-ink-glow: 0.38;
   --grain-opacity: 0.14;
   --grain-blend: screen;

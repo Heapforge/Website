@@ -16,7 +16,12 @@
       {{- with .countries }}
       <ul class="locations__countries reveal" aria-label="Countries we cover">
         {{- range . }}
-        <li class="locations__country" data-globe-country="{{ .code }}" data-lat="{{ .lat }}" data-lon="{{ .lon }}" tabindex="0">
+        <li class="locations__country" data-globe-country="{{ .code }}" data-lat="{{ .lat }}" data-lon="{{ .lon }}" data-heat-hover tabindex="0">
+          <div class="locations__country-bg" aria-hidden="true">
+            <canvas class="locations__country-canvas" data-heat-row aria-hidden="true"></canvas>
+            <div class="locations__country-frost"></div>
+            <div class="locations__country-grain grain"></div>
+          </div>
           <span class="locations__country-dot" aria-hidden="true"></span>
           <span class="locations__country-name">{{ .name }}</span>
           <span class="locations__country-note">{{ .note }}</span>

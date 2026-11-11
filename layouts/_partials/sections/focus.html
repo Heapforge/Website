@@ -16,7 +16,12 @@
       {{- range $projects -}}
         {{- if in .categories $area.id -}}{{- $names = $names | append .name -}}{{- end -}}
       {{- end }}
-      <li class="focus__item reveal">
+      <li class="focus__item reveal" data-heat-hover>
+        <div class="focus__bg" aria-hidden="true">
+          <canvas class="focus__canvas" data-heat-row aria-hidden="true"></canvas>
+          <div class="focus__frost"></div>
+          <div class="focus__grain grain"></div>
+        </div>
         <h3 class="focus__name">{{ $area.name }}</h3>
         <p class="focus__summary">{{ $area.summary }}</p>
         {{- with $names }}

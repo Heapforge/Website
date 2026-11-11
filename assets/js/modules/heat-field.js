@@ -72,10 +72,11 @@ uniform vec3 uC2;        // glow
 uniform vec3 uC3;        // hottest core
 uniform vec3 uEmber;     // ember colour
 uniform float uStrength; // overall heat
+uniform float uAmbient;  // baseline heat across wide rows (0 in hero)
 
 void main() {
   vec2 uv = gl_FragCoord.xy / uRes;            // 0..1, origin bottom-left
-  float aspect = uRes.x / uRes.y;
+  float aspect = uAmbient > 0.0 ? min(uRes.x / uRes.y, 1.8) : uRes.x / uRes.y;
   vec2 p = vec2(uv.x * aspect, uv.y) * 2.0;
   float t = uTime;
 
@@ -90,7 +91,7 @@ void main() {
   vec2 m = vec2((uv.x - 0.93) * aspect * 0.62, (uv.y + 0.12) * 0.95);
   float mouth = exp(-dot(m, m) * 2.8);
   float floorGlow = (1.0 - smoothstep(0.0, 0.4, uv.y)) * smoothstep(0.45, 1.0, uv.x) * 0.3;
-  float zone = clamp(mouth + floorGlow, 0.0, 1.0);
+  float zone = clamp(mouth + floorGlow + uAmbient, 0.0, 1.0);
 
   float heat = (f * f * 1.6 + length(r) * 0.22) * (0.16 + 1.1 * zone) + zone * 0.3;
   heat *= uStrength;
@@ -103,6 +104,7 @@ void main() {
   // Embers rising from the mouth.
   vec2 px = gl_FragCoord.xy / uScale;            // CSS pixels
   vec2 cssRes = uRes / uScale;
+  float emberScale = 1.0 + uAmbient * 2.0;
   float glow = 0.0;
   for (int i = 0; i < 12; i++) {
     float fi = float(i);
@@ -110,15 +112,15 @@ void main() {
     float s2 = hash(vec2(fi, 9.1));
     float s3 = hash(vec2(fi, 4.3));
     float life = fract(s1 + t * (0.018 + s2 * 0.03));
-    float x = 0.55 + s3 * 0.43
+    float x = (0.55 - uAmbient * 0.45) + s3 * (0.43 + uAmbient * 0.42)
             + sin(t * (0.35 + s1 * 0.5) + fi * 2.1) * 0.018
             + (s2 - 0.5) * life * 0.16;
     float y = -0.04 + life * 0.95;
     vec2 d = px - vec2(x, y) * cssRes;
-    float rad = 0.9 + s2 * 1.4;
+    float rad = (0.9 + s2 * 1.4) * emberScale;
     float d2 = dot(d, d);
     float core = exp(-d2 / (rad * rad));
-    float halo = exp(-d2 / (rad * rad * 18.0)) * 0.22;
+    float halo = exp(-d2 / (rad * rad * 18.0)) * (0.22 * emberScale);
     float fade = smoothstep(0.0, 0.1, life) * (1.0 - smoothstep(0.45, 0.9, life));
     float flicker = 0.65 + 0.35 * sin(t * (5.0 + s3 * 6.0) + fi * 3.7);
     glow += (core + halo) * fade * flicker;
@@ -178,10 +180,17 @@ const STILL_TIME = 37.0;   // a pleasing frame for reduced motion
 // renderScale: fraction of device pixels rendered, then upscaled.
 // colors / floats: which CSS custom properties feed which uniforms.
 // clock: fields sharing one stay in step (the flame and its ink).
+const HERO_CLOCK = { t: 12, stamp: 0 };
 const HERO = {
-  renderScale: 0.5, maxDpr: 1.5,
+  renderScale: 0.5, maxDpr: 1.5, clock: HERO_CLOCK,
   colors: { uC0: '--heat-0', uC1: '--heat-1', uC2: '--heat-2', uC3: '--heat-3', uEmber: '--heat-ember' },
-  floats: { uStrength: '--heat-strength' },
+  floats: { uStrength: '--heat-strength', uAmbient: '--heat-ambient' },
+};
+const ROW = {
+  ...HERO,
+  hover: true,
+  colors: { uC0: '--heat-0', uC1: '--heat-1', uC2: '--heat-row-2', uC3: '--heat-row-3', uEmber: '--heat-row-ember' },
+  floats: { uStrength: '--heat-row-strength', uAmbient: '--heat-row-ambient' },
 };
 const LOGO_CLOCK = { t: 12, stamp: 0 };
 const FLAME = {                                   // a few hundred pixels: render it sharp
@@ -221,26 +230,15 @@ function compile(gl, type, source) {
   return shader;
 }
 
-function runField(canvas, fragment, { renderScale, maxDpr, colors, floats, clock: shared }) {
-  let gl = null;
-  try {
-    gl = canvas.getContext('webgl', {
-      alpha: false, antialias: false, depth: false, stencil: false,
-      premultipliedAlpha: false, powerPreference: 'low-power',
-    });
-  } catch (e) {
-    gl = null;
-  }
-  if (!gl) return; // the CSS gradient (or SVG flame) fallback stays visible.
-
+function createGlProgram(gl, fragment, colors, floats) {
   const vs = compile(gl, gl.VERTEX_SHADER, VERTEX);
   const fs = compile(gl, gl.FRAGMENT_SHADER, fragment);
-  if (!vs || !fs) return;
+  if (!vs || !fs) return null;
   const program = gl.createProgram();
   gl.attachShader(program, vs);
   gl.attachShader(program, fs);
   gl.linkProgram(program);
-  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return;
+  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return null;
   gl.useProgram(program);
 
   const buffer = gl.createBuffer();
@@ -251,7 +249,7 @@ function runField(canvas, fragment, { renderScale, maxDpr, colors, floats, clock
   gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
 
   const u = {};
-  ['uRes', 'uScale', 'uTime', 'uC0', 'uC1', 'uC2', 'uC3', 'uEmber', 'uStrength', 'uAmount']
+  ['uRes', 'uScale', 'uTime', 'uC0', 'uC1', 'uC2', 'uC3', 'uEmber', 'uStrength', 'uAmbient', 'uAmount']
     .forEach((name) => { u[name] = gl.getUniformLocation(program, name); });
 
   const readColors = () => {
@@ -266,23 +264,99 @@ function runField(canvas, fragment, { renderScale, maxDpr, colors, floats, clock
     }
   };
 
+  return { u, readColors };
+}
+
+// Shared offscreen WebGL renderer for hover rows so all rows across the page
+// share one WebGL context and copy frames into lightweight 2D canvases.
+function createSharedRenderer(fragment, { colors, floats }) {
+  const surface = document.createElement('canvas');
+  let gl = null;
+  try {
+    gl = surface.getContext('webgl', {
+      alpha: false, antialias: false, depth: false, stencil: false,
+      premultipliedAlpha: false, powerPreference: 'low-power',
+    });
+  } catch (e) {
+    gl = null;
+  }
+  if (!gl) return null;
+
+  const prog = createGlProgram(gl, fragment, colors, floats);
+  if (!prog) return null;
+  const { u, readColors } = prog;
+
+  return {
+    readColors,
+    drawTo(ctx, w, h, scale, time) {
+      if (surface.width < w) surface.width = w;
+      if (surface.height < h) surface.height = h;
+      gl.viewport(0, 0, w, h);
+      gl.uniform2f(u.uRes, w, h);
+      gl.uniform1f(u.uScale, scale);
+      gl.uniform1f(u.uTime, time);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+      ctx.drawImage(surface, 0, surface.height - h, w, h, 0, 0, w, h);
+    },
+  };
+}
+
+function runField(canvas, fragment, { renderScale, maxDpr, colors, floats, clock: shared, hover = false, phase = 0, renderer = null }) {
+  let gl = null;
+  let u = null;
+  let readColors = null;
+  let ctx2d = null;
+
+  if (renderer) {
+    ctx2d = canvas.getContext('2d');
+    if (!ctx2d) return;
+    readColors = renderer.readColors;
+  } else {
+    try {
+      gl = canvas.getContext('webgl', {
+        alpha: false, antialias: false, depth: false, stencil: false,
+        premultipliedAlpha: false, powerPreference: 'low-power',
+      });
+    } catch (e) {
+      gl = null;
+    }
+    if (!gl) return; // the CSS gradient (or SVG flame) fallback stays visible.
+
+    const prog = createGlProgram(gl, fragment, colors, floats);
+    if (!prog) return;
+    u = prog.u;
+    readColors = prog.readColors;
+  }
+
+  let w = 1;
+  let h = 1;
+  let scale = 1;
+
   const resize = () => {
     const dpr = Math.min(window.devicePixelRatio || 1, maxDpr);
-    const scale = dpr * renderScale;
-    const w = Math.max(1, Math.round(canvas.clientWidth * scale));
-    const h = Math.max(1, Math.round(canvas.clientHeight * scale));
+    scale = dpr * renderScale;
+    w = Math.max(1, Math.round(canvas.clientWidth * scale));
+    h = Math.max(1, Math.round(canvas.clientHeight * scale));
     if (canvas.width !== w || canvas.height !== h) {
       canvas.width = w;
       canvas.height = h;
     }
-    gl.viewport(0, 0, w, h);
-    gl.uniform2f(u.uRes, w, h);
-    gl.uniform1f(u.uScale, scale);
+    if (gl) {
+      gl.viewport(0, 0, w, h);
+      gl.uniform2f(u.uRes, w, h);
+      gl.uniform1f(u.uScale, scale);
+    }
   };
 
   const reducedQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
   let reduced = reducedQuery.matches;
   let visible = true;
+  const hoverEl = hover ? (canvas.closest('[data-heat-hover]') || canvas.parentElement) : null;
+  let pointerIn = hoverEl ? hoverEl.matches(':hover') : false;
+  let focusIn = false;
+  let attrActive = hoverEl ? hoverEl.hasAttribute('data-active') : false;
+  let hovered = hoverEl ? (pointerIn || focusIn || attrActive) : true;
+  let hoverTimer = 0;
   // Start mid-flow so the first frame is already developed.
   const clock = shared || { t: 12, stamp: 0 };
   let last = 0;
@@ -296,8 +370,12 @@ function runField(canvas, fragment, { renderScale, maxDpr, colors, floats, clock
   };
 
   const draw = (time) => {
-    gl.uniform1f(u.uTime, time);
-    gl.drawArrays(gl.TRIANGLES, 0, 3);
+    if (renderer) {
+      renderer.drawTo(ctx2d, w, h, scale, time + phase);
+    } else {
+      gl.uniform1f(u.uTime, time + phase);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+    }
     if (!canvas.hasAttribute('data-ready')) canvas.setAttribute('data-ready', '');
   };
 
@@ -309,7 +387,7 @@ function runField(canvas, fragment, { renderScale, maxDpr, colors, floats, clock
     draw(clock.t);
   };
 
-  const shouldRun = () => !reduced && visible && !document.hidden;
+  const shouldRun = () => !reduced && visible && hovered && !document.hidden;
 
   const sync = () => {
     if (shouldRun()) {
@@ -325,6 +403,31 @@ function runField(canvas, fragment, { renderScale, maxDpr, colors, floats, clock
   readColors();
   resize();
   draw(reduced ? STILL_TIME : clock.t);
+
+  if (hoverEl) {
+    const updateHover = () => {
+      clearTimeout(hoverTimer);
+      if (pointerIn || focusIn || attrActive) {
+        hovered = true;
+        sync();
+      } else {
+        hoverTimer = setTimeout(() => {
+          hovered = false;
+          sync();
+        }, 500);
+      }
+    };
+    hoverEl.addEventListener('pointerenter', () => { pointerIn = true; updateHover(); });
+    hoverEl.addEventListener('pointerleave', () => { pointerIn = false; updateHover(); });
+    hoverEl.addEventListener('focusin', () => { focusIn = true; updateHover(); });
+    hoverEl.addEventListener('focusout', () => { focusIn = false; updateHover(); });
+    if ('MutationObserver' in window) {
+      new MutationObserver(() => {
+        attrActive = hoverEl.hasAttribute('data-active');
+        updateHover();
+      }).observe(hoverEl, { attributes: true, attributeFilter: ['data-active'] });
+    }
+  }
 
   if ('ResizeObserver' in window) {
     new ResizeObserver(() => { resize(); redrawIfIdle(); }).observe(canvas);
@@ -358,6 +461,15 @@ function runField(canvas, fragment, { renderScale, maxDpr, colors, floats, clock
 export function initHeatField() {
   const hero = document.querySelector('[data-heat]');
   if (hero) runField(hero, FRAGMENT, HERO);
+  const rows = document.querySelectorAll('[data-heat-row]');
+  if (rows.length) {
+    const rowRenderer = createSharedRenderer(FRAGMENT, ROW);
+    if (rowRenderer) {
+      rows.forEach((canvas, i) => {
+        runField(canvas, FRAGMENT, { ...ROW, phase: (i + 1) * 9.7, renderer: rowRenderer });
+      });
+    }
+  }
   document.querySelectorAll('[data-heat-logo]').forEach((canvas) => runField(canvas, FLAME_FRAGMENT, FLAME));
   document.querySelectorAll('[data-heat-logo-ink]').forEach((canvas) => runField(canvas, INK_FRAGMENT, INK));
 }
