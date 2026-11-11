@@ -1,0 +1,376 @@
+/* Locations: split layout with country coverage list and interactive 3D dot globe. */
+.locations {
+  overflow: clip;
+}
+
+.locations__inner {
+  display: grid;
+  gap: var(--space-2xl);
+  align-items: center;
+}
+
+@media (min-width: 60rem) {
+  .locations__inner {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    column-gap: var(--space-2xl);
+  }
+}
+
+.locations__content {
+  display: grid;
+  gap: var(--space-xl);
+}
+
+.locations__intro {
+  display: grid;
+  gap: var(--space-m);
+}
+
+.locations__title {
+  max-width: 14ch;
+  font-size: var(--step-4);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: var(--tracking-display);
+}
+
+.locations__lede {
+  max-width: 34rem;
+  font-size: var(--step-1);
+  line-height: 1.45;
+  color: var(--ink-muted);
+}
+
+/* Ruled interactive list of the four covered countries */
+.locations__countries {
+  border-top: var(--hairline) solid var(--line-strong);
+}
+
+.locations__country {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: var(--space-s);
+  padding-block: var(--space-s);
+  border-bottom: var(--hairline) solid var(--line);
+  cursor: pointer;
+  transition: color var(--dur-fast) ease;
+}
+
+.locations__country::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-med) var(--ease-out);
+}
+
+.locations__country:hover::after,
+.locations__country[data-active]::after {
+  transform: scaleX(1);
+}
+
+.locations__country-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-soft);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.locations__country:hover .locations__country-dot,
+.locations__country[data-active] .locations__country-dot {
+  transform: scale(1.25);
+}
+
+.locations__country-name {
+  font-size: var(--step-1);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.locations__country:hover .locations__country-name,
+.locations__country[data-active] .locations__country-name {
+  transform: translateX(4px);
+}
+
+.locations__country-note {
+  font-family: var(--font-label);
+  font-size: var(--step--1);
+  color: var(--ink-muted);
+}
+
+.locations__country[data-active] .locations__country-note {
+  color: var(--accent-text);
+  font-weight: 500;
+}
+
+/* Globe stage */
+.locations__stage {
+  display: flex;
+  justify-content: center;
+}
+
+.globe {
+  position: relative;
+  width: 100%;
+  max-width: 34rem;
+  aspect-ratio: 1 / 1;
+  margin-inline: auto;
+  user-select: none;
+}
+
+.globe__canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+.globe[data-dragging] .globe__canvas {
+  cursor: grabbing;
+}
+
+.globe__pins {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.globe__marker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  pointer-events: auto;
+  transition: opacity var(--dur-fast) ease;
+}
+
+.globe__marker[data-open] {
+  z-index: 20;
+}
+
+.globe__marker[data-hidden] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Interactive headquarters pin button:
+   .globe__pin-anchor sits directly on (0,0) (the city coordinate on the sphere);
+   .globe__pin-pill sits immediately to the bottom-left so highlighted country
+   dots remain unobstructed. */
+.globe__pin {
+  position: relative;
+  display: block;
+  padding: 0;
+  background: none;
+  border: 0;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.globe__pin-anchor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1.15rem;
+  height: 1.15rem;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+}
+
+.globe__pin-core {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: var(--radius-pill);
+  background: var(--accent);
+  box-shadow: 0 0 0 2px var(--paper-raised), 0 0 0 3.5px var(--accent);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.globe__pin-pulse {
+  position: absolute;
+  inset: -3px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--accent);
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .globe__pin-pulse {
+    animation: globe-pulse 2.6s var(--ease-out) infinite;
+  }
+}
+
+@keyframes globe-pulse {
+  0% {
+    opacity: 0.75;
+    transform: scale(0.75);
+  }
+  75%, 100% {
+    opacity: 0;
+    transform: scale(1.65);
+  }
+}
+
+.globe__pin-pill {
+  position: absolute;
+  top: 0.35rem;
+  right: 0.35rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.28rem 0.6rem 0.28rem 0.42rem;
+  background: var(--paper-raised);
+  color: var(--ink);
+  border-radius: var(--radius-pill);
+  box-shadow: 0 0 0 var(--hairline) var(--line-strong), var(--shadow);
+  font-family: var(--font-label);
+  font-size: var(--step--1);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  transition: background-color var(--dur-fast) ease, color var(--dur-fast) ease,
+              box-shadow var(--dur-fast) ease, transform var(--dur-fast) var(--ease-out);
+}
+
+.globe__pin:hover .globe__pin-core,
+.globe__marker[data-open] .globe__pin-core {
+  transform: scale(1.25);
+}
+
+.globe__pin:hover .globe__pin-pill,
+.globe__marker[data-open] .globe__pin-pill {
+  background: var(--button-bg);
+  color: var(--button-ink);
+  box-shadow: 0 0 0 1.5px var(--accent), var(--shadow);
+  transform: translateY(-1px);
+}
+
+.globe__pin:focus-visible {
+  outline: none;
+}
+
+.globe__pin:focus-visible .globe__pin-pill {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.globe__pin-icon {
+  display: inline-flex;
+  color: var(--accent);
+}
+
+/* Headquarters tooltip card */
+.globe__tooltip {
+  position: absolute;
+  left: -1.5rem;
+  bottom: calc(100% + 0.9rem);
+  display: grid;
+  gap: 0.2rem;
+  width: max-content;
+  max-width: 15.5rem;
+  padding: var(--space-xs) var(--space-s);
+  background: var(--paper-raised);
+  color: var(--ink);
+  border-radius: var(--radius-m);
+  box-shadow: 0 0 0 var(--hairline) var(--line-strong), var(--shadow);
+  text-align: left;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 6px) scale(0.96);
+  transition: opacity var(--dur-fast) ease,
+              transform var(--dur-fast) var(--ease-out),
+              visibility 0s linear var(--dur-fast);
+}
+
+.globe__tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: calc(50% + 1.5rem);
+  width: 0.55rem;
+  height: 0.55rem;
+  background: var(--paper-raised);
+  border-right: var(--hairline) solid var(--line-strong);
+  border-bottom: var(--hairline) solid var(--line-strong);
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.globe__marker[data-tooltip-pos="bottom"] .globe__tooltip {
+  bottom: auto;
+  top: calc(100% + 2.3rem);
+  transform: translate(-50%, -6px) scale(0.96);
+}
+
+.globe__marker[data-tooltip-pos="bottom"] .globe__tooltip::after {
+  top: 0;
+  border-right: 0;
+  border-bottom: 0;
+  border-left: var(--hairline) solid var(--line-strong);
+  border-top: var(--hairline) solid var(--line-strong);
+}
+
+.globe__marker[data-open] .globe__tooltip {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate(-50%, 0) scale(1);
+  transition-delay: 0s;
+}
+
+.globe__tooltip-city {
+  font-size: var(--step-0);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.globe__tooltip-detail {
+  font-size: var(--step--1);
+  line-height: 1.35;
+  color: var(--ink-muted);
+}
+
+/* Progressive enhancement fallback when JS is disabled */
+html:not(.js) .globe {
+  aspect-ratio: auto;
+}
+html:not(.js) .globe__canvas {
+  display: none;
+}
+html:not(.js) .globe__pins {
+  position: static;
+  display: grid;
+  gap: var(--space-s);
+  pointer-events: auto;
+}
+html:not(.js) .globe__marker {
+  position: static;
+}
+html:not(.js) .globe__pin {
+  display: none;
+}
+html:not(.js) .globe__tooltip {
+  position: static;
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  max-width: none;
+  width: 100%;
+}
+html:not(.js) .globe__tooltip::after {
+  display: none;
+}

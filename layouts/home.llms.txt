@@ -4,7 +4,12 @@
 > {{ $org.description }}
 
 ## Overview
-- **Locations**: {{ delimit site.Params.locations ", " " & " }}
+- **Headquarters**: {{ delimit site.Params.locations ", " " & " }}
+{{- with hugo.Data.locations.countries }}
+{{- $covered := slice -}}
+{{- range . }}{{ $covered = $covered | append .name }}{{ end }}
+- **Coverage**: {{ delimit $covered ", " " & " }}
+{{- end }}
 - **Website**: {{ strings.TrimSuffix "/" site.BaseURL }}
 {{ with site.Params.contact.email }}- **Email**: {{ . }}
 {{ end -}}

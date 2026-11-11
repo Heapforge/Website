@@ -1,0 +1,68 @@
+{{- /*
+  Company coverage & headquarters dot globe, fed by data/locations.yaml.
+  Highlights the UK, Bulgaria, Romania and Greece on an interactive 3D
+  orthographic dot globe and places interactive headquarters pins on
+  London and Sofia.
+*/ -}}
+{{- with hugo.Data.locations }}
+<section class="section locations" id="locations" aria-labelledby="locations-title">
+  <div class="container locations__inner">
+    <div class="locations__content">
+      <div class="locations__intro reveal">
+        <h2 class="locations__title" id="locations-title">{{ .title }}</h2>
+        <p class="locations__lede">{{ .lede }}</p>
+      </div>
+
+      {{- with .countries }}
+      <ul class="locations__countries reveal" aria-label="Countries we cover">
+        {{- range . }}
+        <li class="locations__country" data-globe-country="{{ .code }}" data-lat="{{ .lat }}" data-lon="{{ .lon }}" tabindex="0">
+          <span class="locations__country-dot" aria-hidden="true"></span>
+          <span class="locations__country-name">{{ .name }}</span>
+          <span class="locations__country-note">{{ .note }}</span>
+        </li>
+        {{- end }}
+      </ul>
+      {{- end }}
+    </div>
+
+    <div class="locations__stage reveal">
+      <div class="globe" data-globe aria-label="Interactive globe showing Heapforge coverage in the United Kingdom, Bulgaria, Romania and Greece, with headquarters in London and Sofia">
+        <canvas class="globe__canvas" data-globe-canvas aria-hidden="true"></canvas>
+
+        {{- with .headquarters }}
+        <div class="globe__pins" data-globe-pins>
+          {{- range . }}
+          <div class="globe__marker" data-globe-marker="{{ .id }}" data-country="{{ .countryCode }}" data-lat="{{ .lat }}" data-lon="{{ .lon }}">
+            <button
+              class="globe__pin"
+              type="button"
+              data-globe-pin="{{ .id }}"
+              aria-expanded="false"
+              aria-controls="globe-tip-{{ .id }}"
+              aria-describedby="globe-tip-{{ .id }}"
+              aria-label="{{ .city }}, {{ .country }} — {{ .role }}"
+            >
+              <span class="globe__pin-anchor" aria-hidden="true">
+                <span class="globe__pin-pulse"></span>
+                <span class="globe__pin-core"></span>
+              </span>
+              <span class="globe__pin-pill">
+                <span class="globe__pin-icon" aria-hidden="true">{{ partial "icons/icon.html" (dict "name" "pin" "size" 13) }}</span>
+                <span class="globe__pin-label">{{ .city }}</span>
+              </span>
+            </button>
+
+            <div class="globe__tooltip" id="globe-tip-{{ .id }}" role="tooltip" data-globe-tooltip>
+              <strong class="globe__tooltip-city">{{ .city }}, {{ .country }}</strong>
+              <span class="globe__tooltip-detail">{{ .detail }}</span>
+            </div>
+          </div>
+          {{- end }}
+        </div>
+        {{- end }}
+      </div>
+    </div>
+  </div>
+</section>
+{{- end }}

@@ -1,0 +1,48 @@
+# Countries covered by Heapforge and headquarters cities, rendered by
+# sections/locations.html, home.llms.txt, and head/schema.html.
+title: Where we operate
+lede: Headquartered in London and Sofia, we work with clients and teams across Western and South-Eastern Europe.
+
+countries:
+  - code: GB
+    name: United Kingdom
+    note: Headquarters in London
+    lat: 54.0
+    lon: -2.5
+
+  - code: BG
+    name: Bulgaria
+    note: Headquarters in Sofia
+    lat: 42.7
+    lon: 25.5
+
+  - code: RO
+    name: Romania
+    note: Regional coverage
+    lat: 45.9
+    lon: 24.9
+
+  - code: GR
+    name: Greece
+    note: Regional coverage
+    lat: 39.1
+    lon: 21.8
+
+headquarters:
+  - id: london
+    city: London
+    country: United Kingdom
+    countryCode: GB
+    role: Headquarters
+    detail: Company headquarters — London, United Kingdom
+    lat: 51.5074
+    lon: -0.1278
+
+  - id: sofia
+    city: Sofia
+    country: Bulgaria
+    countryCode: BG
+    role: Headquarters
+    detail: Company headquarters — Sofia, Bulgaria
+    lat: 42.6977
+    lon: 23.3219

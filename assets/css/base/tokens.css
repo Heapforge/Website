@@ -133,6 +133,16 @@
   --heat-logo-ink-glow: 0;
   --grain-opacity: 0.09;
   --grain-blend: multiply;
+
+  /* Dot globe (locations section) */
+  --globe-surface-inner: #FFFFFF;
+  --globe-surface-outer: #EAE4D7;
+  --globe-rim: rgba(30, 41, 59, 0.22);
+  --globe-graticule: rgba(30, 41, 59, 0.07);
+  --globe-dot: rgba(30, 41, 59, 0.34);
+  --globe-highlight: #D9532F;
+  --globe-highlight-glow: rgba(217, 83, 47, 0.24);
+  --globe-ambient: rgba(217, 83, 47, 0.12);
 }
 
 /* ---------- Dark: navy-black, warm whites ---------- */
@@ -184,4 +194,14 @@
   --heat-logo-ink-glow: 0.38;
   --grain-opacity: 0.14;
   --grain-blend: screen;
+
+  /* Dot globe (locations section) */
+  --globe-surface-inner: #131C2B;
+  --globe-surface-outer: #090E17;
+  --globe-rim: rgba(244, 237, 227, 0.22);
+  --globe-graticule: rgba(244, 237, 227, 0.07);
+  --globe-dot: rgba(244, 237, 227, 0.32);
+  --globe-highlight: #FF6B35;
+  --globe-highlight-glow: rgba(255, 107, 53, 0.28);
+  --globe-ambient: rgba(255, 107, 53, 0.16);
 }

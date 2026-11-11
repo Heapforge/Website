@@ -8,7 +8,7 @@ weight: 20
 
 This Privacy Policy explains how **Heapforge Ltd.** ("Heapforge", "we", "us" or "our") collects, uses, shares and protects personal data when you use **Heapforge Reader** (the "app"), or when you otherwise contact us about it. It also explains the rights you have and how to exercise them.
 
-The **Heapforge Journal** app is covered by a [separate privacy policy](/legal/heapforge-journal-privacy-policy/), and the heapforge.com website by [another](/legal/heapforge-com-privacy-policy/).
+The **Heapforge Journal**, **Heapforge Markdown** and **Heapforge HexEditor** apps are covered by a [separate privacy policy](/legal/heapforge-journal-privacy-policy/), and the heapforge.com website by [another](/legal/heapforge-com-privacy-policy/).
 
 ## 1. Who we are
 

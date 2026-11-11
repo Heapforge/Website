@@ -8,6 +8,11 @@
   {{- $locations = $locations | append (dict "@type" "Place" "name" .) -}}
 {{- end -}}
 
+{{- $areaServed := slice -}}
+{{- range hugo.Data.locations.countries -}}
+  {{- $areaServed = $areaServed | append (dict "@type" "Country" "name" .name) -}}
+{{- end -}}
+
 {{- $founders := slice -}}
 {{- range hugo.Data.team -}}
   {{- $founders = $founders | append (dict
@@ -34,6 +39,7 @@
   "description" $org.description
   "sameAs" $sameAs
   "foundingLocation" $locations
+  "areaServed" $areaServed
   "founder" $founders
 -}}
 {{- with site.Params.contact.email -}}
