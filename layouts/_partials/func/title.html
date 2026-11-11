@@ -1,5 +1,7 @@
 {{- if .IsHome -}}
   {{- printf "%s - %s" site.Title site.Params.tagline -}}
+{{- else if eq .Kind "404" -}}
+  {{- printf "%s - %s" (i18n "not_found_page_title" | default .Title) site.Title -}}
 {{- else -}}
   {{- printf "%s - %s" .Title site.Title -}}
 {{- end -}}

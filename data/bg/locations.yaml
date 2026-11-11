@@ -1,0 +1,48 @@
+# Държави, в които Heapforge оперира, и градове със седалища, използвани от
+# sections/locations.html, home.llms.txt и head/schema.html.
+title: Къде работим
+lede: Със седалища в Лондон и София, ние работим с клиенти и екипи в Западна и Югоизточна Европа.
+
+countries:
+  - code: GB
+    name: Обединено кралство
+    note: Седалище в Лондон
+    lat: 54.0
+    lon: -2.5
+
+  - code: BG
+    name: България
+    note: Седалище в София
+    lat: 42.7
+    lon: 25.5
+
+  - code: RO
+    name: Румъния
+    note: Регионално покритие
+    lat: 45.9
+    lon: 24.9
+
+  - code: GR
+    name: Гърция
+    note: Регионално покритие
+    lat: 39.1
+    lon: 21.8
+
+headquarters:
+  - id: london
+    city: Лондон
+    country: Обединено кралство
+    countryCode: GB
+    role: Седалище
+    detail: Седалище на компанията — Лондон, Обединено кралство
+    lat: 51.5074
+    lon: -0.1278
+
+  - id: sofia
+    city: София
+    country: България
+    countryCode: BG
+    role: Седалище
+    detail: Седалище на компанията — София, България
+    lat: 42.6977
+    lon: 23.3219

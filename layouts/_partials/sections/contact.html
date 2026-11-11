@@ -4,19 +4,18 @@
   <div class="contact__heat" aria-hidden="true"></div>
   <div class="container contact__inner">
     <div class="contact__intro reveal">
-      <h2 class="contact__title" id="contact-title">Have a project in mind?</h2>
+      <h2 class="contact__title" id="contact-title">{{ i18n "contact_title" }}</h2>
       <p class="contact__lede">
-        Tell us what you're building, when you need it and roughly what budget
-        you have in mind. We'll take it from there.
+        {{ i18n "contact_lede" }}
       </p>
     </div>
 
     <div class="contact__actions reveal">
-      <a class="button button--primary contact__email" href="mailto:{{ . }}?subject=Project%20enquiry">
+      <a class="button button--primary contact__email" href="mailto:{{ . }}?subject={{ i18n "contact_email_subject" | urlquery }}">
         {{ partial "icons/icon.html" (dict "name" "mail" "size" 18) }}{{ . }}
       </a>
       {{- with site.Params.locations }}
-      <ul class="contact__places" aria-label="Studio locations">
+      <ul class="contact__places" aria-label="{{ i18n "contact_locations_aria" }}">
         {{- range . }}
         <li>{{ partial "icons/icon.html" (dict "name" "pin" "size" 16) }}{{ . }}</li>
         {{- end }}

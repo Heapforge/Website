@@ -1,10 +1,11 @@
-{{- $work := hugo.Data.client_work -}}
+{{- $data := partial "func/site-data.html" . -}}
+{{- $work := $data.client_work -}}
 {{- if $work }}
 <section class="section" id="clients" aria-labelledby="clients-title">
   <div class="container">
     {{ partial "sections/section-head.html" (dict
         "id" "clients-title"
-        "title" "Projects we launched for our clients."
+        "title" (i18n "clients_title")
     ) }}
 
     <ul class="client-list">
@@ -14,7 +15,7 @@
           {{- with .screenshot }}
           {{ partial "screenshot.html" (dict
               "src" .
-              "alt" (printf "Front page of %s" $c.name)
+              "alt" (i18n "screenshot_alt" (dict "name" $c.name))
               "class" "client__shot"
               "sizes" "(min-width: 64rem) 58vw, 92vw") }}
           {{- end }}
@@ -23,9 +24,10 @@
           <h3 class="client__name">{{ .name }}</h3>
           <p class="client__summary">{{ .summary | default .description }}</p>
           {{- with .url }}
+          {{- $host := strings.TrimPrefix "https://" . | strings.TrimSuffix "/" -}}
           <a class="button button--ghost" href="{{ . }}" target="_blank" rel="noopener">
-            Visit {{ strings.TrimPrefix "https://" . | strings.TrimSuffix "/" }}
-            {{ partial "icons/icon.html" (dict "name" "arrow-up-right" "size" 16) }}<span class="visually-hidden"> (opens in a new tab)</span>
+            {{ i18n "visit_site" (dict "host" $host) }}
+            {{ partial "icons/icon.html" (dict "name" "arrow-up-right" "size" 16) }}<span class="visually-hidden"> {{ i18n "opens_new_tab" }}</span>
           </a>
           {{- end }}
         </div>

@@ -4,10 +4,10 @@
     <div class="not-found__grain grain" aria-hidden="true"></div>
     <div class="container not-found__inner">
       <p class="not-found__code" aria-hidden="true">404</p>
-      <h1 class="not-found__title">Nothing was forged here.</h1>
-      <p class="not-found__copy">The page you were looking for doesn't exist. It may have moved, or the link may be mistyped.</p>
+      <h1 class="not-found__title">{{ i18n "not_found_title" }}</h1>
+      <p class="not-found__copy">{{ i18n "not_found_copy" }}</p>
       <a class="button button--primary" href="{{ site.Home.RelPermalink }}">
-        {{ partial "icons/icon.html" (dict "name" "arrow-left" "size" 18) }} Back to {{ site.Title }}
+        {{ partial "icons/icon.html" (dict "name" "arrow-left" "size" 18) }} {{ i18n "back_to" (dict "title" site.Title) }}
       </a>
     </div>
   </section>

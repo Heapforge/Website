@@ -14,12 +14,23 @@
 <meta name="robots" content="noindex">
 {{- else }}
 <link rel="canonical" href="{{ .Permalink }}">
+{{- if .IsTranslated }}
+{{- range .AllTranslations }}
+<link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .Permalink }}">
+{{- if eq .Language.Lang hugo.Sites.Default.Language.Lang }}
+<link rel="alternate" hreflang="x-default" href="{{ .Permalink }}">
+{{- end }}
+{{- end }}
+{{- end }}
 {{- end }}
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="{{ site.Title }}">
 <meta property="og:locale" content="{{ replace site.Language.Locale "-" "_" }}">
+{{- range .Translations }}
+<meta property="og:locale:alternate" content="{{ replace .Language.Locale "-" "_" }}">
+{{- end }}
 <meta property="og:url" content="{{ .Permalink }}">
 <meta property="og:title" content="{{ $title }}">
 <meta property="og:description" content="{{ $ogDescription }}">

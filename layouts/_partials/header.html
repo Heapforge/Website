@@ -1,12 +1,12 @@
 {{- /* In-page anchors resolve against the home page from every other page. */ -}}
 {{- $base := cond .IsHome "" site.Home.RelPermalink -}}
 {{- $links := slice
-  (dict "id" "build" "name" "What we build")
-  (dict "id" "projects" "name" "Projects")
-  (dict "id" "services" "name" "Services")
-  (dict "id" "clients" "name" "Client work")
-  (dict "id" "open-source" "name" "Open source")
-  (dict "id" "contact" "name" "Contact")
+  (dict "id" "build" "name" (i18n "nav_build"))
+  (dict "id" "projects" "name" (i18n "nav_projects"))
+  (dict "id" "services" "name" (i18n "nav_services"))
+  (dict "id" "clients" "name" (i18n "nav_clients"))
+  (dict "id" "open-source" "name" (i18n "nav_open_source"))
+  (dict "id" "contact" "name" (i18n "nav_contact"))
 -}}
 <header class="site-header" data-header>
   <div class="site-header__inner">
@@ -15,7 +15,7 @@
       {{- partial "logo.html" (dict "variant" "wordmark" "class" "site-header__wordmark" "decorative" true) -}}
     </a>
 
-    <nav class="site-nav" id="site-nav" aria-label="Primary" data-nav>
+    <nav class="site-nav" id="site-nav" aria-label="{{ i18n "nav_primary_aria" }}" data-nav>
       <ul class="site-nav__list">
         {{- range $links }}
         <li><a class="site-nav__link" href="{{ $base }}#{{ .id }}">{{ .name }}</a></li>
@@ -24,12 +24,46 @@
     </nav>
 
     <div class="site-header__tools">
-      <button class="icon-button theme-toggle" type="button" data-theme-toggle aria-label="Switch colour theme">
+      <div class="lang-picker" data-lang-picker>
+        <button class="lang-picker__trigger" type="button" data-lang-toggle aria-haspopup="true" aria-expanded="false" aria-controls="lang-menu" aria-label="{{ i18n "lang_picker_aria" }}">
+          {{ partial "icons/icon.html" (dict "name" "globe" "size" 16) }}
+          <span class="lang-picker__code">{{ strings.ToUpper site.Language.Lang }}</span>
+          <span class="lang-picker__chevron" aria-hidden="true">{{ partial "icons/icon.html" (dict "name" "chevron-down" "size" 14) }}</span>
+        </button>
+        <ul class="lang-picker__menu" id="lang-menu" aria-label="{{ i18n "lang_picker_aria" }}" data-lang-menu>
+          {{- range $s := hugo.Sites }}
+          {{- $lang := $s.Language.Lang -}}
+          {{- $isCurrent := eq $lang site.Language.Lang -}}
+          {{- $targetURL := $s.Home.RelPermalink -}}
+          {{- if not (eq $.Kind "404") -}}
+            {{- range $.AllTranslations -}}
+              {{- if eq .Language.Lang $lang -}}
+                {{- $targetURL = .RelPermalink -}}
+              {{- end -}}
+            {{- end -}}
+          {{- end }}
+          <li>
+            <a class="lang-picker__option{{ if $isCurrent }} is-active{{ end }}"
+               href="{{ $targetURL }}"
+               lang="{{ $lang }}"
+               hreflang="{{ $lang }}"{{ if $isCurrent }} aria-current="true"{{ end }}>
+              <span class="lang-picker__name">{{ $s.Language.Label }}</span>
+              <span class="lang-picker__badge">{{ strings.ToUpper $lang }}</span>
+            </a>
+          </li>
+          {{- end }}
+        </ul>
+      </div>
+
+      <button class="icon-button theme-toggle" type="button" data-theme-toggle
+              aria-label="{{ i18n "theme_toggle_aria" }}"
+              data-label-light="{{ i18n "theme_switch_light" }}"
+              data-label-dark="{{ i18n "theme_switch_dark" }}">
         <span class="theme-toggle__icon theme-toggle__icon--sun">{{ partial "icons/icon.html" (dict "name" "sun" "size" 18) }}</span>
         <span class="theme-toggle__icon theme-toggle__icon--moon">{{ partial "icons/icon.html" (dict "name" "moon" "size" 18) }}</span>
       </button>
       <button class="icon-button menu-toggle" type="button" data-menu-toggle aria-controls="site-nav" aria-expanded="false">
-        <span class="visually-hidden">Menu</span>
+        <span class="visually-hidden">{{ i18n "menu" }}</span>
         <span class="menu-toggle__bars" aria-hidden="true"></span>
       </button>
     </div>

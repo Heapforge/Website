@@ -69,6 +69,96 @@
   gap: var(--space-3xs);
 }
 
+/* Language picker dropdown */
+.lang-picker {
+  position: relative;
+}
+.lang-picker__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  height: 2.75rem;
+  padding-inline: 0.75rem 0.65rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-label);
+  font-size: var(--step--1);
+  font-weight: 550;
+  letter-spacing: var(--tracking-label);
+  color: var(--ink);
+  transition: background-color var(--dur-fast) ease, color var(--dur-fast) ease;
+}
+.lang-picker__trigger:hover,
+.lang-picker__trigger[aria-expanded="true"] {
+  background: var(--accent-soft);
+}
+.lang-picker__chevron {
+  display: inline-grid;
+  place-items: center;
+  color: var(--ink-muted);
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+.lang-picker__trigger[aria-expanded="true"] .lang-picker__chevron {
+  transform: rotate(180deg);
+}
+
+.lang-picker__menu {
+  position: absolute;
+  top: calc(100% + var(--space-2xs));
+  right: 0;
+  z-index: 60;
+  min-width: 10.5rem;
+  padding: var(--space-3xs);
+  list-style: none;
+  background: var(--paper-raised);
+  border: var(--hairline) solid var(--line);
+  border-radius: var(--radius-m);
+  box-shadow: var(--shadow);
+  visibility: hidden;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity var(--dur-fast) ease, transform var(--dur-fast) var(--ease-out),
+              visibility 0s linear var(--dur-fast);
+}
+.lang-picker__menu[data-open],
+html:not(.js) .lang-picker:hover .lang-picker__menu,
+html:not(.js) .lang-picker:focus-within .lang-picker__menu {
+  visibility: visible;
+  opacity: 1;
+  transform: none;
+  transition-delay: 0s;
+}
+
+.lang-picker__option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-s);
+  padding: 0.55rem 0.75rem;
+  border-radius: var(--radius-s);
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color var(--dur-fast) ease, color var(--dur-fast) ease;
+}
+.lang-picker__option:hover {
+  background: var(--accent-soft);
+}
+.lang-picker__option.is-active {
+  color: var(--accent-text);
+  font-weight: 600;
+}
+.lang-picker__badge {
+  font-family: var(--font-label);
+  font-size: 0.75rem;
+  letter-spacing: var(--tracking-label);
+  color: var(--ink-muted);
+}
+.lang-picker__option.is-active .lang-picker__badge {
+  color: var(--accent-text);
+}
+
 /* Theme toggle: shows the theme you'd switch to. */
 .theme-toggle { position: relative; }
 .theme-toggle__icon {
@@ -103,7 +193,7 @@
 .menu-toggle[aria-expanded="true"] .menu-toggle__bars { transform: translateY(0) rotate(45deg); }
 .menu-toggle[aria-expanded="true"] .menu-toggle__bars::before { transform: translateY(-6px) rotate(-90deg); }
 
-@media (max-width: 78rem) {
+@media (max-width: 82rem) {
   .site-header__wordmark { display: none; }
   .site-header__symbol { width: var(--logo-header-symbol); height: auto; }
   .site-nav { margin-left: auto; }

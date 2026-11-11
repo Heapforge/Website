@@ -1,0 +1,50 @@
+# Собствени продукти на Heapforge. `url` не е задължителен — пропуска се при
+# все още непубликувани проекти. `categories` са идентификатори от
+# data/<lang>/focus_areas.yaml; `screenshot` е път в assets/.
+- name: webreview.app
+  url: https://webreview.app
+  description: пропуснете изморителните серии от разговори с клиенти за корекции по вашият дизайн! Изпратете линк на клиента си, получете обратна връзка и автоматичен PR от вашите AI агенти въз основа на нея
+  summary: Пропуснете изморителните серии от разговори с клиенти за корекции по вашият дизайн! Изпратете линк на клиента си, получете обратна връзка и автоматичен PR от вашите AI агенти въз основа на нея.
+  categories: [saas, dev-tools]
+  screenshot: images/screenshots/webreview-app.png
+
+- name: tiny.lol
+  url: https://tiny.lol
+  description: инструмент за съкращаване на линкове и споделяне на текст
+  summary: Инструмент за съкращаване на линкове и споделяне на текст.
+  categories: [saas, dev-tools]
+  screenshot: images/screenshots/tiny-lol.png
+
+- name: lasso.domains
+  url: https://lasso.domains
+  description: пакет от инструменти за пазарен анализ и проследяване на търгове на домейни
+  summary: Пакет от инструменти за пазарен анализ и проследяване на търгове на домейни.
+  categories: [saas]
+  screenshot: images/screenshots/lasso-domains.png
+
+- name: Schrift Studio
+  url: https://schrift.app
+  description: професионален софтуер за дизайн на шрифтове за desktop и мобилни платформи
+  summary: Професионален софтуер за дизайн на шрифтове за desktop и мобилни платформи.
+  categories: [saas]
+  screenshot: images/screenshots/schrift-app.png
+
+- name: Project YY
+  description: уебсайт за изучаване на писмости, поддържащ над 20 000 йероглифа и символа
+  summary: Интерактивен уебсайт за изучаване на писмености, поддържащ над 20 000 йероглифа и символа.
+  categories: [language-learning]
+
+- name: Heapforge Reader
+  description: приложение за четене на електронни книги за iOS, Android, Windows, Linux и macOS
+  summary: Приложение за четене на електронни книги за iOS, Android, Windows, Linux и macOS.
+  categories: [mobile]
+
+- name: Heapforge Journal
+  description: дневник за iOS, Android и уеб
+  summary: Дневник за iOS, Android и уеб.
+  categories: [mobile]
+
+- name: Untitled Cube Rotator
+  description: idle clicker игра за PC, Android и iOS
+  summary: Idle clicker игра за PC, Android и iOS.
+  categories: [games]

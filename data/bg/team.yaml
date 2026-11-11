@@ -1,0 +1,14 @@
+# Основатели и екип. `image` е път в assets/, за да може Hugo да го обработи.
+- name: Станислав Василев
+  role: Съосновател
+  location: София, България
+  image: images/stanislav.jpg
+  url: https://madman10k.com
+  label: madman10k.com
+
+- name: Николас Борс
+  role: Съосновател
+  location: Лондон, Великобритания
+  image: images/nicholas.png
+  url: https://nickbors.cc
+  label: nickbors.cc

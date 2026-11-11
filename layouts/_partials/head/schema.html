@@ -1,5 +1,6 @@
-{{- /* Organization + WebSite JSON-LD, built from site params and data/team.yaml. */ -}}
+{{- /* Organization + WebSite JSON-LD, built from site params and data/<lang>/team.yaml. */ -}}
 {{- $org := site.Params.organization -}}
+{{- $data := partial "func/site-data.html" . -}}
 {{- $logo := absURL site.Params.ogImage -}}
 {{- with resources.Get "favicon.svg" }}{{ $logo = .Permalink }}{{ end -}}
 
@@ -9,12 +10,12 @@
 {{- end -}}
 
 {{- $areaServed := slice -}}
-{{- range hugo.Data.locations.countries -}}
+{{- range $data.locations.countries -}}
   {{- $areaServed = $areaServed | append (dict "@type" "Country" "name" .name) -}}
 {{- end -}}
 
 {{- $founders := slice -}}
-{{- range hugo.Data.team -}}
+{{- range $data.team -}}
   {{- $founders = $founders | append (dict
       "@type" "Person"
       "name" .name
@@ -48,8 +49,8 @@
 
 {{- $website := dict
   "@type" "WebSite"
-  "@id" (printf "%s#website" site.BaseURL)
-  "url" site.BaseURL
+  "@id" (printf "%s#website" site.Home.Permalink)
+  "url" site.Home.Permalink
   "name" site.Title
   "inLanguage" site.Language.Lang
   "publisher" (dict "@id" (printf "%s#organization" site.BaseURL))

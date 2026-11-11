@@ -1,0 +1,6 @@
+# Проекти, реализирани за външни клиенти. Същата структура като data/<lang>/projects.yaml.
+- name: cleanrs.bg
+  url: https://cleanrs.bg
+  description: уебсайт за българска компания за професионално почистване
+  summary: Уебсайт, разработен за българска компания за професионално почистване.
+  screenshot: images/screenshots/cleanrs-bg.png

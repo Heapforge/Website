@@ -1,6 +1,7 @@
 baseURL = "https://heapforge.com/"
 locale = "en-GB"
 defaultContentLanguage = "en"
+defaultContentLanguageInSubdir = false
 title = "Heapforge"
 enableRobotsTXT = true
 enableGitInfo = false
@@ -8,12 +9,52 @@ enableGitInfo = false
 # Nothing in this repo needs Hugo's taxonomy machinery.
 disableKinds = ["taxonomy", "term", "rss"]
 
-[menus]
-  # Site-wide links rendered in the footer.
-  [[menus.footer]]
-    name = "Legal & Privacy"
-    pageRef = "/legal"
-    weight = 10
+[languages]
+  [languages.en]
+    label = "English"
+    locale = "en-GB"
+    weight = 1
+
+    [[languages.en.menus.footer]]
+      name = "Legal & Privacy"
+      pageRef = "/legal"
+      weight = 10
+
+    [languages.en.params]
+      tagline = "Software Studio in London & Sofia"
+      description = "Heapforge is a software studio in London and Sofia building SaaS products, developer utilities, games, mobile apps and language-learning software."
+      seoDescription = "Heapforge is a software studio based in London, UK and Sofia, Bulgaria. We build SaaS products, developer utilities, videogames, mobile apps and language-learning software."
+      locations = ["Sofia, Bulgaria", "London, UK"]
+      ogImageAlt = "Heapforge logo"
+
+      [languages.en.params.organization]
+        legalName = "Heapforge Ltd."
+        description = "Heapforge Ltd. is a software development studio based in London, UK and Sofia, Bulgaria. It builds SaaS products, developer utilities, interactive videogames, mobile apps and language-learning software."
+        sameAs = ["https://madladsquad.com", "https://tiny.lol", "https://lasso.domains"]
+        foundingLocations = ["Sofia, Bulgaria", "London, United Kingdom"]
+
+  [languages.bg]
+    label = "Български"
+    locale = "bg-BG"
+    weight = 2
+
+    [[languages.bg.menus.footer]]
+      name = "Правна информация и поверителност"
+      url = "/legal/"
+      weight = 10
+
+    [languages.bg.params]
+      tagline = "Софтуерно студио в Лондон и София"
+      description = "Heapforge е софтуерно студио в Лондон и София, което разработва SaaS продукти, инструменти за разработчици, игри, мобилни приложения и софтуер за изучаване на езици."
+      seoDescription = "Heapforge е софтуерно студио, базирано в Лондон, Великобритания и София, България. Разработваме SaaS продукти, инструменти за разработчици, видеоигри, мобилни приложения и софтуер за изучаване на езици."
+      locations = ["София, България", "Лондон, Великобритания"]
+      ogImageAlt = "Лого на Heapforge"
+
+      [languages.bg.params.organization]
+        legalName = "Heapforge Ltd."
+        description = "Heapforge Ltd. е студио за разработка на софтуер, базирано в Лондон, Великобритания и София, България. То създава SaaS продукти, инструменти за разработчици, интерактивни видеоигри, мобилни приложения и софтуер за изучаване на езици."
+        sameAs = ["https://madladsquad.com", "https://tiny.lol", "https://lasso.domains"]
+        foundingLocations = ["София, България", "Лондон, Обединено кралство"]
 
 [params]
   tagline = "Software Studio in London & Sofia"

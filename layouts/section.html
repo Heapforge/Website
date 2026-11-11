@@ -13,7 +13,7 @@
            list shows titles only; descriptions go to each page's meta tags. */ -}}
     {{- with .Pages.ByWeight }}
     <section class="doc-section" aria-labelledby="documents-title">
-      <h2 class="doc-section__title" id="documents-title">Documents</h2>
+      <h2 class="doc-section__title" id="documents-title">{{ i18n "documents" }}</h2>
       <ol class="doc-list">
         {{- range $p := . }}
         <li class="doc-list__item">

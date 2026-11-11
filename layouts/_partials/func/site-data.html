@@ -1,0 +1,2 @@
+{{- /* Returns the localized data map from data/<lang>/, falling back to data/en/. */ -}}
+{{- return (index hugo.Data site.Language.Lang | default hugo.Data.en) -}}

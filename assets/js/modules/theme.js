@@ -32,7 +32,9 @@ function apply(theme) {
 
 function label(button) {
   const current = document.documentElement.getAttribute('data-theme');
-  button.setAttribute('aria-label', current === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+  const lightLabel = button.getAttribute('data-label-light') || 'Switch to light theme';
+  const darkLabel = button.getAttribute('data-label-dark') || 'Switch to dark theme';
+  button.setAttribute('aria-label', current === 'dark' ? lightLabel : darkLabel);
 }
 
 export function initTheme() {

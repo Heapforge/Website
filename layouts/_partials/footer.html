@@ -10,7 +10,7 @@
         {{- partial "logo.html" (dict "variant" "wordmark" "class" "site-footer__wordmark" "decorative" true) -}}
       </a>
       {{- with site.Menus.footer }}
-      <nav class="site-footer__nav" aria-label="Footer">
+      <nav class="site-footer__nav" aria-label="{{ i18n "nav_footer_aria" }}">
         <ul>
           {{- range . }}
           <li><a href="{{ .URL }}"{{ if $.IsMenuCurrent "footer" . }} aria-current="page"{{ end }}>{{ .Name }}</a></li>
@@ -27,7 +27,7 @@
         <li><a class="site-footer__email" href="mailto:{{ . }}">{{ partial "icons/icon.html" (dict "name" "mail" "size" 18) }}{{ . }}</a></li>
         {{- end }}
         {{- range site.Params.social }}
-        <li><a class="site-footer__social" href="{{ .url }}" target="_blank" rel="noopener me" aria-label="{{ site.Title }} on {{ .name }}" title="{{ .name }}">{{ partial "icons/icon.html" (dict "name" .icon "size" 20) }}</a></li>
+        <li><a class="site-footer__social" href="{{ .url }}" target="_blank" rel="noopener me" aria-label="{{ i18n "social_on" (dict "site" site.Title "network" .name) }}" title="{{ .name }}">{{ partial "icons/icon.html" (dict "name" .icon "size" 20) }}</a></li>
         {{- end }}
       </ul>
       {{- end }}
@@ -35,7 +35,7 @@
 
     <p class="site-footer__legal">
       Copyright &copy; {{ $start }}&ndash;<time data-current-year datetime="{{ now.Year }}">{{ now.Year }}</time>
-      {{ $legalName }}. All rights reserved.
+      {{ $legalName }}. {{ i18n "all_rights_reserved" }}
     </p>
   </div>
 </footer>

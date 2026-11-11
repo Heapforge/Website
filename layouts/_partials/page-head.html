@@ -10,7 +10,7 @@
   <div class="page-head__grain grain" aria-hidden="true"></div>
   <div class="container page-head__inner">
     {{- if not (eq $p.Kind "404") }}
-    <nav class="crumbs" aria-label="Breadcrumb">
+    <nav class="crumbs" aria-label="{{ i18n "breadcrumb_aria" }}">
       <ol>
         <li><a href="{{ site.Home.RelPermalink }}">{{ site.Title }}</a></li>
         {{- with $p.Parent }}{{ if not .IsHome }}

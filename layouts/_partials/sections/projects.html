@@ -1,11 +1,12 @@
 {{- /*
-  Projects carousel: every entry in data/projects.yaml. CSS scroll-snap does
+  Projects carousel: every entry in data/<lang>/projects.yaml. CSS scroll-snap does
   the work; js/modules/carousel.js adds buttons, dots and arrow keys. Without
   JS the track is still a horizontally scrollable, focusable list.
 */ -}}
-{{- $projects := hugo.Data.projects -}}
+{{- $data := partial "func/site-data.html" . -}}
+{{- $projects := $data.projects -}}
 {{- $areaNames := dict -}}
-{{- range $area := hugo.Data.focus_areas }}
+{{- range $area := $data.focus_areas }}
   {{- $areaNames = merge $areaNames (dict $area.id $area.name) -}}
 {{- end -}}
 {{- $total := len $projects -}}
@@ -14,21 +15,21 @@
   <div class="container">
     {{ partial "sections/section-head.html" (dict
         "id" "projects-title"
-        "title" "Our products"
+        "title" (i18n "projects_title")
     ) }}
   </div>
 
-  <div class="carousel" role="region" aria-roledescription="carousel" aria-label="Projects" data-carousel>
-    <div class="carousel__track" id="projects-track" tabindex="0" aria-label="Projects, scroll horizontally" data-carousel-track>
+  <div class="carousel" role="region" aria-roledescription="{{ i18n "carousel_role" }}" aria-label="{{ i18n "projects_aria" }}" data-carousel>
+    <div class="carousel__track" id="projects-track" tabindex="0" aria-label="{{ i18n "projects_track_aria" }}" data-carousel-track>
       {{- range $i, $p := $projects }}
       {{- $cats := slice -}}
       {{- range $p.categories }}{{ with index $areaNames . }}{{ $cats = $cats | append . }}{{ end }}{{ end }}
-      <div class="slide" role="group" aria-roledescription="slide" aria-label="{{ add $i 1 }} of {{ $total }}" data-slide>
+      <div class="slide" role="group" aria-roledescription="{{ i18n "slide_role" }}" aria-label="{{ i18n "slide_of" (dict "current" (add $i 1) "total" $total) }}" data-slide>
         <div class="slide__media{{ if not $p.url }} slide__media--soon{{ end }}">
           {{- if and $p.url $p.screenshot }}
           {{ partial "screenshot.html" (dict
               "src" $p.screenshot
-              "alt" (printf "Front page of %s" $p.name)
+              "alt" (i18n "screenshot_alt" (dict "name" $p.name))
               "class" "slide__shot"
               "sizes" "(min-width: 72rem) 42rem, (min-width: 48rem) 60vw, 86vw") }}
           {{- else }}
@@ -39,7 +40,7 @@
           <div class="slide__heading">
             <h3 class="slide__name">{{ $p.name }}</h3>
             {{- if not $p.url }}
-            <span class="status">In development</span>
+            <span class="status">{{ i18n "in_development" }}</span>
             {{- end }}
           </div>
           <p class="slide__summary">{{ $p.summary | default $p.description }}</p>
@@ -47,10 +48,10 @@
             {{- with $p.url }}
             <a class="link-arrow" href="{{ . }}" target="_blank" rel="noopener">
               {{ strings.TrimPrefix "https://" . | strings.TrimPrefix "http://" | strings.TrimSuffix "/" }}
-              {{ partial "icons/icon.html" (dict "name" "arrow-up-right" "size" 16) }}<span class="visually-hidden"> (opens in a new tab)</span>
+              {{ partial "icons/icon.html" (dict "name" "arrow-up-right" "size" 16) }}<span class="visually-hidden"> {{ i18n "opens_new_tab" }}</span>
             </a>
             {{- else }}
-            <span class="link-arrow link-arrow--muted">Coming soon</span>
+            <span class="link-arrow link-arrow--muted">{{ i18n "coming_soon" }}</span>
             {{- end }}
           </div>
         </div>
@@ -59,14 +60,14 @@
     </div>
 
     <div class="carousel__controls container" data-carousel-controls>
-      <div class="carousel__dots" role="group" aria-label="Choose a project">
+      <div class="carousel__dots" role="group" aria-label="{{ i18n "carousel_choose_project" }}">
         {{- range $i, $p := $projects }}
-        <button class="carousel__dot" type="button" aria-controls="projects-track" aria-label="Show project {{ add $i 1 }}: {{ $p.name }}" data-carousel-dot="{{ $i }}"{{ if eq $i 0 }} aria-current="true"{{ end }}></button>
+        <button class="carousel__dot" type="button" aria-controls="projects-track" aria-label="{{ i18n "carousel_show_project" (dict "index" (add $i 1) "name" $p.name) }}" data-carousel-dot="{{ $i }}"{{ if eq $i 0 }} aria-current="true"{{ end }}></button>
         {{- end }}
       </div>
       <div class="carousel__buttons">
-        <button class="icon-button icon-button--outline" type="button" aria-controls="projects-track" aria-label="Previous project" data-carousel-prev>{{ partial "icons/icon.html" (dict "name" "arrow-left" "size" 20) }}</button>
-        <button class="icon-button icon-button--outline" type="button" aria-controls="projects-track" aria-label="Next project" data-carousel-next>{{ partial "icons/icon.html" (dict "name" "arrow-right" "size" 20) }}</button>
+        <button class="icon-button icon-button--outline" type="button" aria-controls="projects-track" aria-label="{{ i18n "carousel_prev_project" }}" data-carousel-prev>{{ partial "icons/icon.html" (dict "name" "arrow-left" "size" 20) }}</button>
+        <button class="icon-button icon-button--outline" type="button" aria-controls="projects-track" aria-label="{{ i18n "carousel_next_project" }}" data-carousel-next>{{ partial "icons/icon.html" (dict "name" "arrow-right" "size" 20) }}</button>
       </div>
     </div>
   </div>

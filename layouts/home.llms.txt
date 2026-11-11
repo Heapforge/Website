@@ -1,58 +1,60 @@
 {{- $org := site.Params.organization -}}
+{{- $data := partial "func/site-data.html" . -}}
 # {{ site.Title }}
 
 > {{ $org.description }}
 
-## Overview
-- **Headquarters**: {{ delimit site.Params.locations ", " " & " }}
-{{- with hugo.Data.locations.countries }}
+## {{ i18n "llms_overview" }}
+- **{{ i18n "llms_headquarters" }}**: {{ delimit site.Params.locations ", " " & " }}
+{{- with $data.locations.countries }}
 {{- $covered := slice -}}
 {{- range . }}{{ $covered = $covered | append .name }}{{ end }}
-- **Coverage**: {{ delimit $covered ", " " & " }}
+- **{{ i18n "llms_coverage" }}**: {{ delimit $covered ", " " & " }}
 {{- end }}
-- **Website**: {{ strings.TrimSuffix "/" site.BaseURL }}
-{{ with site.Params.contact.email }}- **Email**: {{ . }}
+- **{{ i18n "llms_website" }}**: {{ strings.TrimSuffix "/" site.Home.Permalink }}
+{{ with site.Params.contact.email }}- **{{ i18n "llms_email" }}**: {{ . }}
 {{ end -}}
 {{ range site.Params.social }}- **{{ .name }}**: {{ .url }}
 {{ end }}
-## What We Build
-{{ range hugo.Data.focus_areas -}}
+## {{ i18n "llms_what_we_build" }}
+{{ range $data.focus_areas -}}
 - **{{ .name }}**: {{ .summary }}
 {{ end }}
-## Projects
-{{ range hugo.Data.projects -}}
+## {{ i18n "llms_projects" }}
+{{ range $data.projects -}}
 - **{{ .name }}**: {{ .summary | default .description }}
-{{ if .url }}  - Link: {{ .url }}
-{{ else }}  - Status: in development
+{{ if .url }}  - {{ i18n "llms_link" }}: {{ .url }}
+{{ else }}  - {{ i18n "llms_status_dev" }}
 {{ end -}}
 {{ end }}
-{{ with hugo.Data.services -}}
-## Services for Clients
+{{ with $data.services -}}
+## {{ i18n "llms_services" }}
 {{ range .offerings -}}
 - **{{ .name }}**: {{ .summary }}
 {{ end }}
 {{ end -}}
-## Client Work
-{{ range hugo.Data.client_work -}}
+## {{ i18n "llms_client_work" }}
+{{ range $data.client_work -}}
 - **{{ .name }}**: {{ .summary | default .description }}
-{{ if .url }}  - Link: {{ .url }}
+{{ if .url }}  - {{ i18n "llms_link" }}: {{ .url }}
 {{ end -}}
 {{ end }}
-## Open-Source Contributions
-- **{{ site.Params.openSource.name }}**: Open-source organization behind various tools and initiatives.
-  - Link: {{ site.Params.openSource.url }}
+## {{ i18n "llms_open_source" }}
+- **{{ site.Params.openSource.name }}**: {{ i18n "llms_open_source_desc" }}
+  - {{ i18n "llms_link" }}: {{ site.Params.openSource.url }}
 
-## Team
-{{ range hugo.Data.team -}}
-- **{{ .name }}**: {{ .role }} based in {{ .location }}.
-{{ if .url }}  - Personal Website: {{ .url }}
+## {{ i18n "llms_team" }}
+{{ range $data.team -}}
+- **{{ .name }}**: {{ i18n "llms_team_member" (dict "role" .role "location" .location) }}
+{{ if .url }}  - {{ i18n "llms_personal_website" }}: {{ .url }}
 {{ end -}}
 {{ end -}}
 
-{{ with site.GetPage "/legal" }}
-## Legal
+{{- $legal := site.GetPage "/legal" | default (hugo.Sites.Default.GetPage "/legal") }}
+{{ with $legal }}
+## {{ i18n "llms_legal" }}
 {{ range .Pages.ByWeight -}}
 - **{{ .Title }}**: {{ .Description }}
-  - Link: {{ .Permalink }}
+  - {{ i18n "llms_link" }}: {{ .Permalink }}
 {{ end -}}
 {{ end -}}

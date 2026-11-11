@@ -5,12 +5,12 @@
     <div class="band__grain grain" aria-hidden="true"></div>
     <div class="container band__inner">
       <h2 class="band__title" id="open-source-title">
-        Our open-source work lives under <span class="band__name">{{ .name }}</span>.
+        {{ i18n "open_source_title" (dict "name" (printf `<span class="band__name">%s</span>` .name)) | safeHTML }}
       </h2>
       <div class="band__foot">
-        <p class="band__copy">Tools and initiatives, built in the open and free for anyone to use, study and improve.</p>
+        <p class="band__copy">{{ i18n "open_source_copy" }}</p>
         <a class="button button--light" href="{{ .url }}" target="_blank" rel="noopener">
-          {{ .label }} {{ partial "icons/icon.html" (dict "name" "arrow-up-right" "size" 18) }}<span class="visually-hidden"> (opens in a new tab)</span>
+          {{ .label }} {{ partial "icons/icon.html" (dict "name" "arrow-up-right" "size" 18) }}<span class="visually-hidden"> {{ i18n "opens_new_tab" }}</span>
         </a>
       </div>
     </div>

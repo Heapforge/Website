@@ -1,13 +1,14 @@
-{{- /* The five focus areas from data/focus_areas.yaml, each with the names of
-       the projects filed under it in data/projects.yaml. */ -}}
-{{- $areas := hugo.Data.focus_areas -}}
-{{- $projects := hugo.Data.projects -}}
+{{- /* The five focus areas from data/<lang>/focus_areas.yaml, each with the names of
+       the projects filed under it in data/<lang>/projects.yaml. */ -}}
+{{- $data := partial "func/site-data.html" . -}}
+{{- $areas := $data.focus_areas -}}
+{{- $projects := $data.projects -}}
 {{- if $areas }}
 <section class="section" id="build" aria-labelledby="build-title">
   <div class="container">
     {{ partial "sections/section-head.html" (dict
         "id" "build-title"
-        "title" "What we develop"
+        "title" (i18n "focus_title")
     ) }}
 
     <ol class="focus">
@@ -25,7 +26,7 @@
         <h3 class="focus__name">{{ $area.name }}</h3>
         <p class="focus__summary">{{ $area.summary }}</p>
         {{- with $names }}
-        <p class="focus__projects"><span class="visually-hidden">Projects: </span>{{ delimit . " · " }}</p>
+        <p class="focus__projects"><span class="visually-hidden">{{ i18n "focus_projects_label" }}: </span>{{ delimit . " · " }}</p>
         {{- end }}
       </li>
       {{- end }}

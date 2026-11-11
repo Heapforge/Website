@@ -33,7 +33,7 @@ export function initHeader() {
       toggle.focus();
     }
   });
-  const wide = window.matchMedia('(min-width: 78.01rem)');
+  const wide = window.matchMedia('(min-width: 82.01rem)');
   const onWide = () => { if (wide.matches) setOpen(false); };
   if (wide.addEventListener) wide.addEventListener('change', onWide);
 }

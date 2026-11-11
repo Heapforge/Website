@@ -1,10 +1,11 @@
-{{- /* Client services, from data/services.yaml. */ -}}
-{{- with hugo.Data.services }}
+{{- /* Client services, from data/<lang>/services.yaml. */ -}}
+{{- $data := partial "func/site-data.html" . -}}
+{{- with $data.services }}
 <section class="section" id="services" aria-labelledby="services-title">
   <div class="container">
     {{ partial "sections/section-head.html" (dict
         "id" "services-title"
-        "title" "What we build for clients"
+        "title" (i18n "services_title")
     ) }}
 
     {{- with .offerings }}

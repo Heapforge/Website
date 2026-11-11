@@ -1,0 +1,27 @@
+# Какво разработва Heapforge. `id` се използва от `categories` в
+# data/<lang>/projects.yaml и data/<lang>/client_work.yaml. `icon` е име на
+# икона в assets/icons/.
+- id: saas
+  icon: web-app
+  name: SaaS продукти
+  summary: B2C и B2B SaaS продукти.
+
+- id: dev-tools
+  icon: terminal
+  name: Инструменти за разработчици
+  summary: Инструменти, които улесняват разработчици на софтуер и AI агенти при създаване, тестване и експериментиране по време на разработка на даден софтуерен продукт.
+
+- id: games
+  icon: play
+  name: Видеоигри
+  summary: Забавни и кратки игри.
+
+- id: mobile
+  icon: mobile-app
+  name: Мобилни приложения
+  summary: Мобилни приложения за ежедневието.
+
+- id: language-learning
+  icon: ai-automation
+  name: Изучаване на езици
+  summary: Изкуствен интелект и машинно обучение, приложени в следващото поколение продукти за изучаване на езици.

@@ -1,10 +1,11 @@
 {{- /*
-  Company coverage & headquarters dot globe, fed by data/locations.yaml.
+  Company coverage & headquarters dot globe, fed by data/<lang>/locations.yaml.
   Highlights the UK, Bulgaria, Romania and Greece on an interactive 3D
   orthographic dot globe and places interactive headquarters pins on
   London and Sofia.
 */ -}}
-{{- with hugo.Data.locations }}
+{{- $data := partial "func/site-data.html" . -}}
+{{- with $data.locations }}
 <section class="section locations" id="locations" aria-labelledby="locations-title">
   <div class="container locations__inner">
     <div class="locations__content">
@@ -14,7 +15,7 @@
       </div>
 
       {{- with .countries }}
-      <ul class="locations__countries reveal" aria-label="Countries we cover">
+      <ul class="locations__countries reveal" aria-label="{{ i18n "locations_countries_aria" }}">
         {{- range . }}
         <li class="locations__country" data-globe-country="{{ .code }}" data-lat="{{ .lat }}" data-lon="{{ .lon }}" data-heat-hover tabindex="0">
           <div class="locations__country-bg" aria-hidden="true">
@@ -32,7 +33,7 @@
     </div>
 
     <div class="locations__stage reveal">
-      <div class="globe" data-globe aria-label="Interactive globe showing Heapforge coverage in the United Kingdom, Bulgaria, Romania and Greece, with headquarters in London and Sofia">
+      <div class="globe" data-globe aria-label="{{ i18n "locations_globe_aria" }}">
         <canvas class="globe__canvas" data-globe-canvas aria-hidden="true"></canvas>
 
         {{- with .headquarters }}

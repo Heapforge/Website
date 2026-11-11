@@ -8,7 +8,7 @@
     {{- range $toc }}{{ range .Headings }}{{ if eq .Level 2 }}{{ $h2 = $h2 | append . }}{{ end }}{{ end }}{{ end -}}
     {{- if ge (len $h2) 3 }}
     <aside class="toc" aria-labelledby="toc-title">
-      <p class="toc__title" id="toc-title">On this page</p>
+      <p class="toc__title" id="toc-title">{{ i18n "on_this_page" }}</p>
       <ol class="toc__list">
         {{- range $h2 }}
         <li><a href="#{{ .ID }}">{{ .Title | plainify }}</a></li>
@@ -22,7 +22,7 @@
 
       {{- with .Parent }}{{ if not .IsHome }}
       <p class="prose__back">
-        <a class="link-arrow link-arrow--back" href="{{ .RelPermalink }}">{{ partial "icons/icon.html" (dict "name" "arrow-left" "size" 16) }} Back to {{ .Title }}</a>
+        <a class="link-arrow link-arrow--back" href="{{ .RelPermalink }}">{{ partial "icons/icon.html" (dict "name" "arrow-left" "size" 16) }} {{ i18n "back_to" (dict "title" .Title) }}</a>
       </p>
       {{- end }}{{ end }}
     </article>
