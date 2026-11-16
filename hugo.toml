@@ -61,8 +61,8 @@ disableKinds = ["taxonomy", "term", "rss"]
   description = "Heapforge is a software studio in London and Sofia building SaaS products, developer utilities, games, mobile apps and language-learning software."
   seoDescription = "Heapforge is a software studio based in London, UK and Sofia, Bulgaria. We build SaaS products, developer utilities, videogames, mobile apps and language-learning software."
   author = "Heapforge"
-  themeColor = "#F3F0E8"
-  colorScheme = "light dark"
+  themeColor = "#080C13"
+  colorScheme = "dark light"
   ogImage = "assets/favicon.svg"
   # Short, human-facing location labels (schema.org uses the formal names below).
   locations = ["Sofia, Bulgaria", "London, UK"]

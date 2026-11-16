@@ -80,7 +80,6 @@
 /* ---------- Light: brand Paper, Forge Navy ink, Ember accents ----------
    Contrast on --paper: ink 12.9, ink-muted 6.7, ink-faint 5.2,
    accent-text 5.1 (5.8 on white). */
-:root,
 :root[data-theme="light"] {
   color-scheme: light;
 
@@ -155,7 +154,9 @@
   --globe-ambient: rgba(217, 83, 47, 0.12);
 }
 
-/* ---------- Dark: navy-black, warm whites ---------- */
+/* ---------- Dark: navy-black, warm whites ----------
+   The default theme: bare :root covers the no-JS case. */
+:root,
 :root[data-theme="dark"] {
   color-scheme: dark;
 

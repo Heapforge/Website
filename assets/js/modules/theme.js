@@ -1,19 +1,10 @@
 /**
  * Light/dark theme. The inline head script has already set data-theme; this
- * wires the header toggle, persists an explicit choice in localStorage and,
- * until the visitor picks one, follows changes to the system preference.
- * Every change fires a `themechange` event on the document.
+ * wires the header toggle and persists an explicit choice in localStorage.
+ * Dark is the default regardless of the system preference. Every change
+ * fires a `themechange` event on the document.
  */
 const KEY = 'theme';
-
-function stored() {
-  try {
-    const v = localStorage.getItem(KEY);
-    return v === 'light' || v === 'dark' ? v : null;
-  } catch (e) {
-    return null;
-  }
-}
 
 function store(value) {
   try {
@@ -48,14 +39,4 @@ export function initTheme() {
       buttons.forEach(label);
     });
   });
-
-  const media = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
-  if (!media) return;
-  const onSystemChange = (e) => {
-    if (stored()) return;
-    apply(e.matches ? 'dark' : 'light');
-    buttons.forEach(label);
-  };
-  if (media.addEventListener) media.addEventListener('change', onSystemChange);
-  else if (media.addListener) media.addListener(onSystemChange);
 }

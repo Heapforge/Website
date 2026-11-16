@@ -116,7 +116,8 @@ emphasis, never paragraphs.
 radius, spacing, and font value; no other stylesheet should hard-code a hex
 value. Both themes are defined there (`:root[data-theme="light"|"dark"]`). An
 inline script in `head/head.html` sets `data-theme` before first paint from
-the stored toggle choice or `prefers-color-scheme`. `js/modules/theme.js` runs
+the stored toggle choice, defaulting to dark regardless of
+`prefers-color-scheme` (bare `:root` carries the dark tokens for no-JS). `js/modules/theme.js` runs
 the toggle, and the hero shader (`js/modules/heat-field.js`) re-reads its
 `--heat-*` colours on theme change. `--accent` is decorative only (borders,
 markers, icon accents) — use `--accent-text` for any accent-coloured text,
