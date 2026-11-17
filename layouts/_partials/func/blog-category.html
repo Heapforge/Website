@@ -1,0 +1,15 @@
+{{- /*
+  Returns the category of a blog post (context: the page) as the matching
+  entry of data/<lang>/blog_categories.yaml, falling back to data/en/.
+  A missing or unknown `category` fails the build.
+*/ -}}
+{{- $categories := (partial "func/site-data.html" .).blog_categories | default hugo.Data.en.blog_categories -}}
+{{- $id := .Params.category -}}
+{{- if not $id -}}
+  {{- errorf "blog post %q has no `category` in its front matter" .File.Path -}}
+{{- end -}}
+{{- $match := index (where $categories "id" $id) 0 -}}
+{{- if not $match -}}
+  {{- errorf "blog post %q: unknown category %q (see data/en/blog_categories.yaml)" .File.Path $id -}}
+{{- end -}}
+{{- return $match -}}

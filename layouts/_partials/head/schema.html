@@ -56,6 +56,27 @@
   "publisher" (dict "@id" (printf "%s#organization" site.BaseURL))
 -}}
 
+{{- $graph := slice $organization $website -}}
+
+{{- /* Blog posts add a BlogPosting published by the organization. */ -}}
+{{- if and .IsPage (eq .Section "blog") -}}
+  {{- $orgRef := dict "@id" (printf "%s#organization" site.BaseURL) -}}
+  {{- $graph = $graph | append (dict
+      "@type" "BlogPosting"
+      "@id" (printf "%s#article" .Permalink)
+      "headline" .Title
+      "description" .Description
+      "url" .Permalink
+      "mainEntityOfPage" .Permalink
+      "datePublished" (.Date.Format "2006-01-02T15:04:05Z07:00")
+      "dateModified" (.Lastmod.Format "2006-01-02T15:04:05Z07:00")
+      "articleSection" (partial "func/blog-category.html" .).name
+      "inLanguage" site.Language.Lang
+      "isPartOf" (dict "@id" (printf "%s#website" site.Home.Permalink))
+      "author" $orgRef
+      "publisher" $orgRef) -}}
+{{- end -}}
+
 <script type="application/ld+json">
-{{ dict "@context" "https://schema.org" "@graph" (slice $organization $website) | jsonify (dict "indent" "  ") | safeJS }}
+{{ dict "@context" "https://schema.org" "@graph" $graph | jsonify (dict "indent" "  ") | safeJS }}
 </script>

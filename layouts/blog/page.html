@@ -1,0 +1,20 @@
+{{ define "main" }}
+  {{- $cat := partial "func/blog-category.html" . -}}
+  {{- $blog := .Parent -}}
+  {{- $meta := printf `<time datetime="%s">%s</time><span class="page-head__meta-sep" aria-hidden="true">/</span><a href="%s?category=%s">%s</a>`
+      (.Date.Format "2006-01-02") (.Date | time.Format ":date_long")
+      $blog.RelPermalink (urlquery $cat.id) $cat.name -}}
+  {{ partial "page-head.html" (dict "page" . "meta" ($meta | safeHTML)) }}
+
+  <div class="container page-body page-body--article">
+    {{ partial "toc.html" . }}
+
+    <article class="prose">
+      {{ .Content }}
+
+      <p class="prose__back">
+        <a class="link-arrow link-arrow--back" href="{{ $blog.RelPermalink }}">{{ partial "icons/icon.html" (dict "name" "arrow-left" "size" 16) }} {{ i18n "back_to" (dict "title" $blog.Title) }}</a>
+      </p>
+    </article>
+  </div>
+{{ end }}

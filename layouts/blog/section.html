@@ -1,0 +1,68 @@
+{{ define "main" }}
+  {{ partial "page-head.html" (dict "page" .) }}
+
+  {{- $posts := .Pages.ByDate.Reverse -}}
+  <div class="container page-body">
+    {{- with $posts }}
+    {{- /* Filter options come from the posts themselves: every year with a
+           post, and every category (in data-file order) that has one. */ -}}
+    {{- $years := slice -}}
+    {{- $used := slice -}}
+    {{- range . }}
+      {{- $years = $years | append .Date.Year -}}
+      {{- $used = $used | append (partial "func/blog-category.html" .).id -}}
+    {{- end }}
+    {{- $years = $years | uniq | sort | collections.Reverse -}}
+    {{- $categories := (partial "func/site-data.html" $).blog_categories | default hugo.Data.en.blog_categories -}}
+
+    {{- /* Hidden until blog-filter.js runs: without JS every post is listed. */}}
+    <form class="blog-filter" data-blog-filter hidden aria-label="{{ i18n "blog_filter_aria" }}">
+      <fieldset class="blog-filter__group">
+        <legend class="blog-filter__legend">{{ i18n "blog_filter_year" }}</legend>
+        <div class="blog-filter__options">
+          <label class="blog-filter__pill"><input class="visually-hidden" type="radio" name="year" value="" checked><span>{{ i18n "blog_filter_all" }}</span></label>
+          {{- range $years }}
+          <label class="blog-filter__pill"><input class="visually-hidden" type="radio" name="year" value="{{ . }}"><span>{{ . }}</span></label>
+          {{- end }}
+        </div>
+      </fieldset>
+      <fieldset class="blog-filter__group">
+        <legend class="blog-filter__legend">{{ i18n "blog_filter_category" }}</legend>
+        <div class="blog-filter__options">
+          <label class="blog-filter__pill"><input class="visually-hidden" type="radio" name="category" value="" checked><span>{{ i18n "blog_filter_all" }}</span></label>
+          {{- range $categories }}{{ if in $used .id }}
+          <label class="blog-filter__pill"><input class="visually-hidden" type="radio" name="category" value="{{ .id }}"><span>{{ .name }}</span></label>
+          {{- end }}{{ end }}
+        </div>
+      </fieldset>
+      <div class="blog-filter__footer">
+        <p class="blog-filter__count" role="status" data-blog-count
+           data-singular="{{ i18n "blog_results" 1 }}"
+           data-plural="{{ i18n "blog_results" 2 | replaceRE `\d+` "{count}" }}">{{ i18n "blog_results" (len $posts) }}</p>
+        <button class="blog-filter__reset" type="reset" data-blog-reset>{{ i18n "blog_filter_reset" }}</button>
+      </div>
+    </form>
+
+    <ol class="post-list" data-blog-list>
+      {{- range . }}
+      {{- $cat := partial "func/blog-category.html" . }}
+      <li class="post-list__item" data-year="{{ .Date.Year }}" data-category="{{ $cat.id }}">
+        <a class="post-list__link" href="{{ .RelPermalink }}">
+          <span class="post-list__meta">
+            <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format ":date_long" }}</time>
+            <span class="post-list__category">{{ $cat.name }}</span>
+          </span>
+          <span class="post-list__title">{{ .Title }}</span>
+          {{- with .Description }}
+          <span class="post-list__summary">{{ . }}</span>
+          {{- end }}
+        </a>
+      </li>
+      {{- end }}
+    </ol>
+    <p class="post-list__empty" data-blog-empty hidden>{{ i18n "blog_no_matches" }}</p>
+    {{- else }}
+    <p class="post-list__empty">{{ i18n "blog_no_posts" }}</p>
+    {{- end }}
+  </div>
+{{ end }}

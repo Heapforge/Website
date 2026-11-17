@@ -58,3 +58,12 @@
   - {{ i18n "llms_link" }}: {{ .Permalink }}
 {{ end -}}
 {{ end -}}
+
+{{- $blog := site.GetPage "/blog" | default (hugo.Sites.Default.GetPage "/blog") -}}
+{{ with $blog }}{{ with .Pages }}
+## {{ i18n "llms_blog" }}
+{{ range .ByDate.Reverse -}}
+- **{{ .Title }}** ({{ .Date | time.Format ":date_long" }}, {{ (partial "func/blog-category.html" .).name }}): {{ .Description }}
+  - {{ i18n "llms_link" }}: {{ .Permalink }}
+{{ end -}}
+{{ end }}{{ end -}}

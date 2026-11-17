@@ -1,0 +1,10 @@
+# Blog categories. Posts set `category: <id>` in front matter; an unknown id
+# fails the build. The order here is the order of the filter pills.
+- id: engineering
+  name: "Engineering"
+- id: machine-learning
+  name: "Machine learning"
+- id: product
+  name: "Product"
+- id: studio
+  name: "Studio news"

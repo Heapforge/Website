@@ -10,6 +10,8 @@
     column-gap: clamp(3rem, 8vw, 8rem);
     align-items: start;
   }
+  /* The article keeps its column even when there is no contents list. */
+  .page-body--article > .prose { grid-column: 2; }
 }
 
 /* Contents list: sticky on wide screens, a compact block on narrow ones. */

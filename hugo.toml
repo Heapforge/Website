@@ -6,14 +6,21 @@ title = "Heapforge"
 enableRobotsTXT = true
 enableGitInfo = false
 
-# Nothing in this repo needs Hugo's taxonomy machinery.
-disableKinds = ["taxonomy", "term", "rss"]
+# Nothing in this repo needs Hugo's taxonomy machinery. RSS is enabled only for
+# the blog: [outputs] below omits it everywhere else and content/blog/_index.md
+# opts in via its `outputs` front matter.
+disableKinds = ["taxonomy", "term"]
 
 [languages]
   [languages.en]
     label = "English"
     locale = "en-GB"
     weight = 1
+
+    [[languages.en.menus.footer]]
+      name = "Blog"
+      pageRef = "/blog"
+      weight = 5
 
     [[languages.en.menus.footer]]
       name = "Legal & Privacy"
@@ -37,6 +44,12 @@ disableKinds = ["taxonomy", "term", "rss"]
     label = "Български"
     locale = "bg-BG"
     weight = 2
+
+    # The blog is English-only, so the Bulgarian site links to /blog/.
+    [[languages.bg.menus.footer]]
+      name = "Блог"
+      url = "/blog/"
+      weight = 5
 
     [[languages.bg.menus.footer]]
       name = "Правна информация и поверителност"
@@ -109,6 +122,11 @@ disableKinds = ["taxonomy", "term", "rss"]
 
 [outputs]
   home = ["html", "llms", "robots", "security"]
+  section = ["html"]
+  page = ["html"]
+
+[services.rss]
+  limit = 20
 
 [outputFormats]
   [outputFormats.llms]

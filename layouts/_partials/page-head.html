@@ -2,7 +2,8 @@
   Header band for inner pages: breadcrumb, h1 and lede over a still CSS
   heat glow (the WebGL shader is reserved for the home hero).
   Params: page (the page), title, lede, kicker (all optional overrides),
-  noLede (optional: show no lede; the description still feeds the meta tags).
+  noLede (optional: show no lede; the description still feeds the meta tags),
+  meta (optional, safe HTML: a byline row under the lede, e.g. a post's date).
 */ -}}
 {{- $p := .page -}}
 <header class="page-head">
@@ -25,6 +26,9 @@
     <h1 class="page-head__title">{{ .title | default $p.Title }}</h1>
     {{- with and (not .noLede) (.lede | default $p.Description) }}
     <p class="page-head__lede">{{ . }}</p>
+    {{- end }}
+    {{- with .meta }}
+    <p class="page-head__meta">{{ . }}</p>
     {{- end }}
   </div>
 </header>

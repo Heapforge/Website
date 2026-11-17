@@ -6,6 +6,7 @@ import { initHeatField } from './modules/heat-field.js';
 import { initCarousels } from './modules/carousel.js';
 import { initGlobe } from './modules/globe.js';
 import { initReveal } from './modules/reveal.js';
+import { initBlogFilter } from './modules/blog-filter.js';
 
 renderCurrentYear();
 initTheme();
@@ -15,3 +16,4 @@ initHeatField();
 initCarousels();
 initGlobe();
 initReveal();
+initBlogFilter();

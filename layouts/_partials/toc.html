@@ -1,0 +1,17 @@
+{{- /*
+  Sticky "On this page" table of contents for long pages and blog posts,
+  built from h2 headings when at least three are present.
+  Expects a Page as context.
+*/ -}}
+{{- $h2 := slice -}}
+{{- range .Fragments.Headings }}{{ range .Headings }}{{ if eq .Level 2 }}{{ $h2 = $h2 | append . }}{{ end }}{{ end }}{{ end -}}
+{{- if ge (len $h2) 3 }}
+    <aside class="toc" aria-labelledby="toc-title">
+      <p class="toc__title" id="toc-title">{{ i18n "on_this_page" }}</p>
+      <ol class="toc__list">
+        {{- range $h2 }}
+        <li><a href="#{{ .ID }}">{{ .Title | plainify | htmlUnescape }}</a></li>
+        {{- end }}
+      </ol>
+    </aside>
+{{- end -}}

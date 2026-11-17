@@ -47,6 +47,16 @@ contact), each rendered from `data/*.yaml` or site params:
 - `layouts/section.html` lists a section's own pages as a document list
   (`.Title` / `.Description` / `.RelPermalink`, by `weight`), so adding a legal
   document needs only a Markdown file with front matter and a `weight`.
+- **Blog** (`content/blog/`, English-only, linked from the footer menu):
+  `layouts/blog/section.html` and `layouts/blog/page.html` override the generic
+  templates for that section. A post needs `title`, `description`, `date` and
+  `category`, an `id` from `data/en/blog_categories.yaml`;
+  `_partials/func/blog-category.html` resolves it and fails the build on a
+  missing or unknown id. The index lists posts newest first and
+  `js/modules/blog-filter.js` filters them by year and category on the client,
+  synced to `?year=&category=` (the form is `hidden` until JS reveals it, so
+  without JS every post shows). Posts also get `og:type=article` meta, a
+  `BlogPosting` JSON-LD node and a Blog list in `llms.txt`.
 
 Because of this, the YAML files are the single source of truth: `home.html`,
 `home.llms.txt`, and `head/schema.html` (JSON-LD founders) all read the same
@@ -124,9 +134,16 @@ markers, icon accents) — use `--accent-text` for any accent-coloured text,
 since it is the WCAG AA-compliant sibling. Class names are BEM-ish
 (`focus__name`, `slide__media`, `site-footer__nav`).
 
-Taxonomies and RSS are disabled in `hugo.toml` (`disableKinds`); the site is
-single-language `en-GB` with `unsafe` Goldmark HTML enabled so policy Markdown
-can contain raw HTML.
+Taxonomies are disabled in `hugo.toml` (`disableKinds`). RSS exists only for
+the blog: `[outputs]` lists no RSS for home, sections or pages, and
+`content/blog/_index.md` opts in with `outputs: ["html", "rss"]`
+(`/blog/index.xml`). The site has English and Bulgarian (`/bg/`) home pages;
+the Legal and Blog sections are English-only. Goldmark's `unsafe` HTML is
+enabled so policy Markdown can contain raw HTML.
+
+Go's html/template drops the `data-` prefix before checking attribute names,
+so a `data-on…` attribute is treated as an event handler and its value comes
+out JS-quoted. Do not start data attribute names with `on`.
 
 ## graphify
 
