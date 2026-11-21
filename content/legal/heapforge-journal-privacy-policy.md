@@ -1,12 +1,12 @@
 ---
-title: "Heapforge Journal Privacy Policy"
-description: "How Heapforge Ltd. handles personal data in Heapforge Journal. Your entries stay on your device; Google and Apple are used for purchase verification only."
+title: "Heapforge Journal, Markdown and HexEditor Privacy Policy"
+description: "How Heapforge Ltd. handles personal data in Heapforge Journal, Heapforge Markdown and Heapforge HexEditor. Your data stays on your device; Google and Apple are used for purchase verification only."
 weight: 30
 ---
 
-**Last updated:** 23 October 2026
+**Last updated:** 21 November 2026
 
-This Privacy Policy explains how **Heapforge Ltd.** ("Heapforge", "we", "us" or "our") collects, uses, shares and protects personal data when you use **Heapforge Journal** (the "app") on Android, iOS or the web, or when you otherwise contact us about it. It also explains the rights you have and how to exercise them.
+This Privacy Policy explains how **Heapforge Ltd.** ("Heapforge", "we", "us" or "our") collects, uses, shares and protects personal data when you use **Heapforge Journal**, **Heapforge Markdown** or **Heapforge HexEditor** (each an "app", and together the "apps") on Android, iOS or the web, or when you otherwise contact us about them. The three apps handle personal data in the same way, so everything in this policy applies to each of them, and references to "the app" mean whichever of them you use. It also explains the rights you have and how to exercise them.
 
 The **Heapforge Reader** app is covered by a [separate privacy policy](/legal/heapforge-reader-privacy-policy/), and the heapforge.com website by [another](/legal/heapforge-com-privacy-policy/).
 
@@ -41,9 +41,9 @@ We do not intentionally collect special category data (such as health, religious
 
 ### 3.1 What stays on your device
 
-A journal is about as personal as data gets, and the app is designed so that we never come near it. Everything below is stored locally, in the app's own private storage on your device. It is never sent to Heapforge or to any third party:
+Journals, notes and files can be about as personal as data gets, and the apps are designed so that we never come near them. Everything below is stored locally, in the app's own private storage on your device. It is never sent to Heapforge or to any third party:
 
-- your entries and their full contents, including drafts and anything you have deleted but not yet purged;
+- your entries, documents and files and their full contents, including drafts and anything you have deleted but not yet purged;
 - photographs, audio and any other files you attach to an entry;
 - the metadata around your entries: dates, titles, tags, moods, prompts, streaks and word counts;
 - reminders and notification schedules you set;
@@ -51,15 +51,15 @@ A journal is about as personal as data gets, and the app is designed so that we 
 - search history within the app, and any local index or cache the app builds to find your entries quickly;
 - any passcode or biometric lock you set on the app, which is checked on your device and never sent anywhere.
 
-This data is removed when you delete the app, or when you clear its data through your device's settings. If you export or back up your journal yourself, that copy goes wherever **you** send it, and is then in your hands rather than ours.
+This data is removed when you delete the app, or when you clear its data through your device's settings. If you export or back up your data yourself, that copy goes wherever **you** send it, and is then in your hands rather than ours.
 
 **Device backups.** If you have turned on your operating system's backup service, such as Android Auto Backup, Google One or iCloud Backup, your device may include the app's local data in that backup. That copy is made by your device and governed by [Google's](https://policies.google.com/privacy) or [Apple's](https://www.apple.com/legal/privacy/) privacy policy, not by ours. Heapforge has no access to it. You can turn this off in your device settings.
 
 ### 3.2 The web version
 
-The web version of the app runs **entirely in your browser**. Your entries are held in your browser's own local storage on the device you are using; they are not uploaded to us, and we have no way to read them. Clearing your browser's site data for the app deletes them, and they do not follow you to another browser or device.
+The web version of the app runs **entirely in your browser**. Your entries, documents and files are held in your browser's own local storage on the device you are using; they are not uploaded to us, and we have no way to read them. Clearing your browser's site data for the app deletes them, and they do not follow you to another browser or device.
 
-Loading the web version is a visit to our website, which is covered by the [heapforge.com privacy policy](/legal/heapforge-com-privacy-policy/). That concerns delivering the page to you, never the contents of your journal.
+Loading the web version is a visit to our website, which is covered by the [heapforge.com privacy policy](/legal/heapforge-com-privacy-policy/). That concerns delivering the page to you, never the contents of your journal, documents or files.
 
 ## 4. How we use personal data and our lawful bases
 
@@ -84,9 +84,9 @@ We use a small number of trusted service providers to run our business. They are
 
 ### 5.1 Google and Apple (purchase verification only)
 
-Heapforge Journal is a paid app. To confirm that your copy was legitimately purchased, and so to protect the app against unauthorised copying and distribution, the app checks your entitlement with the store you installed it from. **This is the only thing the app uses Google and Apple services for.**
+Each of the apps is a paid app. To confirm that your copy was legitimately purchased, and so to protect the app against unauthorised copying and distribution, the app checks your entitlement with the store you installed it from. **This is the only thing the app uses Google and Apple services for.**
 
-Google and Apple are **not** our processors for this. Each processes the data involved as an **independent controller**, under its own terms and privacy policy, in connection with the account you hold with it. The check happens directly between your device and the store; nothing passes through Heapforge, and nothing from your journal is involved.
+Google and Apple are **not** our processors for this. Each processes the data involved as an **independent controller**, under its own terms and privacy policy, in connection with the account you hold with it. The check happens directly between your device and the store; nothing passes through Heapforge, and nothing from your journal, documents or files is involved.
 
 #### 5.1.1 Google Play
 
@@ -126,7 +126,7 @@ The app contains:
 - no crash or diagnostic reporting sent to us or to any third-party service;
 - no advertising, ad SDKs or advertising identifiers, and no tracking across other apps or websites;
 - no Heapforge accounts, sign-in or cloud sync, and no Heapforge servers;
-- no scanning, indexing, reading or "AI" processing of your entries anywhere but on your own device;
+- no scanning, indexing, reading or "AI" processing of your entries, documents or files anywhere but on your own device;
 - no sale or sharing of personal data by Heapforge.
 
 ## 7. Permissions
@@ -148,7 +148,7 @@ This policy is the privacy policy referenced by the app's store listings. Our Go
 
 ## 9. Cookies and similar technologies
 
-The app does not use cookies or similar tracking technologies. The web version stores your journal in your browser's local storage, as described in [section 3.2](#32-the-web-version); this is needed for the app to work and is never sent to us.
+The app does not use cookies or similar tracking technologies. The web version stores your data in your browser's local storage, as described in [section 3.2](#32-the-web-version); this is needed for the app to work and is never sent to us.
 
 ## 10. International data transfers
 
@@ -200,7 +200,7 @@ Because the app sends nothing to Heapforge, a request about your use of the app 
 
 ### 13.1 Data on your device and data held by Google and Apple
 
-- Data on your device - you are in control. Delete individual entries in the app, export your journal at any time, or clear the app's data or uninstall it through your device settings. In the web version, clear the app's site data in your browser.
+- Data on your device - you are in control. Delete individual entries in the app, export your data at any time, or clear the app's data or uninstall it through your device settings. In the web version, clear the app's site data in your browser.
 - Google Play - purchase data is controlled by Google. Use Google's privacy tools ([https://myaccount.google.com/privacy](https://myaccount.google.com/privacy)) to exercise your rights over it.
 - Apple App Store - purchase data is controlled by Apple. Use Apple's Data and Privacy portal ([https://privacy.apple.com/](https://privacy.apple.com/)) to exercise your rights over it.
 

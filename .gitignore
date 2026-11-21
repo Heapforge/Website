@@ -40,3 +40,5 @@ hugo_stats.json
 graphify-out/
 .agents/
 .claude/
+.playwright-mcp/
+.DS_Store
