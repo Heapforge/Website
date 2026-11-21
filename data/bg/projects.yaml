@@ -35,14 +35,25 @@
   categories: [language-learning]
 
 - name: Heapforge Reader
-  description: приложение за четене на електронни книги за iOS, Android, Windows, Linux и macOS
-  summary: Приложение за четене на електронни книги за iOS, Android, Windows, Linux и macOS.
+  url: https://reader.heapforge.com
+  description: приложение за четене на електронни книги, PDF и комикси с кратки страници, четене с фиксационни точки, серии от дни и график за четене, за Android и iOS
+  summary: Приложение за четене на електронни книги, PDF и комикси с кратки страници, четене с фиксационни точки, серии от дни и график за четене. За Android и iOS.
   categories: [mobile]
+  screenshot: images/screenshots/heapforge-reader.png
 
 - name: Heapforge Journal
-  description: дневник за iOS, Android и уеб
-  summary: Дневник за iOS, Android и уеб.
+  url: https://journal.heapforge.com
+  description: личен дневник, в който сами оформяте страницата, която попълвате всеки ден, със снимки, скици, настроения и серии от дни, съхранявани само на вашето устройство
+  summary: Личен дневник, в който сами оформяте страницата, която попълвате всеки ден. Снимки, скици, настроения и серии от дни, съхранявани само на вашето устройство.
   categories: [mobile]
+  screenshot: images/screenshots/heapforge-journal.png
+
+- name: Heapforge Markdown
+  url: https://markdown.heapforge.com
+  description: редактор за Markdown, LaTeX и обикновен текст с преглед на живо, папка с бележки, която е изцяло ваша, заключени бележки и експорт към Word и PDF, за Android и iOS
+  summary: Редактор за Markdown, LaTeX и обикновен текст с преглед на живо, папка с бележки, която е изцяло ваша, заключени бележки и експорт към Word и PDF. За Android и iOS.
+  categories: [mobile]
+  screenshot: images/screenshots/heapforge-markdown.png
 
 - name: Untitled Cube Rotator
   description: idle clicker игра за PC, Android и iOS

@@ -35,14 +35,25 @@
   categories: [language-learning]
 
 - name: Heapforge Reader
-  description: a book reading app for iOS, Android, Windows, Linux and macOS
-  summary: A book reading app for iOS, Android, Windows, Linux and macOS.
+  url: https://reader.heapforge.com
+  description: a focused e-book, PDF and comic reader with bite-sized pages, fixation reading, streaks and a reading schedule, for Android and iOS
+  summary: A focused e-book, PDF and comic reader with bite-sized pages, fixation reading, streaks and a reading schedule. For Android and iOS.
   categories: [mobile]
+  screenshot: images/screenshots/heapforge-reader.png
 
 - name: Heapforge Journal
-  description: a journaling app for iOS, Android and the web
-  summary: A journaling app for iOS, Android and the web.
+  url: https://journal.heapforge.com
+  description: a private journal where you design the page you fill in each day, with photos, sketches, moods and streaks stored only on your device
+  summary: A private journal where you design the page you fill in each day. Photos, sketches, moods and streaks, stored only on your device.
   categories: [mobile]
+  screenshot: images/screenshots/heapforge-journal.png
+
+- name: Heapforge Markdown
+  url: https://markdown.heapforge.com
+  description: a Markdown, LaTeX and plain-text editor with live preview, a notes folder you own, locked notes and export to Word and PDF, for Android and iOS
+  summary: A Markdown, LaTeX and plain-text editor with live preview, a notes folder you own, locked notes and export to Word and PDF. For Android and iOS.
+  categories: [mobile]
+  screenshot: images/screenshots/heapforge-markdown.png
 
 - name: Untitled Cube Rotator
   description: an idle clicker game for PC, Android and iOS
