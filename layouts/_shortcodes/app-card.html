@@ -1,0 +1,30 @@
+{{- /*
+  App header for a product announcement: the app icon (a page resource),
+  a one-line tagline and links to its store listing and website.
+  Params: name, icon (resource path in the page bundle), tagline,
+  play (Google Play package id), site (optional URL).
+*/ -}}
+{{- $name := .Get "name" -}}
+{{- $src := .Get "icon" -}}
+{{- with .Page.Resources.Get $src -}}
+  {{- $sm := .Process "resize 96x webp q85" -}}
+  {{- $lg := .Process "resize 192x webp q85" }}
+<div class="app-card">
+  <img class="app-card__icon" src="{{ $lg.RelPermalink }}"
+       srcset="{{ $sm.RelPermalink }} 1x, {{ $lg.RelPermalink }} 2x"
+       width="96" height="96" alt="{{ $name }} app icon" loading="lazy" decoding="async">
+  <div class="app-card__body">
+    <p class="app-card__tagline">{{ $.Get "tagline" }}</p>
+    <p class="app-card__links">
+      {{- with $.Get "play" }}
+      <a class="button button--primary" href="https://play.google.com/store/apps/details?id={{ . }}" rel="noopener">{{ partial "icons/icon.html" (dict "name" "download" "size" 18) }} Get it on Google Play</a>
+      {{- else }}{{ errorf "app-card: %q has no play package id" $name }}{{ end }}
+      {{- with $.Get "site" }}
+      <a class="link-arrow" href="{{ . }}">{{ strings.TrimPrefix "https://" . }} {{ partial "icons/icon.html" (dict "name" "arrow-up-right" "size" 16) }}</a>
+      {{- end }}
+    </p>
+  </div>
+</div>
+{{- else -}}
+  {{- errorf "app-card: icon %q not found in %s" $src .Page.File.Path -}}
+{{- end -}}

@@ -1,0 +1,28 @@
+{{- /*
+  A row of phone screenshots from the page bundle.
+  Positional params: the bundle folder (e.g. "journal"), then one "file|alt"
+  pair per screenshot, e.g. "01-journal|The home screen …".
+  Each <file>.png must exist in <dir>/dark/. A matching <dir>/light/ file is
+  optional: when present it is shown instead under the light theme (blog.css).
+*/ -}}
+{{- $dir := .Get 0 -}}
+<div class="app-shots">
+{{- range $p := after 1 .Params }}
+  {{- $parts := split $p "|" -}}
+  {{- $file := index $parts 0 -}}
+  {{- $alt := index $parts 1 -}}
+  <figure class="app-shot">
+    {{- range $theme := slice "light" "dark" }}
+    {{- with $.Page.Resources.Get (printf "%s/%s/%s.png" $dir $theme $file) }}
+    {{- $sm := .Process "resize 280x webp q80" -}}
+    {{- $md := .Process "resize 420x webp q80" -}}
+    {{- $lg := .Process "resize 640x webp q80" }}
+    <img class="app-shot__img app-shot__img--{{ $theme }}" src="{{ $md.RelPermalink }}"
+         srcset="{{ $sm.RelPermalink }} {{ $sm.Width }}w, {{ $md.RelPermalink }} {{ $md.Width }}w, {{ $lg.RelPermalink }} {{ $lg.Width }}w"
+         sizes="(min-width: 48rem) 13rem, 30vw" alt="{{ $alt }}"
+         width="{{ $md.Width }}" height="{{ $md.Height }}" loading="lazy" decoding="async">
+    {{- else }}{{ if eq $theme "dark" }}{{ errorf "app-shots: %s/dark/%s.png not found in %s" $dir $file $.Page.File.Path }}{{ end }}{{ end }}
+    {{- end }}
+  </figure>
+{{- end }}
+</div>

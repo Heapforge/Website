@@ -114,7 +114,10 @@ emphasis, never paragraphs.
 - Iconography: `_partials/icons/icon.html` (`name`, `size`) inlines
   `assets/icons/<name>.svg` when it exists. These 48 icons were extracted from
   the vector icon page of the brand guidelines: 24px grid, navy line =
-  `currentColor`, Ember accent = `.icon__accent` (`--icon-accent`). Glyphs the
+  `currentColor`, Ember accent = `.icon__accent` (`--icon-accent`). The
+  accent shows only on illustrative icons; inside a link, button, summary or
+  label (e.g. the download button) `typography.css` fills it with
+  `currentColor`, so action icons are single-colour. Glyphs the
   brand set lacks (arrows, sun/moon, pin) fall back to stroke paths in
   the partial, drawn at the same 1.5px line. An unknown name fails the build.
 - Type: the brand pairs Nebulas (headings) with Geist (body). Nebulas is not

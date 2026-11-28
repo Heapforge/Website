@@ -138,3 +138,60 @@
   .blog-filter__group { grid-template-columns: minmax(0, 1fr); gap: var(--space-2xs); }
   .blog-filter__legend { float: none; padding-top: 0; }
 }
+
+/* ---- App announcements (shortcodes app-card and app-shots) ------------ */
+.app-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-m);
+  padding: var(--space-m);
+  border: var(--hairline) solid var(--line);
+  border-radius: var(--radius-l);
+  background: var(--paper-raised);
+}
+.app-card__icon {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 22%; /* the iOS/Android squircle, approximately */
+  box-shadow: 0 0 0 var(--hairline) var(--line-strong);
+}
+.app-card__body > * + * { margin-top: var(--space-xs); }
+.app-card__tagline {
+  font-size: var(--step-1);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+.app-card__links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs) var(--space-m);
+}
+/* .prose a would otherwise recolour the button and the link. */
+.prose .app-card a.button--primary { color: var(--button-ink); text-decoration: none; }
+.prose .app-card a.link-arrow { text-decoration: none; }
+
+.app-shots {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-s);
+}
+.app-shot { margin: 0; }
+.prose .app-shot__img {
+  width: 100%;
+  height: auto;
+  border: var(--hairline) solid var(--line-strong);
+  border-radius: var(--radius-l);
+}
+/* Dark captures by default (also without JS); light ones under the light theme. */
+.app-shot__img--light { display: none; }
+:root[data-theme="light"] .app-shot__img--light { display: block; }
+:root[data-theme="light"] .app-shot__img--light + .app-shot__img--dark { display: none; }
+
+@media (max-width: 30rem) {
+  .app-card { align-items: start; gap: var(--space-s); padding: var(--space-s); }
+  .app-card__icon { width: 3.5rem; height: 3.5rem; }
+  .app-shots { gap: var(--space-2xs); }
+}

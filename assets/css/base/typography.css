@@ -19,9 +19,13 @@ a {
   color: var(--paper-raised);
 }
 
-/* Brand icons: navy line follows the text colour, the accent is Ember. */
+/* Brand icons: navy line follows the text colour, the accent is Ember.
+   The two-tone accent is for illustrative icons (services, focus areas);
+   inside a control (download button, links) the icon is a single colour,
+   following the control's text. */
 .icon { flex-shrink: 0; }
 .icon__accent { fill: var(--icon-accent); }
+:is(a, button, summary, label) .icon__accent { fill: currentColor; }
 
 /* Small uppercase label used for kickers, indices and meta. */
 .label {

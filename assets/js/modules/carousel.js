@@ -18,14 +18,15 @@ function setup(carousel) {
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
   let current = 0;
 
-  const padStart = () => parseFloat(getComputedStyle(track).scrollPaddingLeft) || 0;
   const maxScroll = () => track.scrollWidth - track.clientWidth;
 
-  // Scroll offset that snaps slide i to the start edge.
+  // Scroll offset that snaps slide i to the start edge, measured from the
+  // first slide (which snaps at 0: the track's padding and scroll-padding
+  // share --edge). Reading scroll-padding itself doesn't work, because
+  // getComputedStyle returns its max(…%) expression unresolved.
   const offsetOf = (i) => {
-    const slideBox = slides[i].getBoundingClientRect();
-    const trackBox = track.getBoundingClientRect();
-    return Math.min(maxScroll(), Math.max(0, slideBox.left - trackBox.left + track.scrollLeft - padStart()));
+    const delta = slides[i].getBoundingClientRect().left - slides[0].getBoundingClientRect().left;
+    return Math.min(maxScroll(), Math.max(0, delta));
   };
 
   const goTo = (i) => {
